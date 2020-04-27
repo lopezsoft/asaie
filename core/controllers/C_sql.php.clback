@@ -1,0 +1,2356 @@
+<?php defined('BASEPATH') OR exit('No direct script access allowed');
+
+class C_sql extends SME_Controller 
+{
+	private $id_docente 	= NULL;
+	private $cod_dane  		= NULL;
+	private $año_lectivo	= NULL;
+	private	$doc_docente	= NULL;
+	private $desde			= 0;
+	private	$hasta			= 0;
+	protected $periodo1		= NULL;
+	protected $periodo2		= NULL;
+	protected $periodo3		= NULL;
+	protected $periodo4		= NULL;
+	protected $periodo5		= NULL;
+	private	$table_config	= NULL;
+	
+	
+	public function __construct() 
+	{
+		parent::__construct();
+	  	$this->load->model('M_sql');
+	  	$this->load->model('M_funciones');
+	  	$this->load->model('M_login');
+	  	
+	  	$this->id_docente 	= $this->M_sql->id_docente;
+	  	$this->cod_dane  	= $this->M_sql->cod_dane;
+	  	$this->get_year()	= $this->M_sql->año_lectivo;
+	  	$this->doc_docente	= $this->M_sql->doc_docente;
+	  	$this->limit_min	= 0;
+	  	$this->limit_max	= 25;	
+	  	date_default_timezone_set("America/Bogota");
+	}
+
+	public function db_limit () 
+	{
+		$this-> limit_min = (isset($_GET['start'])?$_GET['start']:"0");
+		$this-> limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		
+	}
+	
+	public function db_docente () {
+		$this->db_limit();
+		$table	= "doc".$this->doc_docente."_".$this->cod_dane;
+		
+		$create ="CREATE TABLE IF NOT EXISTS ".$table." (`id` INT NOT NULL AUTO_INCREMENT , `estado` 
+			TINYINT NOT NULL , `nombre` VARCHAR(12) NOT NULL , PRIMARY KEY (`id`) ) 
+			ENGINE = InnoDB CHARACTER SET utf8 COLLATE utf8_spanish_ci;";
+		
+			
+		$queryx = $this->db->query($create);
+		$count	= 0;
+		$cmax	= 34;
+		$estado	= 0;
+		$nombre	= "";
+		$cinsert= "";
+		$countx	= 1;
+		
+		if ($queryx) {
+						
+			$query	= "SELECT * FROM ".$table ;
+			
+			$select	= $this->db->query($query);
+			
+			if ($select) {
+				
+				if ($select->num_rows()>0){
+					$fields_list = NULL;
+			
+				 	foreach ($select->result_array() as $field)
+				 	{
+						$fields_list [] = $field;
+					}
+					$request	= $this->M_sql->get_request_select($fields_list, $select->num_rows());
+				}else{
+					for($count = 1; $count < $cmax; $count++){
+						$estado	= 0;
+						switch($count){
+							case 1 :
+								$nombre	= 'Nota1';
+								break;
+							case 2 :
+								$nombre	= 'Nota2';
+								break;
+							case 3 :
+								$nombre	= 'Nota3';
+								break;
+							case 4 :
+								$nombre	= 'Nota4';
+								break;
+							case 5 :
+								$nombre	= 'Nota5';
+								break;
+							case 6 :
+								$nombre	= 'Nota6';
+								break;
+							case 7 :
+								$nombre	= 'NOTA';
+								break;
+							case 8 :
+								$nombre	= '%';
+								break;
+							case 9 :
+								$nombre	= 'Nota1';
+								break;
+							case 10 :
+								$nombre	= 'Nota2';
+								break;
+							case 11 :
+								$nombre	= 'Nota3';
+								break;
+							case 12 :
+								$nombre	= 'Nota4';
+								break;
+							case 13 :
+								$nombre	= 'NOTA';
+								break;
+							case 14 :
+								$nombre	= '%';
+								break;
+							case 15 :
+								$nombre	= 'Nota1';
+								break;
+							case 16 :
+								$nombre	= 'Nota2';
+								break;
+							case 17 :
+								$nombre	= 'Nota3';
+								break;
+							case 18 :
+								$nombre	= 'Nota4';
+								break;
+							case 19 :
+								$nombre	= 'NOTA';
+								break;
+							case 20 :
+								$nombre	= '%';
+								break;
+							case 21 :
+								$estado	= 1;
+								$nombre	= 'NOTA';
+								break;
+							case 22 :
+								$estado	= 1;
+								$nombre	= '%';
+								break;
+							case 23 :
+								$nombre	= 'LOGRO 1';
+								break;
+							case 24 :
+								$estado	= 1;
+								$nombre	= 'LOGRO 2';
+								break;
+							case 25 :
+								$estado	= 1;
+								$nombre	= 'LOGRO 3';
+								break;
+							case 26 :
+								$estado	= 1;
+								$nombre	= 'IND5';
+								break;
+							case 27 :
+								$estado	= 1;
+								$nombre	= 'IND6';
+								break;
+							case 28 :
+								$estado	= 1;
+								$nombre	= 'IND7';
+								break;
+							case 29 :
+								$estado	= 1;
+								$nombre	= 'IND8';
+								break;
+							case 30 :
+								$estado	= 1;
+								$nombre	= 'IND9';
+								break;
+							case 31 :
+								$estado	= 1;
+								$nombre	= 'IND10';
+								break;
+							case 32 :
+								$estado	= 1;
+								$nombre	= 'IND11';
+								break;
+							case 33 :
+								$estado	= 1;
+								$nombre	= 'IND12';
+								break;												
+						}
+						
+						$cinsert = $cinsert."('".$estado."','".$nombre."'),";						
+					}
+					
+					$ainsert = substr($cinsert, 0, strlen($cinsert)-1);
+					
+					$this->M_sql->trans_start();
+					$cinsert = "INSERT INTO `".$table."` (`estado`, `nombre`) VALUES ".$ainsert;
+					
+					$this->db->query($cinsert);
+					
+					$this->M_sql->trans_complete();
+					
+															
+					if ( $this->M_sql->trans_status()){
+						$queryc	= "SELECT * FROM ".$table ;
+						$request	= $this->M_sql->get_query($this->limit_min, $this->limit_max, $queryc);
+					}else{
+						$request	= $this->M_sql->get_error();
+					}
+					
+				}
+			}else{
+				$request = $this->M_sql->get_error();
+			}
+			
+		}else{
+			$request	= $this->M_sql->get_error();
+		}
+		echo $request;
+	}
+	
+	public function db_docente_u () {
+		$table	= "doc".$this->doc_docente."_".$this->cod_dane;
+		
+		$fieldslist = json_decode($_POST['fieldlist']);
+		
+		$count 	= count($fieldslist);
+		$i 		= 0;
+		$data	= '';
+		$id		= NULL;
+		$query	= '';
+		$this->M_sql->trans_start();
+		for($i = 0; $i < $count; $i++){
+			$where	= " id = '".$fieldslist[$i]->id."'";
+			$data	= $fieldslist[$i];
+			
+			$query	= $this->db->update_string($table, $data, $where).";";
+			$request = $this->db->query($query);
+		}
+			
+		$this->M_sql->trans_complete();
+		
+		if ($this->M_sql->trans_status()){
+			$request = $this->M_sql->get_request_insert($fieldslist);
+		}else{
+			$request = $this->M_sql->get_error();
+		}				
+		echo $request;						
+	}
+	
+	/**
+	* Funcion que retorna la lista de los estudiantes de un curso
+	* 
+	* @return
+	*/
+	
+	public function get_estudiantes () {
+		$this->db_limit();
+		
+		$cod_grado 	= $_GET['pCod_Grado'];
+		$grupo 		= $_GET['pGrupo'];
+		$cod_jorn 	= $_GET['pCod_Jorn'];
+		$cons_sede 	= $_GET['pCons_Sede'];
+		
+		$param = array(
+			$this->cod_dane,
+			$cod_grado,
+			$grupo,
+			$cod_jorn,
+			$cons_sede,
+			$this->get_year()		
+		);
+		
+		$query	= "SELECT te.cod_est, 
+				CONCAT(RTRIM(te.apellido1),' ',RTRIM(te.apellido2),' ',RTRIM(te.nombre1),' ',RTRIM(te.nombre2)) AS nombres, 
+				tm.cod_grado, UPPER(tg.grado) AS grado, tm.id_jorn, tj.jornada, tm.cons_sede, ts.nom_sede ".
+				"AS sede, tm.año, tm.grupo, tm.estado FROM inscripciones AS te LEFT JOIN matriculas AS tm ON tm.cod_est=te.cod_est 
+				LEFT JOIN grados AS tg ON tg.cod_grado=tm.cod_grado LEFT JOIN jornadas AS tj ON ".
+				"tm.id_jorn=tj.cod_jorn LEFT JOIN sedes AS ts ON tm.cons_sede=ts.cons_sede ";
+				  
+		$where  = "te.cod_dane= ? AND tm.cod_grado= ? AND tm.grupo= ? AND tm.id_jorn= ? 
+					AND tm.cons_sede= ? AND tm.año= ? ORDER BY nombres";
+					
+		$request = $this->M_sql->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param);
+		
+		echo $request;
+		 
+	}	
+	
+	/** 
+	* Funcion que retorna el listado de la carga académica del docente en sesion
+	*/
+	
+	public function get_login_user () {
+		$userType = $this->session->userdata('user_type');	
+
+		switch($userType){
+			case '1':  // Usuario Monitor
+				break;
+			case '2':  // Usuario Retor(a) o Director(a)
+				break;
+			case '3':  // Usuario Secretario(a)
+				break;
+			case '4':  // Usuario Docente
+					
+				$año 	= $this->get_year();
+				$user	= $this->session->userdata('user_description');
+				
+				$get_config	= "SELECT periodo1,periodo2,periodo3,periodo4,periodo5,semestre1,semestre2,procesos 
+								FROM config001 WHERE AÑO = ".$año;
+			
+				$get_config = $this->db->query($get_config);
+			
+				$config 	= NULL;
+				
+				if ($get_config) {
+					foreach($get_config->result_array() as $field){
+						$config [] = $field;
+					}
+					$request	= array(
+						'tiempo'	=> $año,
+						'user'		=> $user,
+						'request'	=> 1,
+						'config'	=> $config
+					);
+				}else{
+					$request	= array(
+						'tiempo'	=> NULL,
+						'user'		=> NULL,
+						'request'	=> 0
+					);
+				}
+				break;
+			case '5':  // Usuario Estudiante
+				
+				$userId	= $this->session->userdata('user_id');
+				$año 	= $this->get_year();
+				$user	= $this->session->userdata('user_description');
+				
+				$get_config	= "SELECT te.cod_est,te.sexo,te.foto,
+				CONCAT(RTRIM(te.nombre1),' ',RTRIM(te.nombre2),' ',RTRIM(te.apellido1),' ',RTRIM(te.apellido2)) AS username,
+				te.nro_doc_id,te.nro_doc_id AS pasw, te.cod_dane, tm.año, tm.estado, tm.cod_grado, tm.grupo,
+				tm.cons_sede, tm.id_jorn, tm.id_matric, tg.grado, tj.jornada, ts.nom_sede As sede FROM inscripciones AS te 
+				LEFT JOIN matriculas AS tm ON tm.cod_est=te.cod_est LEFT JOIN  grados AS tg ON tm.cod_grado=tg.cod_grado 
+				LEFT JOIN jornadas AS tj ON tm.id_jorn=tj.cod_jorn LEFT JOIN sedes AS ts ON 
+				tm.cons_sede=ts.cons_sede  				
+				where te.cod_est= ? AND te.cod_dane= ? AND tm.año= ? LIMIT 1";
+			
+				$get_config = $this->db->query($get_config,array($userId,$this->cod_dane,$año));
+			
+				$config 	= NULL;
+				
+				if ($get_config) {
+					foreach($get_config->result_array() as $field){
+						$config [] = $field;
+					}
+					$request	= array(
+						'tiempo'	=> $año,
+						'user'		=> $user,
+						'request'	=> 1,
+						'config'	=> $config
+					);
+				}else{
+					$request	= array(
+						'tiempo'	=> NULL,
+						'user'		=> NULL,
+						'request'	=> 0
+					);
+				}
+				break;
+			case '6':  // Usuario Coordinación
+				break;
+		}
+				
+		$request	= json_encode($request);
+		
+		echo $request;
+	}
+	
+	public function get_login_signin () {
+		$año	= $_POST['año'];
+		$user	= $_POST['user'];
+		$pass	= $_POST['pass'];
+		$dane	= $_POST['dane'];
+		$userType = $_POST['tipo'];
+		
+		$param	= array(
+			$user,
+			$pass,
+			$dane,
+			$año		
+		);
+		
+		$select_est	= ""
+		$query_est	= ;
+		
+		switch($userType){
+			case '1':  // Usuario Monitor
+				break;
+			case '2':  // Usuario Retor(a) o Director(a)
+				break;
+			case '3':  // Usuario Secretario(a)
+				break;
+			case '4':  // Usuario Docente
+			
+				$select = "SELECT id_docente,
+				CONCAT(RTRIM(nombre1),' ',RTRIM(nombre2),' ',RTRIM(apellido1),' ',RTRIM(apellido2)) AS username, 
+				documento, pasw, id_establecimiento, año, estado FROM docentes ";
+					
+				$where	=	"documento= ? AND SHA1(pasw)= ? AND id_establecimiento= ? AND año= ? LIMIT 1";
+				
+				$query	= $this->db->query($select." WHERE ".$where,$param);
+				
+				if($query){
+					if($query->num_rows() === 1 ){
+						if ($this->M_login->setlogin($query, $userType)){
+																							
+							$request	= array(
+								'request'	=> 1
+							);
+							
+							$request	= json_encode($request);
+						}else{
+							$request	= 0;
+							$request	= json_encode($request);
+						}
+					}else{
+						$request	= 0;
+						$request	= json_encode($request);
+					}
+				}else{
+					$request	= $this->M_sql->get_error();
+				}
+				break;
+			case '5':  // Usuario Estudiante
+				$select = "SELECT te.cod_est,te.sexo,te.foto,
+				CONCAT(RTRIM(te.nombre1),' ',RTRIM(te.nombre2),' ',RTRIM(te.apellido1),' ',RTRIM(te.apellido2)) AS username, 
+				te.nro_doc_id,te.nro_doc_id AS pasw, te.cod_dane, tm.año, tm.estado, tm.cod_grado, tm.grupo,
+				tm.cons_sede, tm.id_jorn, tm.id_matric, tg.grado, tj.jornada FROM inscripciones AS te LEFT JOIN 
+				matriculas AS tm ON tm.cod_est=te.cod_est LEFT JOIN  grados AS tg ON tm.cod_grado=tg.cod_grado 
+				LEFT JOIN jornadas AS tj ON tm.id_jorn=tj.cod_jorn";
+					
+				$where	=	"te.nro_doc_id= ? AND SHA1(te.nro_doc_id)= ? AND te.cod_dane= ? AND tm.año= ? LIMIT 1";
+				
+				$query	= $this->db->query($select." WHERE ".$where,$param);
+				
+				if($query){
+					if($query->num_rows() === 1 ){
+						if ($this->M_login->setlogin($query, $userType)){
+																							
+							$request	= array(
+								'request'	=> 1
+							);
+							
+							$request	= json_encode($request);
+						}else{
+							$request	= 0;
+							$request	= json_encode($request);
+						}
+					}else{
+						$request	= 0;
+						$request	= json_encode($request);
+					}
+				}else{
+					$request	= $this->M_sql->get_error();
+				}
+				break;
+			case '6':  // Usuario Coordinación
+				break;
+		}
+				
+		echo $request;
+	}
+		
+	public function get_carga_grupo () 
+	{
+		$limit_min =(isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		
+		$query = "SELECT tm.cod_grado, UPPER(tg.grado) AS grado, tm.grupo, 
+			tm.cons_sede, TRIM(ts.nom_sede) AS sede , tm.cod_jorn, TRIM(tj.jornada) AS jornada, tm.id_docente, tm.año  
+			FROM cursos as tm, grados as tg, sedes as ts, jornadas as tj ";
+			
+		$where = " tm.cod_grado=tg.cod_grado 
+			AND	tm.cons_sede=ts.cons_sede AND tm.estado=1 AND tm.cod_jorn=tj.cod_jorn AND 
+			tm.id_docente= ? AND tm.año= ?  AND tm.cod_dane= ? AND ts.cod_dane= ? 
+			 GROUP BY tm.cod_grado, tm.grupo, tm.cod_jorn, tm.id_docente, tm.año ";
+			
+		
+		$id_docente		= $this->id_docente;
+		$cod_dane 		= $this->cod_dane;
+		$año			= $this->get_year();
+			
+		$param = array(
+			$id_docente,
+			$año,
+			$cod_dane,
+			$cod_dane
+		);	
+		
+		$db_return = $this->M_sql->get_query_param($limit_min,$limit_max,$query,$where,$param);
+		echo $db_return;
+	}	
+	
+	public function get_carga_academica () 
+	{
+		$limit_min = (isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		
+		$query = "SELECT tm.cod_grado, UPPER(tg.grado) AS grado, tm.grupo, tm.id_Asig , TRIM(ta.des_Asign) as asignatura, 
+			tm.cons_sede, TRIM(ts.nom_sede) AS sede , tm.cod_jorn, TRIM(tj.jornada) AS jornada, tm.id_docente, tm.año, 
+			tmc.proc1, tmc.proc2, tmc.proc3, tmc.proc4 FROM cursos as tm, 
+			grados as tg, asignaturas as ta, sedes as ts, jornadas as tj, matcurso AS tmc ";
+			
+		$where = "(tm.cod_grado=tg.cod_grado AND tmc.cod_grado=tg.cod_grado) AND 
+			(tm.id_asig=ta.cod_Asign AND tmc.cod_asig=ta.cod_Asign) 
+			AND	tm.cons_Sede=ts.cons_sede AND 
+			tm.estado=1 AND tm.cod_jorn=tj.cod_jorn AND 
+			tm.id_docente= ? AND ta.año= ? AND tm.año= ?  AND tm.cod_dane= ? 
+			AND ta.cod_dane = ? AND ts.cod_dane= ? AND tmc.año= ? AND tmc.cod_dane= ? ";
+		
+		$id_docente		= $this->id_docente;
+		$cod_dane 		= $this->cod_dane;
+		$año			= $this->get_year();
+			
+		$param = array(
+				$id_docente,
+				$año,
+				$año,
+				$cod_dane,
+				$cod_dane,
+				$cod_dane,
+				$año,
+				$cod_dane
+			);	
+		
+		$db_return = $this->M_sql->get_query_param($limit_min,$limit_max,$query,$where,$param);
+		echo $db_return;
+	}
+	
+	public function get_carga_academica_grupo () 
+	{
+		$limit_min =(isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		
+		$query = "SELECT tm.cod_grado, UPPER(tg.grado) AS grado, tm.id_asig , TRIM(ta.des_Asign) as asignatura, 
+			tm.cons_sede, TRIM(ts.nom_sede) AS sede , tm.id_docente, tm.año FROM cursos as tm, 
+			grados as tg, asignaturas as ta, sedes as ts ";
+			
+		$where = "tm.cod_grado=tg.cod_grado AND tm.id_asig=ta.cod_Asign AND tm.cons_Sede=ts.cons_sede AND 
+			tm.estado=1 AND tm.id_docente= ? AND ta.año= ? AND tm.año= ?  AND tm.cod_dane= ? AND ta.cod_dane= ? 
+			AND ts.cod_dane= ? GROUP BY tm.cod_grado, tm.id_asig, tm.cons_sede, tm.id_docente, tm.año";
+			
+		
+		$id_docente		= $this->id_docente;
+		$cod_dane 		= $this->cod_dane;
+		$año			= $this->get_year();
+			
+		$param = array(
+				$id_docente,
+				$año,
+				$año,
+				$cod_dane,
+				$cod_dane,
+				$cod_dane
+			);	
+		
+		$db_return = $this->M_sql->get_query_param($limit_min,$limit_max,$query,$where,$param);
+		echo $db_return;
+	}
+		
+	/** 
+	* Funcion que retorna el listado del banco de logros de desempeño
+	*/
+	public function get_banco_logros () 
+	{
+		$limit_min = (isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		
+		if (isset($_GET['pdbCodGrado']) AND isset($_GET['pdbIdAsig'])) 
+		{
+			
+			$query = "SELECT tl.id, tl.id_logro, tl.cod_grado, UPPER(tg.grado) AS grado, tl.id_asig , TRIM(ta.des_Asign) as asignatura, 
+				tl.periodo, tl.logro, tl.año FROM banco_logros as tl, grados as tg, asignaturas as ta ";
+			
+			$where = "tl.cod_grado=tg.cod_grado AND tl.id_asig=ta.cod_Asign AND ta.año= ? AND tl.año= ? 
+				AND tl.cod_dane= ? AND tl.id_asig= ? AND tl.cod_grado= ? AND ta.cod_dane= ? ";
+			
+			
+			$db_cod_grado = $_GET['pdbCodGrado'];
+			$db_id_asig	  = $_GET['pdbIdAsig'];
+
+			$cod_dane 		= $this->cod_dane;
+			$año			= $this->get_year()-1;
+				
+			$param = array(
+					$año,
+					$año,
+					$cod_dane,
+					$db_id_asig,
+					$db_cod_grado,
+					$cod_dane
+				);
+		
+			$db_return = $this->M_sql->get_query_param($limit_min,$limit_max,$query,$where,$param);
+			echo $db_return;
+			
+		} else {
+			echo $this->M_sql->get_error()	;
+		}		
+	}
+
+	/** 
+	* Funcion que retorna el listado del banco de indicadores de desempeño
+	*/
+	public function get_banco_indicadores () 
+	{
+		$this->db_limit();
+		
+		if (isset($_GET['pdbCodGrado']) AND isset($_GET['pdbIdAsig'])) 
+		{
+			$query = "SELECT ti.id, ti.id_logro, id_indicador, ti.cod_grado, UPPER(tg.grado) AS grado, ti.id_asig , 
+				TRIM(ta.des_Asign) as asignatura, 
+				ti.periodo, ti.indicador, ti.año FROM banco_indicadores as ti, grados as tg, asignaturas as ta ";
+			
+			$where= "ti.cod_grado=tg.cod_grado AND ti.id_asig=ta.cod_Asign AND ta.año= ? 
+				AND ti.año= ? AND ti.cod_dane= ? AND ti.id_asig= ? AND ti.cod_grado= ? AND ta.cod_dane= ?";
+			
+			$db_cod_grado = $_GET['pdbCodGrado'];
+			$db_id_asig	  = $_GET['pdbIdAsig'];
+		
+			$cod_dane 		= $this->cod_dane;
+			$año			= $this->get_year()-1;
+				
+			$param = array(
+					$año,
+					$año,
+					$cod_dane,
+					$db_id_asig,
+					$db_cod_grado,
+					$cod_dane
+				);
+		
+			$db_return = $this->M_sql->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param);
+			echo $db_return;
+			
+		} else {
+			echo $this->M_sql->get_error()	;
+		}		
+	}
+	
+	/** 
+	* Funcion que retorna el listado de los grados académicos
+	*/
+	public function get_grados () 
+	{
+		$limit_min = (isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		$query = "SELECT * FROM grados ";
+		echo $this->M_sql->get_query($limit_min,$limit_max,$query);
+	}
+	
+	/** 
+	* Funcion que retorna el numero de periodos académicos a trabajar
+	*/
+	public function	get_periodos	()
+	{
+		echo $this->M_sql->get_periodos();
+	}
+	
+	/** 
+	* Funcion que retorna el listado de los grados académicos
+	*/
+	public function get_matcursos () 
+	{
+		$limit_min = (isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		
+		if (isset($_GET['pdbCodGrado'])) 
+		{
+			$query="SELECT tm.cod_grado, UPPER(tg.grado) AS grado, tm.cod_asig , TRIM(ta.des_Asign) as asignatura, 
+			tm.año FROM matcurso as tm, grados as tg, asignaturas as ta ";
+			
+			$where = "tm.cod_grado=tg.cod_grado AND tm.cod_asig=ta.cod_asign AND ta.año= ? 
+			AND tm.año= ?  AND tm.cod_dane= ? AND ta.cod_dane= ? AND tm.cod_grado = ?";
+			
+			$db_cod_grado 	= $_GET['pdbCodGrado'];
+			$cod_dane 		= $this->M_sql->cod_dane;
+			$año			= $this->M_sql->año_lectivo;
+			
+			$param = array(
+				$año,$año,
+				$cod_dane,
+				$cod_dane,
+				$db_cod_grado
+			);
+			
+			echo $this->M_sql->get_query_param($limit_min,$limit_max,$query,$where,$param);
+		}else{
+			echo $this->M_sql->get_error();	
+		}
+	}
+	
+	/**
+	* Funciones para tabla parcelador.
+	*/
+	
+	// Insert 
+	public function get_parcelador_insert () 
+	{
+		if (isset($_POST['records'])) 
+		{
+			$fields_list = $_POST['records'];
+			//echo $this->M_sql->get_parcelador_insert($fields_list);	
+			
+			$data = json_decode($fields_list);
+			
+			$narray = array (
+				"id_docente " 	=> $this->id_docente,
+				"fecha"		 	=> date('Y-m-d'),
+				"cod_dane"		=> $this->cod_dane,
+				"año"			=> $this->get_year()
+			);
+			
+			$this->M_sql->insert_data('parcelador',$data,$narray);
+		}else{
+			echo $this->M_sql->get_error();
+		}		
+	}
+	
+	// Select 
+	public function get_parcelador () 
+	{
+		$limit_min = (isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		
+		$query = "SELECT tm.*, UPPER(tg.grado) AS grado, TRIM(ta.des_asign) as asignatura  
+			FROM parcelador as tm, grados as tg, asignaturas as ta ";
+		
+		$where = "tm.cod_grado=tg.cod_grado AND tm.cod_asig=ta.cod_asign AND tm.estado=1 AND 
+			tm.id_docente= ? AND ta.año= ? AND tm.año= ? AND tm.cod_dane= ? AND ta.cod_dane= ?";
+		
+		$id_docente		= $this->id_docente;	
+		$cod_dane 		= $this->M_sql->cod_dane;
+		$año			= $this->M_sql->año_lectivo;
+		
+		$param = array(
+			$id_docente,
+			$año,
+			$año,
+			$cod_dane,
+			$cod_dane
+		);
+		
+		echo $this->M_sql->get_query_param($limit_min,$limit_max,$query,$where,$param);
+	}
+	
+	// Update 
+	public function get_parcelador_update () 
+	{
+		if (isset($_POST['records'])) 
+		{
+			$fields_list = json_decode($_POST['records']);
+			
+			$id	="id= '".$fields_list->id."'";	
+						
+			echo $this->M_sql->update_data('parcelador',$fields_list,$id);			
+		}else{
+			echo $this->M_sql->get_error();
+		}
+	}
+	
+	// Delete 
+	public function get_parcelador_delete () 
+	{	
+		if (isset($_POST['records'])) 
+		{
+			$fields_list = json_decode($_POST['records']);
+			$id = "id = '".$fields_list ->id."'";
+				
+			echo $this->M_sql->delete_data('parcelador',$id);
+			
+		}else{
+			echo $this->M_sql->get_error();
+		}
+	}
+		
+	/**
+	* Funcion para la tabla metodologias
+	* 
+	* @return
+	*/
+	
+	public function get_metodologias ()
+	{
+		$limit_min = (isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		
+		$query = "SELECT COD_METOD AS cod_metod, UPPER(RTRIM(METODOLOG)) AS metodolog FROM metodologias";
+		
+		$db_return = $this->M_sql->get_query($limit_min,$limit_max,$query);
+		echo $db_return;
+	}
+	
+	/**
+	* Funcion para la tabla sedes
+	* 
+	* @return
+	*/	
+	public function get_sedes ()
+	{
+		$limit_min = (isset($_GET['start'])?$_GET['start']:"0");
+		$limit_max = (isset($_GET['limit'])?$_GET['limit']:"25");
+		$cod_dane  = $this->M_sql->cod_dane;
+		$param 	   = array(
+			$cod_dane
+		);
+		$query = "SELECT COD_DANE AS cod_dane, cons_sede AS cons_sede,  UPPER(RTRIM(nom_sede)) AS sede FROM sedes ";
+		$where = "COD_DANE = ? ";
+		
+		$db_return = $this->M_sql->get_query_param($limit_min,$limit_max,$query,$where,$param);
+		echo $db_return;
+	}
+		
+	/**
+	* Funciones para la tabla estandares de competencia, logros e indicadores de desempeño
+	* 
+	* @return
+	*/
+	public function get_estandar_import () 
+	{
+		$this->db_limit();
+		
+		$table = $_GET['pdbTable'];
+		
+		$param = array(
+			$_GET['pdbCodGrado'],
+			$_GET['pdbCodAsig'],
+			$_GET['pdbPeriodo'],
+			$this->cod_dane,
+			$this->get_year()
+		);
+
+		switch($table){
+			case '1' : 
+				$query 	= "SELECT p2.id_estandar AS id, p2.estandar AS descripcion, p2.año, p2.periodo, 
+					p2.cod_grado FROM banco_estandares As p2";
+				$where 	= "p2.cod_grado= ? AND p2.id_asig= ? AND p2.periodo= ? AND p2.cod_dane= ? AND p2.año= ?";
+				break;
+			case '2' : 
+			
+				$query 	= "SELECT id_p AS id, indicador AS descripcion, año, periodo, cod_grado, 
+					tipo_desempeño AS desempeño FROM indicadores AS p2 ";
+				
+				$where 	= "cod_grado= ? AND id_asig= ? AND periodo= ? AND cod_dane= ? AND año= ? AND id_docente = ?";
+						
+				$param = array(
+					$_GET['pdbCodGrado'],
+					$_GET['pdbCodAsig'],
+					$_GET['pdbPeriodo'],
+					$this->cod_dane,
+					$this->get_year(),
+					$this->id_docente
+				);
+				break;
+			case '3' : 
+				$query 	= "SELECT id_p AS id, logro AS descripcion, año, periodo, cod_grado, 
+				tipo_desempeño AS desempeño FROM logros ";
+				$where 	= "cod_grado= ? AND id_asig= ? AND periodo= ? AND cod_dane= ? AND año= ? AND id_docente= ?";
+				
+				$param = array(
+					$_GET['pdbCodGrado'],
+					$_GET['pdbCodAsig'],
+					$_GET['pdbPeriodo'],
+					$this->cod_dane,
+					$this->get_year(),
+					$this->id_docente
+				);
+				break;
+		}
+		
+		echo $this->M_sql->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param);
+	}
+	
+	// Select 
+	public function get_estandar () 
+	{
+		$this->db_limit();
+		
+		$table 		 = $_GET['pdbTable'];
+		
+		switch($table){
+			case '1':
+				$query 	= "SELECT p2.id AS idp, p1.id_estandar,p2.estandar AS descripcion,p1.estado,p2.año FROM  parestandares AS p1, 
+					banco_estandares As p2";
+				$where 	= "p1.id_estandar=p2.id_estandar AND p1.id_parcelador= ? AND p2.cod_grado= ? AND p2.id_asig= ? 
+					AND p2.periodo= ? AND p2.cod_dane= ? AND p2.año= ? ";
+					
+				$param = array(
+						$_GET['pdbId'],
+						$_GET['pdbCodGrado'],
+						$_GET['pdbCodAsig'],
+						$_GET['pdbPeriodo'],
+						$this->cod_dane,
+						$this->get_year()
+					);
+				break;
+			case '2':
+				
+				$query 	= "SELECT p2.id_p AS idp, p1.id_indicador AS id_estandar,p2.indicador AS descripcion,p1.estado,p2.año, 
+					p2.tipo_desempeño AS desempeno FROM parindicadores AS p1 LEFT JOIN indicadores As p2 ON p1.id_indicador= 
+					P2.id_p ";
+				
+				$where 	= "p1.id_parcelador= ? AND p2.cod_grado= ? AND p2.id_asig= ? AND p2.periodo= ? AND p2.cod_dane= ? AND p2.año= ? ";
+						
+				$param = array(
+					$_GET['pdbId'],
+					$_GET['pdbCodGrado'],
+					$_GET['pdbCodAsig'],
+					$_GET['pdbPeriodo'],
+					$this->cod_dane,
+					$this->get_year()
+				);
+				
+				break;
+			case '3':
+				$query 	= "SELECT p2.id_p AS idp, p1.id_logro AS id_estandar, p2.logro AS descripcion, p1.estado, p2.año,
+					p2.tipo_desempeño AS desempeno FROM parlogros AS p1, logros As p2 ";
+					
+				$where 	= "p1.id_logro=p2.id_p AND p1.id_parcelador= ? AND p2.cod_grado= ? 
+						AND p2.id_asig= ? AND p2.periodo= ? AND p2.cod_dane= ? AND p2.año= ? ";
+			$param = array(
+				$_GET['pdbId'],
+				$_GET['pdbCodGrado'],
+				$_GET['pdbCodAsig'],
+				$_GET['pdbPeriodo'],
+				$this->cod_dane,
+				$this->get_year()
+			);
+				break;
+		}
+				
+		
+		
+		echo $this->M_sql->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param);
+	}
+	
+	// Insert 
+	public	function get_estandar_insert()
+	{
+		$request = NULL;
+		
+		$fields_list = json_decode($_POST['records']);
+		
+		$id_estandar = $fields_list->id_estandar;
+		$descripcion = $fields_list->descripcion;
+		$table 		 = $_POST['pdbTable'];
+		
+		$param = array(
+			$this->cod_dane,
+			$_POST['pdbCodGrado'],
+			$_POST['pdbCodAsig'],			
+			$_POST['pdbPeriodo'],
+			$this->get_year()
+		);
+		
+		switch($table){
+			case '1':
+				$query_ins = "INSERT INTO parestandares (id_parcelador,id_estandar) VALUES ('".$_POST['pdbId']."','".$id_estandar."')";
+		
+				$query_ins 	= $this->db->query($query_ins);
+							
+				if ($query_ins) {
+					
+					$fields_list = array(
+						'id_estandar'	=> $id_estandar,
+						'descripcion'	=> $descripcion,
+						'estado'		=> '1',
+						'año'			=> $this->get_year()
+					);
+				
+					$request = $this->M_sql->get_request_insert($fields_list);	
+				}else{
+					$request = $this->M_sql->get_error();
+				}
+				break;
+			case '2':
+				$query_ins = "INSERT INTO parindicadores (id_parcelador,id_indicador) VALUES ('".$_POST['pdbId']."','".$id_estandar."')";
+		
+				$query_ins 	= $this->db->query($query_ins);
+							
+				if ($query_ins) {
+					
+					$fields_list = array(
+						'idp'			=> $id_estandar,
+						'id_estandar'	=> $id_estandar,
+						'descripcion'	=> $descripcion,
+						'estado'		=> '1',
+						'año'			=> $this->get_year()
+					);
+				
+					$request = $this->M_sql->get_request_insert($fields_list);	
+				}else{
+					$request = $this->M_sql->get_error();
+				}
+				
+				break;
+			case '3':
+				$query_ins = "INSERT INTO parlogros (id_parcelador,id_logro) VALUES ('".$_POST['pdbId']."','".$id_estandar."')";
+		
+				$query_ins 	= $this->db->query($query_ins);
+							
+				if ($query_ins) {
+					
+					$fields_list = array(
+						'idp'			=> $id_estandar,
+						'id_estandar'	=> $id_estandar,
+						'descripcion'	=> $descripcion,
+						'estado'		=> '1',
+						'año'			=> $this->get_year()
+					);
+				
+					$request = $this->M_sql->get_request_insert($fields_list);	
+				}else{
+					$request = $this->M_sql->get_error();
+				}
+				break;
+		}
+		
+		
+		echo $request;
+	}
+		
+	// Update 
+	public	function get_estandar_update()
+	{
+		$fields_list = json_decode($_POST['records']);
+		
+		if (isset($fields_list->descripcion) AND (isset($fields_list->id_estandar))) {
+			
+			$descripcion = $fields_list->descripcion;
+			$id_estandar = $fields_list->id_estandar;
+			$table 		 = $_POST['pdbTable'];
+			
+			$this->M_sql->trans_start();
+			
+			switch($table){
+				case '1':
+				
+					$query = "UPDATE parestandares SET id_estandar = '".$id_estandar."' WHERE id_parcelador='"
+							.$_POST['pdbId']."' AND id_estandar='".$_POST['pdbIdEstandar']."'";
+							
+					$query = $this->db->query($query);				
+					break;
+				case '2':
+					$query = "UPDATE parindicadores SET id_indicador= '".$id_estandar."' WHERE id_parcelador='"
+							.$_POST['pdbId']."' AND id_indicador='".$_POST['pdbIdEstandar']."'";
+			
+					$query = $this->db->query($query);
+					break;
+				case '3':
+				
+					$query = "UPDATE parlogros SET id_logro = '".$id_estandar."' WHERE id_parcelador='"
+							.$_POST['pdbId']."' AND id_logro='".$_POST['pdbIdEstandar']."'";
+			
+					$query = $this->db->query($query);
+					
+					break;
+			}
+			
+			$this->M_sql->trans_complete();
+					
+			if ($this->M_sql->trans_status()) {
+				
+				echo $this->M_sql->get_request_insert($fields_list);
+				
+			}else{
+				
+				echo $this->M_sql->get_error();
+			}
+		}else{
+			echo $this->M_sql->get_error();
+		}
+	}
+	
+	// Delete
+	public	function get_estandar_delete()
+	{
+		
+		$table = $_POST['pdbTable'];
+		
+		switch($table){
+			case '1' : 
+				$query 	= "DELETE FROM parestandares WHERE id_parcelador ='".$_POST['pdbId']."' AND id_estandar= '"
+						.$_POST['pdbIdEstandar']."'";
+				break;
+			case '2' : 
+				$query 	= "DELETE FROM parindicadores WHERE id_parcelador ='".$_POST['pdbId']."' AND id_indicador= '"
+							.$_POST['pdbIdEstandar']."'";
+				break;
+			case '3' : 
+				$query 	= "DELETE FROM parlogros WHERE id_parcelador ='".$_POST['pdbId']."' AND id_logro= '".$_POST['pdbIdEstandar']."'";
+				break;
+		}
+		
+		$query	= $this->db->query($query);
+		
+		if ($query) {
+			
+			$request = $this->M_sql->get_request_ab();
+		}else{
+			
+			$request = $this->M_sql->get_error();			
+		}
+		
+		echo $request;
+	}
+	
+	/**
+	* Funciones para la tabla de sugerencias
+	* 
+	* @return
+	*/
+	public function get_sugerencias () {
+		$this->db_limit();
+		
+		$query 	= "SELECT id_s, id, sugerencia, tipo, periodo, año FROM sugerencias";
+		$where	= "id_docente= ? AND año= ? AND cod_dane= ? ORDER BY tipo, periodo, id_s";
+		$param 	= array(
+			$this->id_docente,
+			$this->get_year(),
+			$this->cod_dane
+		);
+		
+		echo $this->M_sql->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param);
+	}
+	
+	public function get_sugerencias_i_u_d () {
+		
+		$this->db_limit();
+		
+		$field_list = json_decode($_POST['records']);
+		
+		$table = $_POST['pdbState'];
+				
+		switch($table){
+		 	case "I" :
+		 		$sugerencia  = $field_list->sugerencia;
+		 		$periodo	 = $field_list->periodo;
+		 		
+		 		if (isset($field_list->tipo)) {
+					$tipo		 = $field_list->tipo;
+				}else{
+					$tipo		 = '2';
+				}	 		
+		 		
+		 		$param = array(
+		 			$this->get_year(),
+		 			$this->cod_dane,
+		 			$this->id_docente,
+		 			$periodo,
+		 			$tipo
+		 		);
+		 		
+		 		
+		 		$query	= "SELECT id FROM sugerencias WHERE año= ? AND cod_dane= ? AND id_docente= ? 
+		 		          AND periodo= ? AND tipo= ? ORDER BY id DESC LIMIT 1";
+		 		          
+		 		$query	= $this->db->query($query,$param);
+		 		
+		 		if ($query) {
+		 			
+		 			if ($query->num_rows()==1) {
+						$count 	= strval($query->row()->id)+1;
+					}else{
+						$count	= 1;
+					}
+										
+		 			$count = $this->M_funciones->correlativo($count);
+		 			
+					$query = "INSERT INTO sugerencias (id,cod_dane,id_docente,año,periodo,sugerencia,tipo) 
+						          VALUES('".$count."','".$this->cod_dane."','".$this->id_docente."','"
+						          .$this->get_year()."','".$periodo."','".$sugerencia."','".$tipo."')";
+						          
+						$query	= $this->db->query($query); 
+						
+			 			if ($query) {
+							
+							$field_list = array(
+								'id_s'			=> $this->db->insert_id(),
+					 			'id'			=> $count,
+					 			'sugerencia' 	=> $sugerencia,
+					 			'periodo'	 	=> $periodo,
+					 			'tipo' 		 	=> $tipo,
+					 			'año'			=> $this->get_year()		 		
+					 		);
+			 		
+			 				$request = $this->M_sql->get_request_insert($field_list);
+			 				
+						}else{
+							$request = $this->M_sql->get_error();
+						}
+					 					 		
+				}else{
+					$request = $this->M_sql->get_error();
+				}	 		
+		 		break;
+		 	case "U" :
+		 						
+				$where	= 'id_s = '.$field_list->id_s;
+				
+				$request = $this->M_sql->update_data('sugerencias', $field_list, $where);
+									
+		 		break;
+		 	case "D" :
+		 		$id = "id_s= '".$field_list->id_s."'";		 		
+				$request = $this->M_sql->delete_data('sugerencias',$id);
+		 		break;
+		 }
+		
+		echo $request;
+	}
+	
+	
+	/**
+	* Funciones para las tablas de notas
+	* 
+	* @return
+	*/
+	public function get_notas () {
+		
+		$this->db_limit();	
+		$c_type		= $_GET['pdbTable']		;
+		$c_grado	= $_GET['pdbCodGrado']	;
+		$cod_asig	= $_GET['pdbCodAsig']	;
+		$cod_jorn	= $_GET['pdbCodJorn']	;
+		$cons_sede	= $_GET['pdbConsSede']	;
+		$grupo		= $_GET['pdbGrupo']		;
+		$periodo	= $_GET['pdbPeriodo']	;
+			
+		$table = $this->M_sql->tabla_notas($c_grado);
+				
+		if ($this->control_date($periodo,$c_grado)){					
+			$paramm	= array(
+				$this->get_year(),
+				$c_grado,
+				$grupo,
+				$cod_jorn,
+				$cons_sede			
+			);
+			
+			$query_mat 	= "SELECT te.COD_EST, tm.AÑO, tm.GRUPO, tm.ID_JORN, tm.COD_GRADO FROM matriculas AS tm, 
+							inscripciones AS te ";
+			$where_mat  = "tm.cod_est=te.cod_est AND tm.estado=2 AND tm.AÑO= ? AND tm.COD_GRADO= ? AND tm.GRUPO= ? AND 
+						  tm.ID_JORN= ? AND  tm.CONS_SEDE= ?";
+			
+			// Cargamos la lista de los estudiantes
+			
+			$query_mat = $this->db->query($query_mat.' WHERE '.$where_mat,$paramm);
+			// Recorremos el array con la lista de los estudiantes
+			if ($query_mat->num_rows()>0){
+				
+				$fields_list 	= NULL;
+				$fields_insert 	= '';
+				$fields_update	= ''; 
+					
+			 	foreach ($query_mat->result_array() as $field)
+			 	{
+			 		$paramn	= array(
+			 			$field['COD_EST'],
+						$this->get_year(),
+						$this->cod_dane,
+						$c_grado,
+						$cod_asig,
+						$cod_jorn,
+						$cons_sede,
+						$grupo,
+						$periodo			
+					);
+					 		
+			 		$notas	= "SELECT cod_est FROM ".$table." AS tn ";
+			 		$wnotas ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND tn.id_asig= ? AND 
+			 					tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo= ?";
+					// Verifica si el estudiante tiene notas en el periodo indicado
+					$notas	= $this->db->query($notas.' WHERE '.$wnotas, $paramn);
+					// Si no tiene notas en el periodo asignado, guarda los datos del INSERT
+					if ($notas->num_rows() == 0){
+						$fields_insert = $fields_insert."('".$field['COD_EST']."','".$this->get_year()."','".
+						$this->cod_dane."','".$c_grado."','".$cod_asig."','".$cod_jorn."','".$cons_sede."','".
+						$grupo."','".$periodo."','".$this->id_docente."'),";
+					}else{
+						$cparamn	= array(
+				 			$field['COD_EST'],
+							$this->get_year(),
+							$this->cod_dane,
+							$c_grado,
+							$cod_asig,
+							$cod_jorn,
+							$cons_sede,
+							$grupo			
+						);
+						
+						$codEst 	= $field['COD_EST'];
+					 	$anno		= $this->get_year();
+						$dane		= $this->cod_dane;
+						
+						switch($periodo){
+							case '2':
+								$notas_p1 = "SELECT IF (final>nota_habilitacion,final,nota_habilitacion) AS nota FROM "
+								.$table." AS tn ";
+								
+						 		$wnotasp1 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='1'";
+																
+						 		$wnotasp2 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='2'";
+						 		      
+								// Verifica si el estudiante tiene notas en el periodo indicado
+								$notas_p2	= $this->db->query($notas_p1.' WHERE '.$wnotasp2, $cparamn);
+								$notas_p1	= $this->db->query($notas_p1.' WHERE '.$wnotasp1, $cparamn);
+								
+								if ($notas_p1 AND $notas_p2){
+										
+									if ($notas_p1->num_rows()>0) {
+										$nota1 	= $notas_p1->row()->nota;
+									}else{
+										$nota1  = 0;
+									}
+									
+									if ($notas_p2->num_rows()>0) {
+										$nota2	= $notas_p2->row()->nota;
+									}else{
+										$nota2	= 0;
+									}								
+									
+									//$fields_update = $fields_update."UPDATE ".$table." SET prom = ";
+																		
+									$whereUp = " WHERE cod_est='".$codEst."' AND año= '".$anno."' AND cod_dane= '".$dane."' 
+							 		AND cod_grado= '".$c_grado."' AND id_asig= '".$cod_asig."' AND 
+							 		cod_jorn= '".$cod_jorn."' AND cons_sede= '".$cons_sede."' AND 
+							 		grupo= '".$grupo."'  AND periodo='2'";
+									
+									$fields_update = "UPDATE ".$table." SET prom = (".$nota1."+".$nota2.")/2".$whereUp.";";	
+									$fields_update = $this->db->query($fields_update);
+									if (!$fields_update) {
+										$this->M_sql->get_error();
+									}
+								}else{
+									echo $this->M_sql->get_error();
+								}			
+								
+								break;
+							case '3':
+								$notas_p1 = "SELECT IF (final>nota_habilitacion,final,nota_habilitacion) AS nota FROM "
+								.$table." AS tn ";
+								
+						 		$wnotasp1 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='1'";
+																
+						 		$wnotasp2 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='2'";
+						 		      
+						 		$wnotasp3 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='3'";      
+						
+								$notas_p2	= $this->db->query($notas_p1.' WHERE '.$wnotasp2, $cparamn);
+								$notas_p3	= $this->db->query($notas_p1.' WHERE '.$wnotasp3, $cparamn);
+								$notas_p1	= $this->db->query($notas_p1.' WHERE '.$wnotasp1, $cparamn);
+								
+								if ($notas_p1 AND $notas_p2 AND $notas_p3){
+										
+									if ($notas_p1->num_rows()>0) {
+										$nota1 	= $notas_p1->row()->nota;
+									}else{
+										$nota1  = 0;
+									}
+									
+									if ($notas_p2->num_rows()>0) {
+										$nota2 	= $notas_p2->row()->nota;
+									}else{
+										$nota2  = 0;
+									}
+									
+									if ($notas_p3->num_rows()>0) {
+										$nota3 	= $notas_p3->row()->nota;
+									}else{
+										$nota3  = 0;
+									}
+																		
+									//$fields_update = $fields_update."UPDATE ".$table." SET prom = ";
+																		
+									$whereUp = " WHERE cod_est='".$codEst."' AND año= '".$anno."' AND cod_dane= '".$dane."' 
+							 		AND cod_grado= '".$c_grado."' AND id_asig= '".$cod_asig."' AND 
+							 		cod_jorn= '".$cod_jorn."' AND cons_sede= '".$cons_sede."' AND 
+							 		grupo= '".$grupo."'  AND periodo='3'";
+									
+									$fields_update = "UPDATE ".$table." SET prom = (".$nota1."+".$nota2."+".$nota3.")/3".
+													 $whereUp.";";	
+									$fields_update = $this->db->query($fields_update);
+									
+									if (!$fields_update) {
+										echo $this->M_sql->get_error();
+									}
+								}else{
+									echo $this->M_sql->get_error();
+								}
+								
+								break;
+							case '4':
+								$notas_p1 = "SELECT IF (final>nota_habilitacion,final,nota_habilitacion) AS nota FROM "
+								.$table." AS tn ";
+								
+						 		$wnotasp1 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='1'";
+																
+						 		$wnotasp2 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='2'";
+						 		      
+						 		$wnotasp3 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='3'";
+						 		      
+						 		$wnotasp4 ="tn.cod_est= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND  
+						 		      tn.id_asig= ? AND tn.cod_jorn= ? AND tn.cons_sede= ? AND grupo= ? AND periodo='4'";       
+						
+								$notas_p2	= $this->db->query($notas_p1.' WHERE '.$wnotasp2, $cparamn);
+								$notas_p3	= $this->db->query($notas_p1.' WHERE '.$wnotasp3, $cparamn);
+								$notas_p4	= $this->db->query($notas_p1.' WHERE '.$wnotasp4, $cparamn);
+								$notas_p1	= $this->db->query($notas_p1.' WHERE '.$wnotasp1, $cparamn);
+								
+								if ($notas_p1 AND $notas_p2 AND $notas_p3 AND $notas_p4 ){	
+									
+									if ($notas_p1->num_rows()>0) {
+										$nota1 	= $notas_p1->row()->nota;
+									}else{
+										$nota1  = 0;
+									}
+									
+									if ($notas_p2->num_rows()>0) {
+										$nota2 	= $notas_p2->row()->nota;
+									}else{
+										$nota2  = 0;
+									}
+									
+									if ($notas_p3->num_rows()>0) {
+										$nota3 	= $notas_p3->row()->nota;
+									}else{
+										$nota3  = 0;
+									}
+									
+									if ($notas_p4->num_rows()>0) {
+										$nota4 	= $notas_p4->row()->nota;
+									}else{
+										$nota4  = 0;
+									}
+																		
+									//$fields_update = $fields_update."UPDATE ".$table." SET prom = ";
+																		
+									$whereUp = " WHERE cod_est='".$codEst."' AND año= '".$anno."' AND cod_dane= '".$dane."' 
+							 		AND cod_grado= '".$c_grado."' AND id_asig= '".$cod_asig."' AND 
+							 		cod_jorn= '".$cod_jorn."' AND cons_sede= '".$cons_sede."' AND 
+							 		grupo= '".$grupo."'  AND periodo='4'";
+									
+									$fields_update = "UPDATE ".$table." SET prom = (".$nota1."+".$nota2."+".
+													$nota3."+".$nota4.")/4".$whereUp.";";
+													
+									$fields_update = $this->db->query($fields_update);
+									
+									if (!$fields_update) {
+										$this->M_sql->get_error();
+									}									
+								}else{
+									echo $this->M_sql->get_error();
+								}	
+								break; 
+							default:
+									
+								$whereUp = " WHERE cod_est='".$codEst."' AND año= '".$anno."' AND cod_dane= '".$dane."' 
+						 		AND cod_grado= '".$c_grado."' AND id_asig= '".$cod_asig."' AND 
+						 		cod_jorn= '".$cod_jorn."' AND cons_sede= '".$cons_sede."' AND 
+						 		grupo= '".$grupo."'  AND periodo='1'";
+								
+								$fields_update = "UPDATE ".$table." SET prom = 
+												IF (final>nota_habilitacion,final,nota_habilitacion) ".$whereUp.";";
+								$fields_update = $this->db->query($fields_update);
+								if (!$fields_update) {
+									$this->M_sql->get_error();
+								}
+								break;
+						}
+					}
+					
+					
+				}
+				// Si hay datos para insertar, realiza esta operación
+				if (!empty($fields_insert)){
+					$insert_string	= substr($fields_insert, 0, strlen($fields_insert)-1);
+					$insert_query	= "INSERT INTO ".$table."(cod_est, año, cod_dane, cod_grado, id_asig, cod_jorn, 
+															  cons_sede, grupo, periodo, id_docente) VALUES ".$insert_string;
+					$this->M_sql->trans_start();
+					$this->db->query($insert_query);
+					$this->M_sql->trans_complete();
+					if (!$this->M_sql->trans_status()){
+						echo $this->M_sql->get_error();
+					}
+				}
+					
+			}
+			
+			$querya ="tn.cod_dane, tn.id_docente, tn.cod_grado, tn.id_asig, tn.cod_est, tn.ID_Logro, tn.ID_LOGRO1, tn.ID_LOGRO2, 
+				tn.id_sugerencia, tn.cod_jorn, 
+				tn.cons_sede, tn.grupo, tn.periodo, tn.año, tn.n1P, tn.n2P, tn.n3P, tn.n4P, tn.n5P, tn.n6P, 
+				tn.NOTAP1, tn.P1, tn.n1P2, tn.n2P2, tn.n3P2, tn.n4P2, tn.n5P2, 
+				tn.n6P2, tn.n7P2, tn.n8P2, tn.NOTAP2, tn.P2, tn.n1P3, tn.n2P3, tn.n3P3, tn.n4P3, tn.n5P3, 
+				tn.n6P3, tn.n7P3, tn.n8P3, tn.NOTAP3, tn.P3, tn.n1P4, tn.n2P4, 
+				tn.n3P4, tn.n4P4, tn.n5P4, tn.n6P4, tn.NOTAP4, tn.P4, tn.prom, tn.final, RTRIM(tn.conceptual) AS conceptual, 
+				tn.faltas, tn.ind1, tn.ind2, tn.ind3, tn.ind4, tn.ind5, 
+				tn.ind6, tn.ind7, tn.ind8,tn.ind9, tn.ind10, tn.ind11, tn.ind12, tn.tipo_sug, tn.id_obser, 
+				tn.tipo_ind1, tn.tipo_ind2, tn.tipo_ind3, tn.tipo_ind4, 
+				tn.tipo_ind5, tn.tipo_ind6, tn.tipo_ind7, tn.tipo_ind8, tn.tipo_ind9, tn.tipo_ind10, 
+				tn.tipo_ind11, tn.tipo_ind12";
+			
+			$query	= "SELECT CONCAT(RTRIM(ti.apellido1),' ',RTRIM(ti.apellido2),' ',RTRIM(ti.nombre1),' ',RTRIM(ti.nombre2)) 
+					  AS nombres,".$querya." FROM ".$table." AS tn, inscripciones AS ti";
+			$where	= "tn.cod_est=ti.cod_est AND ti.cod_dane= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? 
+					  AND tn.id_asig= ? AND tn.cod_jorn= ? AND  
+					  tn.cons_sede= ? AND grupo= ? AND periodo= ? ORDER BY nombres";
+						
+			$param	= array(
+				$this->cod_dane,
+				$this->get_year(),
+				$this->cod_dane,
+				$c_grado,
+				$cod_asig,
+				$cod_jorn,
+				$cons_sede,
+				$grupo,
+				$periodo			
+			);
+				
+			echo $this->M_sql->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param);
+		}else{						
+			echo $this->control_date_msg();
+		}		
+	}
+	
+	public function get_notas_b () {
+		
+		$this->db_limit();
+		
+				
+		$c_type		= $_POST['pdbTable']		;
+		$c_grado	= $_POST['pdbCodGrado']	;
+		$cod_asig	= $_POST['pdbCodAsig']	;
+		$cod_jorn	= $_POST['pdbCodJorn']	;
+		$cons_sede	= $_POST['pdbConsSede']	;
+		$grupo		= $_POST['pdbGrupo']		;
+		$periodo	= $_POST['pdbPeriodo']	;
+		
+		$fieldslist = json_decode($_POST['fieldlist']);
+		
+		$count = count($fieldslist);
+		$i 		= 0;
+		
+		$table = $this->M_sql->tabla_notas($c_grado);
+				
+		$this->M_sql->trans_start();
+		
+		for($i = 0; $i < $count; $i++){
+			$cod_est		=  $fieldslist[$i]->cod_est ;
+			$cons_sede		=  $fieldslist[$i]->cons_sede;
+			$ID_Logro		=  $fieldslist[$i]->ID_Logro ;
+			$ID_LOGRO1		=  $fieldslist[$i]->ID_LOGRO1 ;
+			$ID_LOGRO2		=  $fieldslist[$i]->ID_LOGRO2 ;
+			$id_sugerencia	=  $fieldslist[$i]->id_sugerencia ;
+			$n1P			=  $fieldslist[$i]->n1P ;
+			$n2P			=  $fieldslist[$i]->n2P ;
+			$n3P			=  $fieldslist[$i]->n3P ;
+			$n4P			=  $fieldslist[$i]->n4P ;
+			$n5P			=  $fieldslist[$i]->n5P ;
+			$n6P			=  $fieldslist[$i]->n6P ;
+			$NOTAP1			=  $fieldslist[$i]->NOTAP1 ;
+			$P1				=  $fieldslist[$i]->P1 ;
+			$n1P2			=  $fieldslist[$i]->n1P2 ;
+			$n2P2			=  $fieldslist[$i]->n2P2 ;
+			$n3P2			=  $fieldslist[$i]->n3P2 ;
+			$n4P2			=  $fieldslist[$i]->n4P2 ;
+			$n5P2			=  $fieldslist[$i]->n5P2 ;
+			$n6P2			=  $fieldslist[$i]->n6P2 ;
+			$n7P2			=  $fieldslist[$i]->n7P2 ;
+			$n8P2			=  $fieldslist[$i]->n8P2 ;
+			$NOTAP2			=  $fieldslist[$i]->NOTAP2 ;
+			$P2				=  $fieldslist[$i]->P2 ;
+			$n1P3			=  $fieldslist[$i]->n1P3 ;
+			$n2P3			=  $fieldslist[$i]->n2P3 ;
+			$n3P3			=  $fieldslist[$i]->n3P3 ;
+			$n4P3			=  $fieldslist[$i]->n4P3 ;
+			$n5P3			=  $fieldslist[$i]->n5P3 ;
+			$n6P3			=  $fieldslist[$i]->n6P3 ;
+			$n7P3			=  $fieldslist[$i]->n7P3 ;
+			$n8P3			=  $fieldslist[$i]->n8P3 ;
+			$NOTAP3			=  $fieldslist[$i]->NOTAP3 ;
+			$P3				=  $fieldslist[$i]->P3 ;
+			$n1P4			=  $fieldslist[$i]->n1P4 ;
+			$n2P4			=  $fieldslist[$i]->n2P4 ;
+			$n3P4			=  $fieldslist[$i]->n3P4 ;
+			$n4P4			=  $fieldslist[$i]->n4P4 ;
+			$n5P4			=  $fieldslist[$i]->n5P4 ;
+			$n6P4			=  $fieldslist[$i]->n6P4 ;
+			$NOTAP4			=  $fieldslist[$i]->NOTAP4;
+			$P4				=  $fieldslist[$i]->P4 ;
+			$final			=  $fieldslist[$i]->final ;
+			$conceptual		=  $fieldslist[$i]->conceptual;
+			$prom			=  $fieldslist[$i]->prom ;
+			$faltas			=  $fieldslist[$i]->faltas ;
+			$ind1			=  $fieldslist[$i]->ind1 ;
+			$ind2			=  $fieldslist[$i]->ind2 ;
+			$ind3			=  $fieldslist[$i]->ind3 ;
+			$ind4			=  $fieldslist[$i]->ind4 ;
+			$ind5			=  $fieldslist[$i]->ind5 ;
+			$ind6			=  $fieldslist[$i]->ind6 ;
+			$ind7			=  $fieldslist[$i]->ind7 ;
+			$ind8			=  $fieldslist[$i]->ind8 ;
+			$ind9			=  $fieldslist[$i]->ind9 ;
+			$ind10			=  $fieldslist[$i]->ind10 ;
+			$ind11			=  $fieldslist[$i]->ind11 ;
+			$ind12			=  $fieldslist[$i]->ind12 ;
+			$tipo_sug		=  $fieldslist[$i]->tipo_sug;
+			$id_obser		=  $fieldslist[$i]->id_obser ;
+			$tipo_ind1		=  $fieldslist[$i]->tipo_ind1 ;
+			$tipo_ind2		=  $fieldslist[$i]->tipo_ind2 ;
+			$tipo_ind3		=  $fieldslist[$i]->tipo_ind3 ;
+			$tipo_ind4		=  $fieldslist[$i]->tipo_ind4 ;
+			$tipo_ind5		=  $fieldslist[$i]->tipo_ind5 ;
+			$tipo_ind6		=  $fieldslist[$i]->tipo_ind6 ;
+			$tipo_ind7		=  $fieldslist[$i]->tipo_ind7 ;
+			$tipo_ind8		=  $fieldslist[$i]->tipo_ind8 ;
+			$tipo_ind9		=  $fieldslist[$i]->tipo_ind9 ;
+			$tipo_ind10		=  $fieldslist[$i]->tipo_ind10 ;
+			$tipo_ind11		=  $fieldslist[$i]->tipo_ind11 ;
+			$tipo_ind12		=  $fieldslist[$i]->tipo_ind12 ;			
+
+			$querya = "UPDATE ".$table." SET ".
+			"ID_Logro='".$ID_Logro."', ID_LOGRO1='".$ID_LOGRO1."', ID_LOGRO2= '".$ID_LOGRO2."', id_sugerencia= '".$id_sugerencia.
+			"', cod_jorn='".$cod_jorn."', n1P= '".$n1P."', n2P= '".$n2P."', n3P= '".$n3P.
+			"', n4P= '".$n4P."', n5P= '".$n5P."', n6P= '".$n6P."', NOTAP1= '".$NOTAP1."', P1= '".$P1."', n1P2= '".$n1P2."', n2P2= '".$n2P2.
+			"', n3P2= '".$n3P2."', n4P2= '".$n4P2."', n5P2= '".$n5P2."', n6P2= '".$n6P2."', n7P2= '".$n7P2."', n8P2= '".$n8P2."', NOTAP2= '".$NOTAP2.
+			"', P2= '".$P2."', n1P3= '".$n1P3."', n2P3= '".$n2P3."', n3P3= '".$n3P3."', n4P3= '".$n4P3."', n5P3= '".$n5P3."', n6P3= '".$n6P3.
+			"', n7P3= '".$n7P3."', n8P3= '".$n8P3."', NOTAP3= '".$NOTAP3."', P3= '".$P3."', n1P4= '".$n1P4."', n2P4= '".$n2P4."', 
+			n3P4= '".$n3P4."', n4P4= '".$n4P4."', n5P4= '".$n5P4."', n6P4= '".$n6P4."', NOTAP4= '".$NOTAP4."', P4= '".$P4."', final= '".$final.
+			"', conceptual= '".$conceptual."', faltas= '".$faltas."', ind1= '".$ind1."', ind2= '".$ind2."', ind3= '".$ind3.
+			"', ind4= '".$ind4."', ind5= '".$ind5."', ind6= '".$ind6."', ind7= '".$ind7."', ind8= '".
+			$ind8."', ind9= '".$ind9."', ind10= '".$ind10."', ind11= '".$ind11."', ind12= '".$ind12."', tipo_sug= '".$tipo_sug."', id_obser= '".$id_obser.
+			"', tipo_ind1= '".$tipo_ind1."', tipo_ind2= '".$tipo_ind2."', tipo_ind3= '".$tipo_ind3."', tipo_ind4= '".$tipo_ind4."', tipo_ind5= '".$tipo_ind5.
+			"', tipo_ind6= '".$tipo_ind6."', tipo_ind7= '".$tipo_ind7."', tipo_ind8='".$tipo_ind8."', 
+			tipo_ind9= '".$tipo_ind9."', tipo_ind10= '".$tipo_ind10."', tipo_ind11='".$tipo_ind11."', tipo_ind12='".$tipo_ind12."'";
+			
+			$where	= "cod_est= '".$cod_est."' AND cod_dane= '".$this->cod_dane."' AND año= '".$this->get_year().
+					"' AND cod_grado= '".$c_grado."' AND id_asig= '".$cod_asig."' AND cod_jorn= '".$cod_jorn.
+					"' AND cons_sede= '".$cons_sede."' AND grupo= '".$grupo."' AND periodo= '".$periodo."'";	
+					
+			$query = $querya." WHERE ".$where;
+			
+			$this->db->query($query);
+		};
+		
+		$this->M_sql->trans_complete();
+		
+		if($this->M_sql->trans_status()){
+			$request	= $this->M_sql->get_request_ab();
+		}else{
+			$request	= $this->M_sql->get_error();
+		}
+					
+		echo $request;
+	}
+	
+	/**
+	* funciones para la tabla logros
+	* 
+	* @return
+	*/
+	public function	get_logros () {
+		
+		$this->db_limit();
+		
+		$cod_grado	= $_GET['pdbCodGrado'];
+		$id_asig	= $_GET['pdbIdAsig'];
+		
+		$query = "SELECT `id_p`, `cod_dane`, `id`, `logro`, `id_docente`, `cod_grado`, `id_asig`, `año`, `periodo`, 
+			`tipo_desempeño`, `estado`, `asignacion`, `tipo` FROM logros ";
+		
+		$where = "cod_dane= ? AND id_docente= ? AND cod_grado= ? AND id_asig= ? AND año= ? 
+			ORDER BY periodo, id";
+		
+		$param = array(
+			$this->cod_dane,
+			$this->id_docente,
+			$cod_grado,
+			$id_asig,
+			$this->get_year()
+		);
+		
+		$request = $this->M_sql->get_query_param($this->limit_min, $this->limit_max,$query, $where, $param);
+		
+		echo $request;		
+	}
+	
+	public function	get_logros_b () {
+		
+		$lista	= json_decode($_POST['records']);
+		$table 	= $_POST['pdbTable'];
+		switch($table){
+			case 1	: // Update			
+				$where		= "id_p = ".$lista->id_p;				
+				$request	= $this->M_sql->update_data('logros',$lista,$where);
+				break;
+			case 2	: // Insert
+				
+				$logro			= $lista->logro;
+				$id_asig		= $_POST['pdbIdAsig'];
+				$cod_grado 		= $_POST['pdbCodGrado'];
+				$periodo		= $lista->periodo;
+				$tipo_desempeño	= $lista->tipo_desempeño;
+				$estado			= $lista->estado;
+				$asignacion		= $lista->asignacion;
+				$cod_dane		= $this->cod_dane;
+				$id_docente		= $this->id_docente;
+				$año			= $this->get_year();
+				
+				$query = "SELECT id FROM logros ";
+		
+				$where = "cod_dane= ? AND id_docente= ? AND cod_grado= ? AND id_asig= ? AND año= ? AND periodo= ? 
+				ORDER BY id DESC LIMIT 1";
+				
+				$param = array(
+					$this->cod_dane,
+					$this->id_docente,
+					$cod_grado,
+					$id_asig,
+					$this->get_year(),
+					$periodo
+				);
+				
+				$query = $this->db->query($query.' WHERE '.$where, $param);
+				
+				if ($query) {
+					
+					if ($query->num_rows() > 0){						
+						$count 	= strval($query->row()->id)+1;						
+					}else{
+						$count 	= '1';						
+					}
+					
+					$id = $this->M_funciones->correlativo($count);
+					
+					$query 	= "INSERT INTO logros (id, logro, id_asig, cod_grado, periodo, tipo_desempeño, estado, asignacion,
+							cod_dane,id_docente,año) VALUES('".$id."','". $logro."','". $id_asig."','". $cod_grado.
+							"','". $periodo."','". $tipo_desempeño."','".$estado."','". $asignacion."','".$cod_dane
+							."','". $id_docente."','".$año."')";
+					
+					$query	= $this->db->query($query);
+										
+					if ($query) {
+						
+						$param = array(
+							'id_p'				=> $this->db->insert_id(),
+							'id'				=> $id,
+							'logro'				=> $lista->logro,
+							'id_asig'			=> $_POST['pdbIdAsig'],
+							'cod_grado' 		=> $_POST['pdbCodGrado'],
+							'periodo'			=> $lista->periodo,
+							'tipo_desempeño'	=> $lista->tipo_desempeño,
+							'estado'			=> $lista->estado,
+							'asignacion'		=> $lista->asignacion,
+							'cod_dane'			=> $this->cod_dane,
+							'id_docente'		=> $this->id_docente,
+							'año'				=> $this->get_year()
+						);
+						
+						$request	= $this->M_sql->get_request_insert($param);
+						
+					}else{
+						$request = $this->M_sql->get_error();
+					}
+				
+				}else{
+					$request = $this->M_sql->get_error();
+				}
+				break;
+		}
+				
+		echo $request;
+	}
+	
+	public	function get_logros_d () {
+		$lista	= json_decode($_POST['records']);
+		
+		$id 	= "id_p = '".$lista->id_p."'";
+		
+		$request	= $this->M_sql->delete_data('logros',$id);
+	
+		echo $request;
+	}
+	
+		/**
+	* funciones para la tabla indicadores
+	* 
+	* @return
+	*/
+	public function	get_indicadores () {
+		
+		$this->db_limit();
+		
+		$cod_grado	= $_GET['pdbCodGrado'];
+		$id_asig	= $_GET['pdbIdAsig'];
+		
+		$query = "SELECT `id_p`, `cod_dane`, `id`, `indicador`, `id_logro`, `id_docente`, `cod_grado`, `id_asig`, `año`, 
+		`periodo`, `tipo_desempeño`, `estado`, `asignacion`, `tipo` FROM indicadores ";
+		
+		$where = "cod_dane= ? AND id_docente= ? AND cod_grado= ? AND id_asig= ? AND año= ? 
+			ORDER BY periodo, tipo, asignacion, id";
+		
+		$param = array(
+			$this->cod_dane,
+			$this->id_docente,
+			$cod_grado,
+			$id_asig,
+			$this->get_year()
+		);
+		
+		$request = $this->M_sql->get_query_param($this->limit_min, $this->limit_max,$query, $where, $param);
+		
+		echo $request;		
+	}
+	
+	public function	get_indicadores_b () {
+		$lista	= json_decode($_POST['records']);
+		$table 	= $_POST['pdbTable'];
+		switch($table){
+			case 1	: // Update
+			
+				$where		= "id_p = ".$lista->id_p;
+				$request	= $this->M_sql->update_data('indicadores', $lista, $where);
+											
+				break;
+			case 2	: // Insert
+				
+				$logro			= $lista->indicador;
+				$id_asig		= $_POST['pdbIdAsig'];
+				$cod_grado 		= $_POST['pdbCodGrado'];
+				$periodo		= $lista->periodo;
+				$tipo_desempeño	= $lista->tipo_desempeño;
+				$estado			= $lista->estado;
+				$asignacion		= $lista->asignacion;
+				$cod_dane		= $this->cod_dane;
+				$id_docente		= $this->id_docente;
+				$año			= $this->get_year();
+				$tipo 			= $lista->tipo;
+				
+				$query = "SELECT id FROM indicadores ";
+		
+				$where = "cod_dane= ? AND id_docente= ? AND cod_grado= ? AND id_asig= ? AND año= ? AND periodo= ? 
+				ORDER BY id DESC LIMIT 1";
+				
+				$param = array(
+					$this->cod_dane,
+					$this->id_docente,
+					$cod_grado,
+					$id_asig,
+					$this->get_year(),
+					$periodo
+				);
+				
+				$query = $this->db->query($query.' WHERE '.$where, $param);
+				
+				if ($query) {
+					
+					if ($query->num_rows() > 0){						
+						$count 	= strval($query->row()->id)+1;						
+					}else{
+						$count 	= '1';						
+					}
+					
+					$id = $this->M_funciones->correlativo($count);
+					
+					$query 	= "INSERT INTO indicadores (id, indicador, id_asig, cod_grado, periodo, tipo_desempeño, estado, asignacion,
+							cod_dane,id_docente,año, tipo) VALUES('".$id."','". $logro."','". $id_asig."','". $cod_grado.
+							"','". $periodo."','". $tipo_desempeño."','".$estado."','". $asignacion."','".$cod_dane
+							."','". $id_docente."','".$año."','".$tipo."')";
+					
+					$query	= $this->db->query($query);
+										
+					if ($query) {
+						
+						$param = array(
+							'id_p'				=> $this->db->insert_id(),
+							'id'				=> $id,
+							'logro'				=> $lista->indicador,
+							'id_asig'			=> $_POST['pdbIdAsig'],
+							'cod_grado' 		=> $_POST['pdbCodGrado'],
+							'periodo'			=> $lista->periodo,
+							'tipo_desempeño'	=> $lista->tipo_desempeño,
+							'estado'			=> $lista->estado,
+							'asignacion'		=> $lista->asignacion,
+							'cod_dane'			=> $this->cod_dane,
+							'id_docente'		=> $this->id_docente,
+							'año'				=> $this->get_year(),
+							'tipo'				=> $tipo
+						);
+						
+						$request	= $this->M_sql->get_request_insert($param);
+						
+					}else{
+						$request = $this->M_sql->get_error();
+					}
+				
+				}else{
+					$request = $this->M_sql->get_error();
+				}
+				break;
+		}
+				
+		echo $request;
+	}
+	
+	public function	get_indicadores_d () {
+		
+		$lista	= json_decode($_POST['records']);
+		
+		$id 	="id_p = '".$lista->id_p."'";
+		
+		$request 	= $this->M_sql->delete_data('indicadores',$id);
+		
+		echo $request;
+	}
+	
+	public function get_log_ind () {
+		$this->db_limit();
+		
+		$cod_grado	= $_POST['pdbGrado'];
+		$id_asig	= $_POST['pdbAsig'];
+		$periodo	= $_POST['pdbPerio'];
+		
+		$query1 = "SELECT `id_p`, `cod_dane`, `id`, `indicador`, `id_logro`, `id_docente`, `cod_grado`, `id_asig`, `año`, 
+		`periodo`, `tipo_desempeño`, `estado`, `asignacion`, `tipo` FROM indicadores ";
+		
+		$where1 = "cod_dane= ? AND id_docente= ? AND cod_grado= ? AND id_asig= ? AND año= ? AND periodo= ?
+			ORDER BY periodo, id";
+		
+		$query2 = "SELECT `id_p`, `cod_dane`, `id`, `logro`, `id_docente`, `cod_grado`, `id_asig`, `año`, `periodo`, 
+			`tipo_desempeño`, `estado`, `asignacion`, `tipo` FROM logros ";
+		
+		$where2 = "cod_dane= ? AND id_docente= ? AND cod_grado= ? AND id_asig= ? AND año= ? AND periodo= ?
+			ORDER BY periodo, id";
+					
+		$param = array(
+			$this->cod_dane,
+			$this->id_docente,
+			$cod_grado,
+			$id_asig,
+			$this->get_year(),
+			$periodo
+		);
+		
+		if ($this->control_date($periodo,$cod_grado)) {
+			$query  = $this->db->query($query1.' WHERE '.$where1, $param);
+			
+			$query1 = $this->db->query($query2.' WHERE '.$where2, $param);
+		
+			if ($query AND $query1){
+				
+				$fields_indicadores 	= NULL;
+				
+				$fields_logros			= NULL;
+				
+			 	foreach ($query->result_array() as $field)
+			 	{
+					$fields_indicadores [] = $field;
+				}
+				
+				foreach ($query1->result_array() as $field)
+			 	{
+					$fields_logros [] = $field;
+				}
+				
+				
+				$request = array(
+					'success'       => TRUE,
+					'records'	=> $fields_indicadores,
+					'fields_lis2'	=> $fields_logros
+				);
+				
+				/**
+				* Respuesta en formato Json
+				*/
+				$request = json_encode($request);
+				
+			}else{
+				$request = $this->M_sql->get_error();
+			}
+		}else{
+			$request = $this->control_date_msg();
+		}
+		echo $request;
+	}
+	
+	/**
+	* Funcion para la tabla Dimensiones
+	* 
+	* @return
+	*/
+	public function get_dimensiones () {
+		
+		$this->db_limit();
+		
+		$cod_grado = $_POST['idGrado'];
+			
+		$where	= " WHERE cod_dane= ? AND año= ?";
+		
+		$param = array(
+			$this->cod_dane, 
+			$this->get_year()
+		);
+		
+		$query2 	= "SELECT procesos FROM config001 WHERE AÑO= ? ";
+		$query2 	= $this->db->query($query2, $this->get_year());
+		
+		if ($cod_grado == '99') {
+			
+			$query 	= "SELECT * FROM dimaceleracion ";
+			$query1 = "SELECT * FROM valnotas ";
+			
+			$query 	= $this->db->query($query.$where, $param);		
+			$query1	= $this->db->query($query1.$where, $param);	
+		}else{
+			if ($cod_grado >= '21' AND $cod_grado <= '26') {
+				$query 	= "SELECT * FROM cdimensiones ";
+				$query1 = "SELECT * FROM cdesempeños ";
+			
+				$query 	= $this->db->query($query.$where, $param);	
+				$query1	= $this->db->query($query1.$where, $param);	
+			}else{
+				$query 	= "SELECT * FROM dimensiones ";
+				$query1 = "SELECT * FROM valnotas ";
+			
+				$query 	= $this->db->query($query.$where, $param);	
+				$query1	= $this->db->query($query1.$where, $param);	
+			}
+		}
+		
+		if ($query AND $query1 AND $query2) {
+			
+			$fields_list 	= NULL;
+			
+			$fields_list1	= NULL;
+			
+			$fields_list2	= NULL;
+			
+		 	foreach ($query->result_array() as $field)
+		 	{
+				$fields_list [] = $field;
+			}
+			
+			foreach ($query1->result_array() as $field)
+		 	{
+				$fields_list1 [] = $field;
+			}
+			
+			foreach ($query2->result_array() as $field)
+		 	{
+				$fields_list2 [] = $field;
+			}
+			
+			$request = array(
+				'success'       =>TRUE,
+				'records'	=> $fields_list,
+				'fields_lis2'	=> $fields_list1,
+				'field_list3'	=> $fields_list2
+			);
+			
+			/**
+			* Respuesta en formato Json
+			*/
+			$request = json_encode($request);
+					
+		}else{
+			
+			$request = $this->M_sql->get_error();
+		}
+		
+		echo $request;		
+	}
+	
+	/**
+	* Funcion para la consulta a la tabla valnotas
+	* 
+	* @return
+	*/
+	public function get_valnotas ()
+	{
+		
+		$this->db_limit();
+		
+		$query 	= "SELECT orden, des_crip AS desempeno FROM valnotas ";
+		$where 	= "año= ? AND cod_dane= ?";
+		
+		$param	= array(
+			$this->get_year(),
+			$this->cod_dane
+		);
+		
+		echo $this->M_sql->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param);
+	}
+	
+	public function get_valnotas_select ($cValue = '')
+	{
+		
+		$this->db_limit();
+		
+		$query 	= "SELECT orden AS desempeño FROM valnotas  WHERE año= ? AND cod_dane= ? AND des_crip= ?";
+		
+		$param	= array(
+			$this->get_year(),
+			$this->cod_dane,
+			$cValue
+		);
+		
+		$query = $this->db->query($query,$param);	
+			
+		if ($query) {
+			$request = $query->row()->desempeño;
+		}else{
+			$request = '';
+		}
+		
+		return $request;
+	}
+	/**
+	* Funcion que devuelve el rango de desempeños
+	* @param STRING $cValue
+	* 
+	* @return BOLEAN
+	*/
+	public function get_valnotas_rango ($cValue = 'BAJO',$cTable = 'valnotas')
+	{
+		
+		$this->db_limit();
+		
+		$query 	= "SELECT * FROM ".$cTable."  WHERE año= ? AND cod_dane= ? AND des_crip= ?";
+		
+		$param	= array(
+			$this->get_year(),
+			$this->cod_dane,
+			$cValue
+		);
+		
+		$query = $this->db->query($query,$param);	
+			
+		if ($query) {
+			$this->desde = $query->row()->desde;
+			$this->hasta = $query->row()->hasta;
+			$request = TRUE;
+		}else{
+			$request = TRUE;
+		}
+		
+		return $request;
+	}
+	
+	public	function get_password () {
+		$newpass  = $_POST['newpass'];
+		$xuser	  = $_POST['user'];
+		$yuser 	  = $this->session->userdata('user_pass');
+		
+		if ($xuser == $yuser) {
+			$query = "UPDATE docentes SET pasw= '".$newpass."' WHERE id_docente= '".$this->id_docente."'";
+						
+			$query = $this->db->query($query);
+			
+			if ($query){
+				$request = $this->M_sql->get_request_ab();
+			}else{
+				$request = $this->M_sql->get_error();
+			}
+		}else{
+						
+			$request = 'FALSE';
+		}
+			
+		
+		echo $request;
+	}
+	
+	public function get_recuperaciones_b(){ 
+		$this->db_limit();
+		
+		$c_grado	= $_POST['pdbCodGrado']	;
+		$cod_asig	= $_POST['pdbCodAsig']	;
+		
+		$fieldslist = json_decode($_POST['fieldlist']);
+		
+		$count = count($fieldslist);
+		$i 		= 0;
+		
+		$table	= $this->M_sql->tabla_notas($c_grado);
+		
+		$this->M_sql->trans_start();
+		
+		for($i = 0; $i < $count; $i++){
+			$cod_est			=  $fieldslist[$i]->cod_est ;
+			$cons_sede			=  $fieldslist[$i]->cons_sede;
+			$periodo			=  $fieldslist[$i]->periodo;
+			$grupo				=  $fieldslist[$i]->grupo;
+			$cod_jorn			=  $fieldslist[$i]->cod_jorn;	
+			$nota_habilitacion	=  $fieldslist[$i]->nota_habilitacion;		
+			$fecha				=  $fieldslist[$i]->fecha;
+			
+			$querya = "UPDATE ".$table." SET nota_habilitacion ='".$nota_habilitacion."', fecha='".$fecha."'";
+			
+			$where	= "cod_est= '".$cod_est."' AND cod_dane= '".$this->cod_dane."' AND año= '".$this->get_year().
+					"' AND cod_grado= '".$c_grado."' AND id_asig= '".$cod_asig."' AND cod_jorn= '".$cod_jorn.
+					"' AND cons_sede= '".$cons_sede."' AND grupo= '".$grupo."' AND periodo= '".$periodo.
+					"' AND nota_perdida<='".$nota_habilitacion."'";	
+					
+			$query = $querya." WHERE ".$where;
+			
+			$this->db->query($query);
+		};
+		
+		$this->M_sql->trans_complete();
+		
+		if($this->M_sql->trans_status()){
+			$request	= $this->M_sql->get_request_ab();
+		}else{
+			$request	= $this->M_sql->get_error();
+		}
+					
+		echo $request;
+	}
+	
+	public function get_recuperaciones(){
+		$this->db_limit();
+		
+		$c_grado	= $_GET['pdbCodGrado']	;
+		$cod_asig	= $_GET['pdbCodAsig']	;
+		$periodo	= $_GET['pdbPeriodo']	;
+		
+		$table = $this->M_sql->tabla_notas($c_grado);
+		
+		if ($c_grado >= '21' AND $c_grado<='26') {			
+			$cTable = 'cdesempeños';			
+		}else{
+			$cTable = 'valnotas';
+		}
+				
+		
+		if ($this->get_valnotas_rango('BAJO',$cTable)){
+			$date	= date('Y-m-d');
+			
+			$update	= "UPDATE ".$table." SET nota_perdida=final WHERE 1 AND año= '".$this->get_year().
+					  "' AND cod_dane='".$this->cod_dane."' AND cod_grado='".$c_grado."' AND id_asig='".$cod_asig.
+					  "' AND periodo='".$periodo."' AND final BETWEEN '".$this->desde."' AND '".$this->hasta."'";
+					  
+			$update2 = "UPDATE ".$table." SET fecha='".$date."' WHERE 1 AND año= '".$this->get_year().
+					  "' AND cod_dane='".$this->cod_dane."' AND cod_grado='".$c_grado."' AND id_asig='".$cod_asig.
+					  "' AND periodo='".$periodo."' AND nota_perdida>0 AND fecha='0000-00-00'";
+			
+			$update = $this->db->query($update);
+			
+			$update2 = $this->db->query($update2);
+						
+			if ($update AND $update2) {
+				$querya ="tn.cod_dane, tn.id_docente, tn.cod_grado, tn.id_asig, tn.cod_est, tn.cod_jorn, 
+				tn.cons_sede, tn.grupo, tn.periodo, tn.año, tn.nota_perdida, tn.nota_habilitacion, tn.final, tn.fecha";
+			
+				$query	= "SELECT CONCAT(RTRIM(ti.apellido1),' ',RTRIM(ti.apellido2),' ',RTRIM(ti.nombre1),' ',RTRIM(ti.nombre2)) AS nombres,".$querya.
+				" FROM ".$table." AS tn, inscripciones AS ti";
+				$where	= "tn.cod_est=ti.cod_est AND ti.cod_dane= ? AND tn.año= ? AND tn.cod_dane= ? AND tn.cod_grado= ? AND tn.id_asig= ? AND  
+							periodo= ? AND final BETWEEN ? AND ? AND id_docente= ? ORDER BY cod_grado, grupo, id_asig, cod_jorn, nombres";
+							
+				$param	= array(
+					$this->cod_dane,
+					$this->get_year(),
+					$this->cod_dane,
+					$c_grado,
+					$cod_asig,
+					$periodo,
+					$this->desde,
+					$this->hasta,
+					$this->id_docente			
+				);
+					
+				$request = $this->M_sql->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param);
+			}else{
+				$request = $this->M_sql->get_error();
+			}	
+			
+		}else{
+			$request = $this->M_sql->get_error();
+		}
+		
+		echo $request;
+	}
+
+	/**
+	* funcion que verifica si el periodo se encuentra habilitado o no.
+	* @param string $periodo
+	* @param string $grado
+	* 
+	* @return bolean
+	*/
+	public function control_date ($periodo, $grado) {
+		$query 	= "SELECT * FROM config001 WHERE AÑO =".$this->get_year();
+		$query	= $this->db->query($query);
+		$system_date	=  date("Y-m-d");
+		if ($query) {
+			
+			if(($grado >='21' AND $grado <='26')){
+				$n_field 	= 'semestre'.$periodo; 	
+				$close_date = $query->row($n_field);
+			}else{				
+				$n_field 	= 'periodo'.$periodo; 	
+				$close_date = $query->row($n_field);	
+			}
+			
+			if ($close_date>=$system_date) {
+				$request	= TRUE;				
+			}else{
+				$request	= FALSE;
+			}
+			
+		}else{
+			$request = FALSE;
+		}
+		
+		return $request;
+	}
+	
+	public function control_date_msg () {
+		$date	= date('Y-m-d');
+		$reuqest = array(
+				'success'	=> FALSE,
+				'request'   => 'Se ha vencido la fecha del periodo',
+				'fecha'		=> $date
+			);
+			
+		return json_encode($reuqest);
+	}
+
+}
+
+
+/* End of file C_sql.php */
+/* Location: ./application/controllers/C_sql.php */
+	
