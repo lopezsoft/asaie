@@ -2742,6 +2742,9 @@ WHERE estado = 1;
 INSERT INTO aux_asignaturas (id_asign, id_area, YEAR) 
 SELECT id_pk, id_area, 2019 FROM asignaturas 
 WHERE estado = 1;
+INSERT INTO aux_asignaturas (id_asign, id_area, YEAR) 
+SELECT id_pk, id_area, 2020 FROM asignaturas 
+WHERE estado = 1;
 
 ALTER TABLE `asignaturas`
 	DROP COLUMN `id_inst`,
@@ -3930,3 +3933,13 @@ ALTER TABLE `obs_items_modelo_3`
 	ADD CONSTRAINT `obs_items_modelo_3_ibfk_1` FOREIGN KEY (`id_observador`) REFERENCES `asaie`.`obs_observador_mod_3` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
 	ADD CONSTRAINT `obs_items_modelo_3_ibfk_3` FOREIGN KEY (`id_item_criterio`) REFERENCES `asaie`.`obs_criterios` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT;
 
+
+
+/***                          CAMBIOS 2020                ********/
+
+
+ALTER TABLE `users`
+	CHANGE COLUMN `message` `message` LONGTEXT NULL COLLATE 'utf8_general_ci' AFTER `lectur`;
+
+INSERT INTO `user_types` (`id`, `name`, `description`, `active`, `timestamp`) VALUES (5, 'Estudiantes', NULL, 1, '2019-11-30 07:31:36');
+INSERT INTO `user_types` (`id`, `name`, `description`, `active`, `timestamp`) VALUES (7, 'Familiares', NULL, 1, '2019-11-30 07:31:56');

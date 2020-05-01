@@ -1,7 +1,6 @@
 Ext.define('Admin.container.CustomContainer',{
     extend  : 'Ext.container.Container',
-    alias   : 'widget.customContainer',
-    xtype   : 'widget.customcontainer',
+    alias   : 'widget.customcontainer',
     layout: {
         type: 'hbox'
     },

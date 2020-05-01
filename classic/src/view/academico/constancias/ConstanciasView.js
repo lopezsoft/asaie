@@ -1,8 +1,5 @@
-/**
- * Created by LOPEZSOFT on 11/02/2016.
- */
 Ext.define('Admin.view.academico.ConstanciasView',{
-    extend: 'Admin.form.FormBase',
+    extend: 'Admin.forms.CustomForm',
     controller  : 'academico',
     initComponent: function () {
         var me  = Admin.getApplication();
@@ -11,16 +8,15 @@ Ext.define('Admin.view.academico.ConstanciasView',{
         me.onStore('general.ConstanciasStore');
         this.callParent(arguments);
         this.setTitle(AppLang.getSTitleViewStudyConstancy() + ' - ' + Global.getYear());
+        this.down('#periodo').setHidden(true);
     },
     alias       : 'widget.constancias',
-    xtype       : 'constancias',
     itemId      : 'ConstanciasView',
     showSaveButton : false,
     items : [
         {
             xtype   : 'customgrid',
             store   : 'CandidatosSearchStore',
-            iconCls : '',
             plugins		: [
                 {
                     ptype: 'rowexpander',

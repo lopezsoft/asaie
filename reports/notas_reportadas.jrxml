@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="notas_reportadas" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="43" bottomMargin="20" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
@@ -102,14 +102,14 @@
 				<staticText>
 					<reportElement x="17" y="1" width="276" height="11" uuid="2c516e33-9281-4d0b-a40a-6111f5555017"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[APELLIDOS Y NOMBRES]]></text>
 				</staticText>
 				<staticText>
 					<reportElement x="441" y="1" width="94" height="11" uuid="6d796eda-b107-4b61-9dac-86e4decaf41a"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[FINAL]]></text>
 				</staticText>
@@ -128,7 +128,7 @@
 				<staticText>
 					<reportElement x="295" y="1" width="144" height="11" uuid="2dfbe77e-4b19-4372-b30b-ea8b51cdd4ad"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[ESTADO]]></text>
 				</staticText>
@@ -142,7 +142,7 @@
 						<topPen lineWidth="0.25"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="DejaVu Serif" size="9" isBold="true"/>
+						<font fontName="Arial" size="9" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Firma]]></text>
 				</staticText>
@@ -157,21 +157,21 @@
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="18" width="390" height="10" isRemoveLineWhenBlank="true" uuid="5e471478-f487-4d32-8e1d-ffcbb42bfd1b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
 				<reportElement isPrintRepeatedValues="false" x="74" y="1" width="390" height="16" uuid="e4d7208d-1cc0-440d-a5b2-08e0e909ffed"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="10" isBold="true"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle" markup="html">
+					<font fontName="Arial" size="10" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_TITLE}.trim()]]></textFieldExpression>
 			</textField>
 			<textField pattern="h.mm.ss a">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="28" width="390" height="10" isRemoveLineWhenBlank="true" uuid="4ca50a72-ce42-4ad4-ae2f-d90aae91e172"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -182,7 +182,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="0" y="1" width="539" height="16" uuid="e252fe0f-eab8-47a7-97ff-7aa4f51d4b1c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONTROL DE NOTAS REPORTADAS]]></text>
 			</staticText>
@@ -300,14 +300,14 @@
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="17" y="0" width="276" height="12" uuid="abd22c90-2bdb-40b4-84cb-10ee782a535f"/>
 				<box leftPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{estudiante}.trim()]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement stretchType="RelativeToTallestObject" x="441" y="0" width="28" height="12" uuid="150336c9-6bb0-45d5-810f-d37045085f13"/>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{final}]]></textFieldExpression>
 			</textField>
@@ -336,7 +336,7 @@
 				<reportElement positionType="Float" stretchType="RelativeToBandHeight" x="295" y="0" width="144" height="12" uuid="0d5fb324-b086-4e23-8c07-be595b09d4c4"/>
 				<box leftPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{name_state}]]></textFieldExpression>
 			</textField>
@@ -356,21 +356,21 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement x="16" y="1" width="507" height="21" uuid="60f4683a-0284-4fea-9cb7-bb6a102fcce2"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="8" isItalic="false"/>
+					<font fontName="Arial" size="8" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_FOOTER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="542" y="1" width="21" height="10" uuid="184a72c7-f142-4496-b933-89d1fe3009b0"/>
 				<textElement>
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="16" y="22" width="507" height="8" uuid="7829f300-5387-4522-b2ae-d6bf773009d8"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<font fontName="Arial" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_MARKETING}]]></textFieldExpression>
 			</textField>

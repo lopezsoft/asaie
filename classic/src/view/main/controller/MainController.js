@@ -135,5 +135,9 @@ Ext.define('Admin.view.main.MainController', {
 
     onEmailRouteChange: function () {
         this.setCurrentView('email');
+    },
+
+    onToolBarChange : function(){
+        this.redirectTo("dashboard");
     }
 });

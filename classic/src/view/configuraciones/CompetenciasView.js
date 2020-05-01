@@ -86,9 +86,7 @@ Ext.define('Admin.view.configuraciones.CompetenciasView',{
 									if(err){
 										me.onError('ERROR');
 									}else{
-										console.log(result);
 										Ext.each(result,function (name) {
-											console.log(name);
 											var
 												remove = ColumnasNotasStore.queryRecords('numero_column',name.numero_column);
 											ColumnasNotasStore.remove(remove);

@@ -69,7 +69,7 @@ class M_academico extends SME_Model {
 		if ($this->trans_status()) {
 			$result = $this->get_request_ab();
 		}else{
-			$result	= $this->get_error();
+			$result	= $this->getError();
 		}
 		
 		return $result;
@@ -135,10 +135,10 @@ class M_academico extends SME_Model {
 			if ($this->trans_status()) {
 				$request = $this->get_request_ab();
 			}else{
-				$request = $this->get_error();
+				$request = $this->getError();
 			}		
 		}else{
-			$request	= $this->get_error();
+			$request	= $this->getError();
 		}
 		$this->closeconn();
 		return $request;
@@ -319,7 +319,7 @@ class M_academico extends SME_Model {
 		if ($this->trans_status()) {
 			$result = $this->get_request_ab();
 		}else{
-			$result	= $this->get_error();
+			$result	= $this->getError();
 		}
 		
 		return $result;
@@ -435,15 +435,15 @@ class M_academico extends SME_Model {
 						)
 					);
 				}else{
-					$request = $this->M_sql->get_error();
+					$request = $this->M_sql->getError();
 				}
 				
 			}else{
-				$request = $this->M_sql->get_error();
+				$request = $this->M_sql->getError();
 			}
 			
 		}else{
-			$request = $this->M_sql->get_error();
+			$request = $this->M_sql->getError();
 		}
 		
 		return $request;
@@ -477,7 +477,7 @@ class M_academico extends SME_Model {
 			$result = $this->insert_data_primary('familiares',$lista,$extra,TRUE);
 			$id		= $this->last_insert_id();	
 		}
-		$query	= "INSERT INTO aux_families_students (id_familiar,cod_est,tipo_famil,parentesco) VALUES 
+		$query	= "INSERT INTO aux_families_students (id_family,cod_est,tipo_famil,parentesco) VALUES 
 				  (".$id.",".$cod.",'".$lista->tipo_famil."','".$lista->parentesco."')";
 		$this->db->query($query);
 		
@@ -485,7 +485,7 @@ class M_academico extends SME_Model {
 		$tipo	= $lista->tipo_famil;
 		if (($acud > 0) AND ($tipo <> 'Acudiente')){
 			$lista->tipo_famil = 'Acudiente';
-			$query	= "INSERT INTO aux_families_students (id_familiar,cod_est,tipo_famil,parentesco) VALUES 
+			$query	= "INSERT INTO aux_families_students (id_family,cod_est,tipo_famil,parentesco) VALUES 
 				  (".$id.",".$cod.",'".$lista->tipo_famil."','".$lista->parentesco."')";
 			$this->db->query($query);
 		}
@@ -493,58 +493,38 @@ class M_academico extends SME_Model {
 		if ($this->trans_status()){
 			$result = $result;
 		}else{
-			$result = $this->get_error();
+			$result = $this->getError();
 		}
 		return $result;
 	}
 	
 	function get_update_familiares($list,$cod){	
-		$lista = json_decode($list);
+		$db		= $this->get_db_name();
+		$lista 	= json_decode($list);
 		$this->trans_start();
 		
-		$sql	= "SELECT id_familiar FROM aux_families_students WHERE id=".$lista->id;
+		$sql	= "SELECT id_family FROM ".$db.".aux_families_students WHERE id=".$lista->id;
 		$this->db->select('id');
-		$this->db->from('.aux_families_students');
+		$this->db->from($db.'.aux_families_students');
 		
 		$sql	= $this->db->query($sql);
 		if($sql->num_rows() > 0){
-			$id		= $sql->row('id_familiar');
-			$result	= $this->get_update_primary('aux_families_students',$list);
-			$lista = json_decode($list);	
+			$id		= $sql->row('id_family');
+			$result	= $this->updateData('aux_families_students',$lista);
 			$lista->id = $id;
-			$lista = json_encode($lista);	
-			$result	= $this->get_update_primary('familiares',$lista);
+			$result	= $this->updateData('familiares',$lista);
 		}else{
-			$result = $this->get_request_ab();
+			$result = $this->getJsonResponse([],0);
 		}
 		$this->trans_complete();
 		if ($this->trans_status()){
 			$result = $result;
 		}else{
-			$result = $this->get_error();
+			$result = $this->getError();
 		}
 		return $result;
 	}
 	
-	
-	function get_select_familiares($cod){
-		if (empty($cod)){		
-			$total	= $this->get_count_all('families');			
-		}else{			
-			$total 	= $this->get_count_all('aux_families_students',"id_student=".$cod);	
-			$this->db->where('t2.id_student', $cod);			
-		};
-		$db	= $this->get_db_name();
-		$this->db->select("t1.*, CONCAT(RTRIM(lastname1),' ',RTRIM(lastname2),' ',RTRIM(name1),' ',RTRIM(name2)) AS nombres,".
-							"t2.id_student,t2.id_type, t2.id_relationship, t3.name_kinship, t4.family_type_name");
-		$this->db->from($db.'.families AS t1');
-		$this->db->join($db.'.aux_families_students AS t2', 't2.id_family = t1.id', 'left');
-		$this->db->join($db.'.family_relationships AS t3', 't2.id_relationship = t3.id', 'left');
-		$this->db->join($db.'.family_type AS t4', 't2.id_type = t4.id ', 'left');
-		$this->db->order_by('nombres,t2.id_student');
-		$query	= $this->db->get();			
-		return $this->get_request_select($query->result_array(), $total);
-	}
 	
 	function get_select_student_enrollment($id = 0){		
 		$query 	= "id=".$id;
@@ -592,11 +572,11 @@ class M_academico extends SME_Model {
 					$query_ins	= $this->db->get();
 					$result 	= $this->get_request_select($query_ins->result_array(),1);
 				}else{
-					$result = $this->get_error();
+					$result = $this->getError();
 				}
 			}
 		}else{
-			$result = $this->get_error();
+			$result = $this->getError();
 		}		
 		return $result;
 	}
@@ -672,7 +652,7 @@ class M_academico extends SME_Model {
 		if($query){
 			$query	= $this->get_request_select($query->result_array(), $total);
 		}else{
-			$query	= $this->get_error();
+			$query	= $this->getError();
 		}
 		return $query;
 	}

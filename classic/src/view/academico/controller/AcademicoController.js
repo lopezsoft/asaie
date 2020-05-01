@@ -11,7 +11,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
 
     onNovelty : function (btn) {
         var 
-            me      = this.app,
+            me      = Admin.getApplication(),
             eStore  = Ext.getStore('HistorialStore'),
             data    = btn.up('window').down('#gridMat').getSelection()[0],
             xparam  = {
@@ -35,7 +35,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
 	onTransferir : function (btn) {
 		var win         = btn.up('window'),
 			sel         = btn.up('window').down('grid').getSelection(),
-			me          = this.app,
+			me          = Admin.getApplication(),
 			cCount      = 0,
 			data        = {},
 			gb          = Global,
@@ -118,7 +118,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
 	},
 	onSaveNuevos : function (btn) {
 		var win     = btn.up('window'),
-			me      = this.app,
+			me      = Admin.getApplication(),
 			store	= Ext.getStore('PreMatriculaNuevosStore'),
 			records = Ext.ComponentQuery.query('PreMatriculaNuevosView')[0].down('grid').getSelection(),
 			values	= {},
@@ -166,7 +166,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
 
 	onSaveViejos : function (btn) {
 		var win     = btn.up('window'),
-			me      = this.app,
+			me      = Admin.getApplication(),
 			store	= Ext.getStore('PreMatriculaViejosStore'),
 			records = Ext.ComponentQuery.query('PreMatriculaViejosView')[0].down('grid').getSelection(),
 			values	= {},
@@ -350,7 +350,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
         var 
             win     = btn.up('form'),
             sel     = win.down('grid').getSelection(),
-            me      = this.app,
+            me      = Admin.getApplication(),
             cCount  = 0,
             data    = {},
             valForm = win.getValues(),
@@ -462,7 +462,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
     },
 
     addAsginaturas : function (btn) {
-        var me  		= this.app,
+        var me  		= Admin.getApplication(),
             win 		= btn.up('window'),
             grid		= win.down('#gridCarga'),
             select      = grid.getSelection(),
@@ -554,7 +554,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
     },
 
     onNotasReportadas : function (btn) {
-        this.redirectTo('notasReportadas');
+        this.redirectTo('notasreportadas');
     },
 
     onSaveCarga : function (btn) {
@@ -604,7 +604,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
     },
 
     onCreateArAsig : function (btn) {
-        var me = this.app,
+        var me = Admin.getApplication(),
             record = btn.up('form').down('grid').getSelection()[0];
         me.setParamStore('AreasAsignaturaStore', {
             pdbTable: 'aux_asignaturas',
@@ -616,7 +616,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
     },
 
     onCreateAsignaturasCert : function (btn) {
-        var me = this.app,
+        var me = Admin.getApplication(),
             record  = btn.up('form').down('grid').getSelection()[0];
         param   = {
             pdbTable : 'asignaturas_certificados',
@@ -675,7 +675,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
         });
     },
 	onViewWebcam	: function (btn) {
-		var me  	= this.app,
+		var me  	= Admin.getApplication(),
             view    = btn.up('window') || btn.up('form'),
 			rec 	= view.down('grid').getSelection()[0],
             store = view.down('grid').getStore();
@@ -704,7 +704,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
         });
 	},
     onViewArchivos : function (btn) {
-        var me  = this.app,
+        var me  = Admin.getApplication(),
             rec = btn.up('window').down('grid').getSelection()[0];
         me.onStore('docs.ImageBrowserStore');
         var win = Ext.create({
@@ -722,15 +722,27 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
         });
         win.show();
     },
-    onViewFamiliares : function (btn) {
-        var me = this.app,
+    onFamilies : function (btn) {
+        var me = Admin.getApplication(),
                 dataGrid    = btn.up('window').down('grid').getSelection()[0];
-            me.setParamStore('FamiliaresStore', {
+            me.setParamStore('FamiliesStore', {
+                pdbTable        : 'families'
+            },false);
+            Ext.create('Admin.view.academico.inscripciones.Families',{
+                record  : dataGrid
+            }).show();
+    },
+
+    onFamiliesStudent : function (btn) {
+        var me = Admin.getApplication(),
+                dataGrid    = btn.up('window').down('grid').getSelection()[0];
+            me.setParamStore('FamiliesStudentStore', {
                 pdbTable        : 'aux_families_students',
                 pdbIdStudent    :  dataGrid.get('id')
             },false);
-            win = Ext.create('Admin.view.academico.inscripciones.FamiliaresView');
-            win.show();
+            Ext.create('Admin.view.academico.inscripciones.FamiliesStudent',{
+                record  : dataGrid
+            }).show();
     },
 
     onViewReportes : function (btn) {
@@ -868,7 +880,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
     },
     onMatricula : function (btn) {
         var 
-            me  = this.app,
+            me  = Admin.getApplication(),
             ts  = btn.up('window');
         var
             data    = btn.up('window').down('#gridMat').getSelection()[0],

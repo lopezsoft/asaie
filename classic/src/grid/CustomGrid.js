@@ -221,7 +221,7 @@ Ext.define('Admin.grid.CustomGrid' ,{
 
     syncSize: function () {
         var width = Ext.Element.getViewportWidth(),
-            height = Ext.Element.getViewportHeight() - 176;
+            height = Ext.Element.getViewportHeight() - 186;
 		if(this.getSyncHeight()){
 			this.setMaxHeight(height);
 		}

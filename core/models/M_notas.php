@@ -647,7 +647,7 @@ class M_notas extends SME_Model {
 		$where	= '';
 
 		if ($sexo != 'MX') {
-			$where = " AND tx.abrev_sexo =".$sexo;
+			$where = " AND tx.abrev_sexo ='".$sexo."'";
 		}					
 		$query	= "INSERT INTO ".$table." (id_matric, year, periodo, id_curso)
 			SELECT tm.id, tm.year, ".$periodo.", ".$curso."

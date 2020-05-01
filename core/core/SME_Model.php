@@ -1368,6 +1368,11 @@ class SME_Model extends CI_Model {
 					if(count($where) > 0){
 						$this->db->where($where);
 					}
+					if(count($order) > 0){
+						foreach ($order as $key => $value) {
+							$this->db->order_by($key, $value);
+						}
+					}
 					$this->db->like($name,$query);
 					$this->db->limit($limit, $offset);            
 					$result  	= $this->db->get($table);
@@ -1404,6 +1409,11 @@ class SME_Model extends CI_Model {
 				}
 				if(count($whereVig) > 0){
 					$this->db->where($whereVig);
+				}
+				if(count($order) > 0){
+					foreach ($order as $key => $value) {
+						$this->db->order_by($key, $value);
+					}
 				}
 				$this->db->limit($limit, $offset);            
 				$result  	= $this->db->get($table);

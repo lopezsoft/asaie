@@ -30,6 +30,7 @@ Ext.define('Admin.base.WindowCrud' ,{
 		store		: undefined,
 		modalView	: undefined,
 		record		: undefined,
+		records		: undefined,
 		reloadStore	: false
 	},
 	initComponent	: function(){

@@ -1,18 +1,12 @@
-Ext.define('Admin.view.academico.inscripciones.forms.FamiliaresFormView' ,{
-    extend	: 'Admin.base.WindowCrud',
-    alias 	: 'widget.FamiliaresFormView',
-	height	: '100%',
+Ext.define('Admin.view.academico.inscripciones.forms.FamiliesForm' ,{
+    extend	: 'Admin.base.SaveWindow',
+    alias 	: 'widget.familiesform',
 	controller	: 'academico',
-	requires	: [
-		'Admin.sockets.Socket'
-	],
-	closeAction : 'hide',
 	initComponent: function () {
 		this.callParent(arguments);
 		this.setTitle(AppLang.getSTitleNewEdit()+' '+AppLang.getSTitleViewFamilies());
 	},
-	width	: 450,
-	store: 'FamiliaresStore',
+	store			: 'FamiliesStore',
 	defaultFocus	: 'CbCountries',
     items : [
     	{
@@ -37,34 +31,23 @@ Ext.define('Admin.view.academico.inscripciones.forms.FamiliaresFormView' ,{
 										record	= form.getRecord();
 									if (!record){
 										if (me.getValue().length > 0){
-											SME.sockets.Socket.request({
-												url		: ['sqlQuerySQL','requestQuerySQL'],
-												host	: Globale.getHostSocket(),
-												extraParams	: {
-													pdbQuery		: Globale.getDbName()+'.families',
-													pdbWhereFields	: ['document = ?'],
-													pdbWhereValues	: [me.getValue()],
-													pdbFields		: '*'
-												},
-												params	: {
-													start	: 0,
-													limit	: 1
-												},
-												success : function (req, res) {
-													var
-														resVal	= Ext.decode(req.responseText);
-													values	= resVal.records[0];
-													if (values){
-														form.getForm().setValues(values);
-														app.showResult('Ya existe un familiar para el documento: '+me.getValue().toString());
-													}
-												},
-												failure	: function (req, res) {
-													app.onMsgClose();
-													app.onError('ERROR');
-												},
-												callback	: function () {
-													app.onMsgClose();
+											socket		= Global.getSocket();
+											param		= {
+												dataName	: Global.getDbName(),
+												table		: 'families',
+												where		: ['document = ?'],
+												values		: [me.getValue()],
+												fields		: '*'
+											};
+											socket.emit('querySelect',(param),(err, res)=>{
+												if (err) {
+													app.showResult('Error en el servidor','error');
+													return	
+												}
+												values	= res[0];
+												if (values){
+													form.getForm().setValues(values);
+													app.showResult('Ya existe un familiar para el documento: '+me.getValue().toString(),'error');
 												}
 											});
 										}
@@ -107,19 +90,6 @@ Ext.define('Admin.view.academico.inscripciones.forms.FamiliaresFormView' ,{
 						{
 							xtype	: 'CbRH',
 							name	: 'blood_type'
-						},
-						{
-							xtype		: 'CbTipoFamiliar'
-						},
-						{
-							xtype		: 'CbParentescoFamiliar'
-						},
-						{
-							xtype		: 'customcheckboxfield',
-							boxLabel  	: 'Agregar como acudiente',
-							name      	: 'add_acud',
-							id        	: 'CkAcud',
-							hidden		: true
 						}
 					]
 				},

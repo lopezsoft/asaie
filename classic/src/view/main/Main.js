@@ -101,7 +101,7 @@ Ext.define('Admin.view.main.Main', {
                                             if(mainCard){
                                                 mainCard.removeAll(true);
                                             }
-                                            ts.getController().redirectTo((localStorage.getItem('oldRoute')) ? localStorage.getItem('oldRoute') : 'dashboard',true);
+                                            ts.getController().redirectTo((localStorage.getItem('currentRoute')) ? localStorage.getItem('currentRoute') : 'dashboard',true);
                                         }else {
                                             msg = AppLang.getSDbNotChangeYear();
                                         };

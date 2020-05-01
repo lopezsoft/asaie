@@ -1,19 +1,15 @@
-/**
- * Created by LOPEZSOFT2 on 23/09/2016.
- */
 Ext.define('Admin.view.academico.NotasReportadasView',{
-    extend  : 'Admin.form.FormBase',
-    alias   : 'widget.notasReportadas',
-    xtype   : 'notasReportadas',
-    itemId : 'NotasReportadasView',
+    extend          : 'Admin.forms.CustomForm',
+    alias           : 'widget.notasreportadas',
+    itemId          : 'NotasReportadasView',
     controller      : 'academico',
     initComponent: function () {
         var me  = Admin.getApplication();
         me.onStore('general.GradosStore');
         me.onStore('admin.DocentesDirGrupoStore');
         me.onStore('general.PeriodosStore');
-        this.callParent(arguments);
         this.setTitle(AppLang.getSTitleViewReportedNotes() + ' - ' + Global.getYear());
+        this.callParent(arguments);
     },
     showSaveButton    : false,
     items: [
@@ -63,9 +59,9 @@ Ext.define('Admin.view.academico.NotasReportadasView',{
                     xtype: 'toolbarCrud',
                     items: [
                         {
-                            xtype: 'CbPeriodos',
-                            width: 160,
-                            labelAlign : 'left'
+                            xtype       : 'CbPeriodos',
+                            width       : 160,
+                            labelAlign  : 'left'
                         },
                         {
                             xtype   : 'printButton'

@@ -3,7 +3,7 @@ Ext.define('Admin.view.docentes.OnlineActitiesSave',{
     alias  	    : 'widget.onlineactitiessave',
     xtype  	    : 'onlineactitiessave',
     controller  : 'actividades',
-    store		: 'MaterialEducativoStore',
+    store		: 'OnlineActivitiesStore',
     reloadStore : true,
     items 	: [
         {
@@ -94,7 +94,7 @@ Ext.define('Admin.view.docentes.OnlineActitiesSave',{
                     ]
                 },
                 {
-                    xtype   : 'customContainer',
+                    xtype   : 'customcontainer',
                     items   : [
                         {
                             xtype       : 'customdate',
@@ -109,7 +109,7 @@ Ext.define('Admin.view.docentes.OnlineActitiesSave',{
                     ]
                 },
                 {
-                    xtype   : 'customContainer',
+                    xtype   : 'customcontainer',
                     items   : [
                         {
                             xtype       : 'customdate',

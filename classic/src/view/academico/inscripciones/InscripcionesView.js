@@ -1,21 +1,11 @@
-/**
- * Created by LOPEZSOFT2 on 23/09/2016.
- */
 Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
     extend  : 'Admin.base.WindowCrud',
     alias   : 'widget.inscripcionesView',
     xtype   : 'inscripcionesView',
     controller: 'academico',
     initComponent: function () {
-        var me  = Admin.getApplication();
-        me.onStore('inscripciones.InscripcionesStore');
-        me.onStore('inscripciones.HistorialStore');
-        this.callParent(arguments);
-        this.setTitle(AppLang.getSTitleViewStudents());
-    },
-    buildWindow: function () {
-        var
-            me = this.getApp();
+        var 
+            me  = Admin.getApplication();
         me.onStore('general.DocumentosStore');
         me.onStore('general.CountryStore');
         me.onStore('general.CiudStore');
@@ -31,6 +21,13 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
         me.onStore('general.JornadasStore');
         me.onStore('general.EstadoStore');
         me.onStore('inscripciones.MatriculasStore');
+        me.onStore('inscripciones.InscripcionesStore');
+        me.onStore('inscripciones.FamiliesStudentStore');
+        me.onStore('inscripciones.HistorialStore');
+        this.setTitle(AppLang.getSTitleViewStudents());
+        this.callParent(arguments);
+    },
+    buildWindow: function () {
         this.winObject = Ext.create('Admin.view.academico.inscripciones.forms.InscripcionesForm');
     },
     showWindow: function (btn) {
@@ -77,6 +74,7 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                     items   : [
                         {
                             xtype       : 'customgrid',
+                            syncHeight  : false,
                             plugins		: [
                                 {
                                     ptype : 'gridfilters'
@@ -174,11 +172,19 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                                         },'-','->',
                                         {
                                             xtype       : 'customButton',
-                                            tooltip     : 'Familiares',
+                                            tooltip     : 'Familiares asignados al estudiante',
                                             iconCls     : 'x-fa fa-users',
+                                            text        : 'Agregar',
                                             itemId      : 'btnFamil',
                                             disabled  	: true,
-                                            handler     : 'onViewFamiliares'
+                                            handler     : 'onFamiliesStudent'
+                                        },
+                                        {
+                                            xtype       : 'customButton',
+                                            tooltip     : 'Crear Familiares',
+                                            text        : 'Crear',
+                                            iconCls     : 'x-fa fa-users',
+                                            handler     : 'onFamilies'
                                         },
                                         {
                                             xtype       : 'customButton',
@@ -210,6 +216,7 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                         {
                             xtype       : 'customgrid',
                             store       : 'HistorialStore',
+                            syncHeight  : false,
                             itemId      : 'gridMat',
                             plugins		: [
                                 {

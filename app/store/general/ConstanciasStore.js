@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 7/12/2015.
- */
 Ext.define('Admin.store.general.ConstanciasStore', {
     extend: 'Admin.store.base.StoreApi',
     storeId: 'ConstanciasStore',

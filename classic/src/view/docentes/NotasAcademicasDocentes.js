@@ -32,9 +32,6 @@ Ext.define('Admin.view.docentes.NotasAcademicasDocentes', {
                     minChars: 2,
                     flex: 1,
                     emptyText: 'Seleccione la asignatura por favor...',
-                    // Template for the dropdown menu.
-                    // Note the use of the "x-list-plain" and "x-boundlist-item" class,
-                    // this is required to make the items selectable.
                     tpl: Ext.create('Ext.XTemplate',
                         '<ul class="x-list-plain"><tpl for=".">',
                         '<li role="option" class="x-boundlist-item">{grado} - {grupo} - {asignatura} - {jornada} - {sede}</li>',
@@ -333,52 +330,40 @@ Ext.define('Admin.view.docentes.NotasAcademicasDocentes', {
                     itemId: 'lbClock'
                 }, '-',
                 {
-                    xtype: 'radiogroup',
-                    fieldLabel: 'Sexo',
+                    xtype       : 'radiogroup',
+                    fieldLabel  : 'Sexo',
                     defaults: {
                         name: 'sexo'
                     },
-                    itemId: 'sexo',
-                    labelWidth: 30,
-                    columns: 3,
-                    vertical: true,
-                    hideLabel: true,
-                    tooltip : 'Permite filtar el listado por sexo',
-                    items: [{
-                            boxLabel: 'Mixto',
-                            inputValue: 'MX',
-                            checked: true,
-                            tooltip : 'Permite mostrar todos de los estudiantes'
+                    itemId      : 'sexo',
+                    labelWidth  : 30,
+                    columns     : 3,
+                    vertical    : true,
+                    hideLabel   : true,
+                    tooltip     : 'Permite filtar el listado por sexo',
+                    items: [
+                        {
+                            boxLabel    : 'Mixto',
+                            inputValue  : 'MX',
+                            checked     : true,
+                            tooltip     : 'Permite mostrar todos de los estudiantes'
                         },
                         {
-                            boxLabel: 'M',
-                            inputValue: 'M',
-                            tooltip : 'Permite mostrar solo la lista de los estudiantes másculinos',
-                            margin: '0 0 0 2'
+                            boxLabel    : 'M',
+                            inputValue  : 'M',
+                            tooltip     : 'Permite mostrar solo la lista de los estudiantes másculinos',
+                            margin      : '0 0 0 2'
                         },
                         {
-                            boxLabel: 'F',
-                            inputValue: 'F',
-                            margin: '0 0 0 2',
-                            tooltip : 'Permite mostrar solo la lista de los estudiantes femeninos'
+                            boxLabel    : 'F',
+                            inputValue  : 'F',
+                            margin      : '0 0 0 2',
+                            tooltip     : 'Permite mostrar solo la lista de los estudiantes femeninos'
                         }
                     ],
                     listeners: {
                         change: function(btn, newValue, oldValue, eOpts) {
-                            var data = Ext.ComponentQuery.query('cargaView')[0].getSelection()[0],
-                                me = Admin.getApplication();
-                            ExExParams = {
-                                pdbGrado: data.get('id_grado'),
-                                pdbCurso: data.get('id'),
-                                pdbAsig: data.get('id_asig'),
-                                pdbGrupo: data.get('grupo'),
-                                pdbJorn: data.get('id_jorn'),
-                                pdbCSede: data.get('id_sede'),
-                                pdbPeriodo: SME.ConfigApp.periodo,
-                                pdbSexo: newValue,
-                                pdbTable: '1'
-                            };
-                            me.setParamStore('NotasStore', ExExParams);
+
                         }
                     }
                 }, '-',
