@@ -9,7 +9,6 @@ Ext.define('Admin.view.docentes.controller.ActiviadesController',{
             panel   = btn.up('panel'),
             record  = panel.getRecord(),
             view    = Admin.getApplication().getMainView();
-        console.log(panel.getActivityName() +': '+ record.get('grado') + ' - ' + record.get('grupo'));
         if(view){
             cont    = view.getController();
             cont.onRemove('studentsonlineactivities');

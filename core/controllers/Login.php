@@ -26,7 +26,8 @@ class Login extends SME_Controller
 		$user	= $this->input->post_get('user');
 		$pass	= $this->input->post_get('pass');
 		$inst	= $this->input->post_get('inst');
-	 	$request = $this->M_login->log_in($user,$pass,$year,$inst);		
+		$type	= $this->input->post_get('type');
+	 	$request = $this->M_login->log_in($user,$pass,$year,$inst,$type);		
 		echo $request;
 	}
 	

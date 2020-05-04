@@ -1,9 +1,7 @@
-Ext.define('Admin.view.academico.inscripciones.forms.InscripcionesForm' ,{
-    extend	: 'Admin.base.WindowCrud',
+Ext.define('Admin.view.academico.inscripciones.forms.InscripcionesForm',{
+    extend	: 'Admin.base.SaveWindow',
     alias 	: 'widget.InscripcionesForm',
-	maximized	: false,
-	width		: 450,
-	height		: '100%',
+	maxWidth	: 750,
 	controller	: 'academico',
 	requires	: [
 		'Admin.combo.CbCountries',
@@ -13,7 +11,6 @@ Ext.define('Admin.view.academico.inscripciones.forms.InscripcionesForm' ,{
 		'Admin.combo.CbPoblacionAtendida',
 		'Admin.sockets.Socket'
 	],
-	closeAction		: 'hide',
 	initComponent: function () {
 		this.callParent(arguments);
 		this.setTitle(AppLang.getSTitleNewEdit() + ' ' + AppLang.getSTitleViewStudents());
@@ -188,21 +185,47 @@ Ext.define('Admin.view.academico.inscripciones.forms.InscripcionesForm' ,{
 						{
 							xtype		: 'CbSedes',
 							name		: 'id_headquarters',
+							allowBlank 	: true,
+							listeners: {
+								select: function (cb, r) {
+									var
+										me = Admin.getApplication(),                
+										param = {
+											pdbTable    : 'jornadas',
+											pdbSede     : r.id
+										};
+									me.setParamStore('JornadasStore', param, true);
+				
+									param = {
+										pdbTable    : 'grados',
+										pdbSede     : r.id
+									};
+									me.setParamStore('GradosStore', param, true);
+								}
+							}
+						},
+						{
+							xtype	: 'CbJornadas',
+							bind: {
+								visible: '{comboSedes.value}'
+							},
+							name		: 'id_study_day',
 							allowBlank 	: true
 						},
 						{
 							xtype		: 'CbGrados',
+							bind: {
+								visible	: '{comboJornadas.value}'
+							},
 							name		:'id_grade',
 							allowBlank 	: true
 						},
 						{
 							xtype	: 'CbGrupo',
-							name	: 'id_group',
-							allowBlank 	: true
-						},
-						{
-							xtype	: 'CbJornadas',
-							name	: 'id_study_day',
+							bind: {
+								visible: '{comboGrados.value}'
+							},
+							name		: 'id_group',
 							allowBlank 	: true
 						}
 					]

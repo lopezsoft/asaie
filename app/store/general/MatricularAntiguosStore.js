@@ -10,7 +10,7 @@ Ext.define('Admin.store.general.MatricularAntiguosStore',{
         },
         api: {
             create  : 'General/insert_data',
-            read    : 'c_academico/get_select_matriculas',
+            read    : 'academic/get_select_matriculas',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

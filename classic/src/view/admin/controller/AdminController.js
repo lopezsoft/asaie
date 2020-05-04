@@ -14,7 +14,7 @@ Ext.define('Admin.view.admin.controller.AdminController',{
         var me = this.app;
             me.onStore('general.GradosStore');
             me.onStore('admin.DirGrupoStore');
-            Ext.create('Admin.view.admin.DirGruposView').show();
+        this.redirectTo('groupmanagers', true);
     },
 
     onCreateAdmin : function (btn) {

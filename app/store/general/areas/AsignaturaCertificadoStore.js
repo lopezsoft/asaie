@@ -14,8 +14,8 @@ Ext.define('Admin.store.general.AsignaturaCertificadoStore', {
             pdbTable : 'asignaturas_certificados'
         },
         api: {
-            create  : 'c_academico/insert_asignaturas_certificados',
-            read    : 'c_academico/get_select_asignaturas_certificados',
+            create  : 'academic/insert_asignaturas_certificados',
+            read    : 'academic/get_select_asignaturas_certificados',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

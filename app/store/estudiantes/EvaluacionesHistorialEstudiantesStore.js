@@ -14,7 +14,7 @@ Ext.define('Admin.store.estudiantes.EvaluacionesHistorialEstudiantesStore',{
         },
         api: {
             create  : '',
-            read    : 'c_estudiantes/get_select_evaluaciones_estudiantes',
+            read    : 'students/get_select_evaluaciones_estudiantes',
             update  : 'General/update_data',
             destroy : ''
         }

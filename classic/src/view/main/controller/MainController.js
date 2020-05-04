@@ -137,6 +137,10 @@ Ext.define('Admin.view.main.MainController', {
         this.setCurrentView('email');
     },
 
+    onStudentsActivities : function(){
+        this.redirectTo('studentsactivities', true);
+    },
+
     onToolBarChange : function(){
         this.redirectTo("dashboard");
     }

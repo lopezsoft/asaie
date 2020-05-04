@@ -10,6 +10,6 @@ Ext.define('Admin.store.estudiantes.DocentesCursoStore', {
     ],
     pageSize	: 0,
     proxy: {
-        url : 'c_estudiantes/get_docentes_curso'
+        url : 'students/get_docentes_curso'
     }
 });

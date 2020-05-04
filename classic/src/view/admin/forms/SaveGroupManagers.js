@@ -1,6 +1,6 @@
-Ext.define('Admin.view.admin.forms.DirGrupoFormView' ,{
-    extend	: 'Admin.base.WindowCrud',
-    alias 	: 'widget.DirGrupoFormView',
+Ext.define('Admin.view.admin.forms.SaveGroupManagers' ,{
+    extend	: 'Admin.base.SaveWindow',
+    alias 	: 'widget.savegroupmanagers',
 	controller	: 'admin',
 	requires	: [
 		'Admin.store.admin.DocentesDirGrupoStore',
@@ -8,14 +8,16 @@ Ext.define('Admin.view.admin.forms.DirGrupoFormView' ,{
 		'Admin.combo.CbGrupo',
 		'Admin.container.SedesJorn'
 	],
-	height	: '100%',
-	width	: 450,
+	maxWidth	: 550,
 	initComponent: function (cnf) {  
 		this.callParent(arguments);	
 		this.setTitle(AppLang.getSTitleViewAddGroupDirectors());
 	},
-	onSave: function (btn) {
-		var win 	= btn.up('window'),
+	onSave		: function(){
+		this.onSaveData();
+	},
+	onSaveData	: function(){
+		var win 	= this,
 			values 	= win.down('grid').getSelection()[0],
 			data 	= [],
 			store 	= Ext.getStore('DirGrupoStore'),
@@ -23,7 +25,7 @@ Ext.define('Admin.view.admin.forms.DirGrupoFormView' ,{
 
 		if (Ext.isEmpty(values)) {
 			me.onAler('No ha selecionado un docente.');
-		} else {
+		}else{
 			data = {
 				id_sede		: win.down('#comboSedes').getSelection().id,
 				id_docente	: values.get('id_docente'),
@@ -47,16 +49,18 @@ Ext.define('Admin.view.admin.forms.DirGrupoFormView' ,{
 			xtype		: 'customform',
 			items: [
 				{
-					xtype: 'sedesJorn'
+					xtype: 'sedesJorn',
+					defaults	: {
+						labelWidth      : 60
+					}
 				},
 				{
-					xtype: 'CbGrupo'
+					xtype			: 'CbGrupo',
+					labelWidth      : 60
 				},
 				{
 					xtype	: 'customgrid',
 					selModel: 'rowmodel',
-					margin  : '0 3 0 0',
-					iconCls	: '',
 					plugins		: [
 						{
 							ptype			: 'gridSearch',
@@ -83,8 +87,7 @@ Ext.define('Admin.view.admin.forms.DirGrupoFormView' ,{
 					],
 					dockedItems : [
 						{
-							xtype 		: 'pagination',
-							itemId		: 'pToolbar'
+							xtype 		: 'pagination'
 						}
 					]
 				}

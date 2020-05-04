@@ -500,23 +500,6 @@ class M_general extends SME_Model {
 		return $this->get_query($this->limit_min,$this->limit_max,'SELECT * FROM tipo_discapacidad');
 	}
 	
-	function get_resguardos($q){
-		if(empty($q)){
-			$query = 'SELECT * FROM resguardos';
-		}else{
-			$query = "SELECT * FROM resguardos WHERE NOMB_RESG REGEXP '".$q."'";
-		}
-		return $this->get_query($this->limit_min,$this->limit_max,$query);
-	}
-	
-	function get_etnias($q){
-		if(empty($q)){
-			$query = 'SELECT * FROM etnias';
-		}else{
-			$query = "SELECT * FROM etnias WHERE NOM_ETNIA REGEXP '".$q."'";
-		}
-		return $this->get_query($this->limit_min,$this->limit_max,$query);
-	}
 	
 	function get_poblacion_victima_conflicto(){
 		return $this->get_query($this->limit_min,$this->limit_max,'SELECT * FROM poblacion_victima_conflicto');

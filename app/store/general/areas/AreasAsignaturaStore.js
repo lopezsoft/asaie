@@ -13,8 +13,8 @@ Ext.define('Admin.store.general.AreasAsignaturaStore', {
             pdbTable : 'aux_asignaturas'
         },
         api: {
-            create  : 'c_academico/insert_aux_asignaturas',
-            read    : 'c_academico/get_select_aux_asignaturas',
+            create  : 'academic/insert_aux_asignaturas',
+            read    : 'academic/get_select_aux_asignaturas',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

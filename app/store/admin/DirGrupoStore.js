@@ -1,12 +1,10 @@
-/**
- * Created by LOPEZSOFT2 on 23/09/2016.
- */
 Ext.define('Admin.store.admin.DirGrupoStore',{
     extend  : 'Admin.store.base.StoreApi',
     storeId : 'DirGrupoStore',
     proxy: {
         extraParams : {
-            pdbTable : 'dir_grupo'
+            pdbTable    : 'dir_grupo',
+            pdbGrado    : 0
         },
         api: {
             create  : 'master/insertData',

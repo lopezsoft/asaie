@@ -3,6 +3,10 @@ Ext.define('Admin.combo.CbPoblacionVictimaCon',{
 	 requires: [
        'Admin.store.general.PoblacionVictimaConStore'
     ],
+    initComponent: function(){
+        Admin.getApplication().onStore('general.PoblacionVictimaConStore');
+        this.callParent(arguments);
+    },
 	alias	    : 'widget.CbPoblacionVictimaCon',
 	fieldLabel	: 'Población victima de conflicto',
 	name		: 'pob_vict_conf',

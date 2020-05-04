@@ -10,7 +10,7 @@ Ext.define('Admin.store.promocion.ListaMatriculaStore',{
             pdbTable : 'matriculas'
         },
         api: {
-            create  : 'c_academico/insert_matriculas',
+            create  : 'academic/insert_matriculas',
             read    : 'General/get_select_matricula_antiguos',
             update  : 'General/update_data',
             destroy : 'General/delete_data'

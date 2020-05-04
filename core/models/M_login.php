@@ -77,7 +77,7 @@ class M_login extends SME_Model {
 		* @return JSonCode
 		*/
 		
-		function log_in($user,$pass,$year,$inst){			
+		function log_in($user,$pass,$year,$inst,$type){			
 			$request	= "";			
 			$this->db->select("*");
 			$this->db->from('schools');
@@ -93,6 +93,7 @@ class M_login extends SME_Model {
 
 				$where	=	'SHA1(username)=SHA1("'.$user.'") AND password="'.$pass.'"';
 				$this->db->where($where);
+				$this->db->where('user_type', $type);
 				$re		= $this->db->get($row->database_name.'.users', 1);
 				$re		= $re->row();
 				
@@ -167,6 +168,51 @@ class M_login extends SME_Model {
 						'user_type'		=> $this->session->userdata('user_type')
 					);
 					break;
+				case '5':  // Usuario Estudiante
+					$sess   		= $this->session;
+					$year 			= $sess->userdata('user_year');;
+					$user			= $sess->userdata('first_name');
+					$db				= $sess->userdata('db_name');
+					$user_parent	= $sess->userdata('user_parent');
+					$this->id_school= $sess->userdata('user_id_school');
+					$this->user_id	= $sess->userdata('user_id');
+					
+					$this->db->select("*");
+					$this->db->from($db.".config001");
+					$this->db->where("year",$year);
+					$config = $this->db->get();
+	
+					$this->db->select('id,user_type,names, last_name,username,email,image,mime');
+					$this->db->from($db.'.users');
+					$this->db->where('id', $this->user_id);
+					$user_data	= $this->db->get();
+					
+					$this->db->select("a.*, c.cod_grado, c.grado, trim(d.jornada) AS jornada, trim(e.NOMBRE_SEDE) sede,
+					CONCAT(TRIM(g.apellido1),' ',TRIM(g.apellido2),' ',TRIM(g.nombre1),' ',TRIM(g.nombre2)) estudiante");
+					$this->db->from($db.'.student_enrollment AS a');
+					$this->db->join($db.'.grados AS c', 'a.id_grade = c.id', 'left');
+					$this->db->join($db.'.jornadas AS d', 'a.id_study_day = d.cod_jorn', 'left');
+					$this->db->join($db.'.sedes AS e', 'a.id_headquarters = e.ID', 'left');
+					$this->db->join($db.'.inscripciones AS g', 'a.id_student = g.id', 'left');
+					$this->db->where('a.id_student', $this->get_student_id());
+					$this->db->where('a.year', $this->get_year());
+					$this->db->limit(1);
+					$enrollement	= $this->db->get();
+				
+					$request	= array(
+						'user'			=> $user,
+						'request'		=> 1,
+						'config'		=> $config->result(),
+						'user_data'		=> $user_data->result(),
+						'id_school'		=> $this->id_school,
+						'user_id'		=> $this->user_id,
+						'enrollment'	=> $enrollement->result(),
+						'year'			=> $year,
+						'db_name'		=> $db,
+						'user_parent'	=> $user_parent,
+						'user_type'		=> $this->session->userdata('user_type')
+					);
+					break;
 				default :
 					$request = $this->get_user();
 					break;
@@ -192,16 +238,15 @@ class M_login extends SME_Model {
 				if($query->num_rows() === 1 ){
 					if ($this->setLogin($query, $user_type, $year, $inst)){															
 						$request	= array(
-							'request'	=> 1
+							'request'	=> 1,
+							'success'	=> true
 						);						
 						$request	= json_encode($request);
 					}else{
-						$request	= 0;
-						$request	= json_encode($request);
+						$request	= $this->error_success();
 					}
 				}else{
-					$request	= 0;
-					$request	= json_encode($request);
+					$request	= $this->error_success();
 				}
 			}else{
 				$request	= $this->getError();

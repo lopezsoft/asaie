@@ -14,8 +14,8 @@ Ext.define('Admin.store.general.CargaStore', {
             pdbTable : 'cursos'
         },
         api: {
-            create  : 'c_academico/insert_carga',
-            read    : 'c_academico/get_select_carga',
+            create  : 'academic/insert_carga',
+            read    : 'academic/get_select_carga',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

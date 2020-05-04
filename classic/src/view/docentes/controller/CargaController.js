@@ -960,50 +960,6 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 		store.reload();
     },
 
-	onEachColumsCompetencia : function (editor, idComp) {
-		var
-			colums	= [],
-			store	= Ext.getStore('ColumnDocentesStore');
-		store.each(function (data) {
-			if ( data.get('id_competencia') == idComp){
-				switch (data.get('nombre')){
-					case 'PROM' :
-						colums.push({
-							text 	        : data.get('nombre'),
-							width			: 77,
-							dataIndex	    : data.get('name_column'),
-							tooltip     	: data.get('descripcion'),
-							hidden			: data.get('activa') > 0 ? false :  true,
-							renderer :  function(val) {
-								return '<span style="color:Darkviolet;"> <b>' + val + '</b></span>'
-							}
-						});
-						break;
-					case '%' :
-						colums.push({
-							text 	        : data.get('nombre'),
-							dataIndex	    : data.get('name_column'),
-							tooltip     	: data.get('descripcion'),
-							hidden			: data.get('activa') > 0 ? false :  true,
-							renderer :  function(val) {
-								return '<span style="color:red;"> <b>' + val + '</b></span>'
-							}
-						});
-						break;
-					default :
-						colums.push({
-							text 	        : data.get('nombre'),
-							dataIndex	    : data.get('name_column'),
-							tooltip     	: data.get('descripcion'),
-							hidden			: data.get('activa') > 0 ? false :  true,
-							editor      	: editor
-						});
-						break;
-				}
-			}
-		});
-		return colums;
-	},
 
 	onRenderColorEscala : function (val) {
 		var
@@ -1342,6 +1298,51 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 		form.remove('notasGrid',true);
 		form.add(grid);
     },
+
+    onEachColumsCompetencia : function (editor, idComp) {
+		var
+			colums	= [],
+			store	= Ext.getStore('ColumnDocentesStore');
+		store.each(function (data) {
+			if ( data.get('id_competencia') == idComp){
+				switch (data.get('nombre')){
+					case 'PROM' :
+						colums.push({
+							text 	        : data.get('nombre'),
+							width			: 77,
+							dataIndex	    : data.get('name_column'),
+							tooltip     	: data.get('descripcion'),
+							hidden			: data.get('activa') > 0 ? false :  true,
+							renderer :  function(val) {
+								return '<span style="color:Darkviolet;"> <b>' + val + '</b></span>'
+							}
+						});
+						break;
+					case '%' :
+						colums.push({
+							text 	        : data.get('nombre'),
+							dataIndex	    : data.get('name_column'),
+							tooltip     	: data.get('descripcion'),
+							hidden			: data.get('activa') > 0 ? false :  true,
+							renderer :  function(val) {
+								return '<span style="color:red;"> <b>' + val + '</b></span>'
+							}
+						});
+						break;
+					default :
+						colums.push({
+							text 	        : data.get('nombre'),
+							dataIndex	    : data.get('name_column'),
+							tooltip     	: data.get('descripcion'),
+							hidden			: data.get('activa') > 0 ? false :  true,
+							editor      	: editor
+						});
+						break;
+				}
+			}
+		});
+		return colums;
+	},
 
     onDeleteLog : function (btn) {
        var  me      = this,

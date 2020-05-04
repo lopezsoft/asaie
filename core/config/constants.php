@@ -103,6 +103,8 @@ define('XLS_FILE_DIRECTORY','excel');
 define('UPLOADED_DIRECTORY','upload');
 define('MATERIAL_DIRECTORY','material');
 define('RESOURCE_FOLDER','resources');
+define('FOLDER_COMMENTS_ACTIVITIES','activities');
+define('EVALUATION_COMMENTS_FOLDER','evaluatios');
 
 define('REPORT_DIRECTORY','reports');
 define('PDF_REPORT_DIRECTORY','pdf');

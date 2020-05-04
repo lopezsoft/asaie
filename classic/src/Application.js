@@ -25,12 +25,12 @@ Ext.define('Admin.Application', {
         'charts.RegisteredStore',
         'charts.TeachersStore',
         'NavigationTree',
-        'NavigationTreeEstudiantes',
+        'NavigationTreeStudents',
         'NavigationTreeMain'
     ],
 
 
-    // defaultToken : 'dashboard',
+    defaultToken : 'dashboard',
 
     // The name of the initial view to create. This class will gain a "viewport" plugin
     // if it does not extend Ext.Viewport.

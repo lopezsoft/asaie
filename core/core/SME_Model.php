@@ -63,8 +63,8 @@ class SME_Model extends CI_Model {
 		parent::__construct()	;
 		$this->update_properties();		
 		$this->limit_min	= 0;
-	  $this->limit_max	= 60;
-	  $this->db_limit();
+	  	$this->limit_max	= 60;
+	  	$this->db_limit();
 		$this->date			= date('Y-m-d h-m-s');
 		$this->directory_path	= $_SERVER["DOCUMENT_ROOT"].PATH_DELIM;
 		
@@ -94,6 +94,10 @@ class SME_Model extends CI_Model {
 	}
 	
 	public function get_teacher_id(){
+		return $this->session->userdata('user_parent');
+	}
+
+	public function get_student_id(){
 		return $this->session->userdata('user_parent');
 	}
 	
@@ -162,6 +166,34 @@ class SME_Model extends CI_Model {
 			
 	}
 
+	function activities_comments_folder(){
+		$this->update_properties();
+		// Crea el directorio para los archivos adjuntos en los comentarios realizados a las actividades
+		$dir	= $this->directory_path.SCHOOL_DIRECTORY.PATH_DELIM.$this->school_folder.PATH_DELIM.FOLDER_COMMENTS_ACTIVITIES;
+		if ( ! is_dir($dir)){
+			mkdir($dir, 0777, true);
+		}
+		$result	= "";
+		if(is_dir($dir)){
+			$result	= SCHOOL_DIRECTORY.PATH_DELIM.$this->school_folder.	PATH_DELIM.FOLDER_COMMENTS_ACTIVITIES;
+		}
+		return $result;
+	}
+
+	function evaluation_comments_folder(){
+		$this->update_properties();
+		// Crea el directorio para los archivos adjuntos en los comentarios realizados a las evaluaciones
+		$dir	= $this->directory_path.SCHOOL_DIRECTORY.PATH_DELIM.$this->school_folder.PATH_DELIM.EVALUATION_COMMENTS_FOLDER;
+		if ( ! is_dir($dir)){
+			mkdir($dir, 0777, true);
+		}
+		$result	= "";
+		if(is_dir($dir)){
+			$result	= SCHOOL_DIRECTORY.PATH_DELIM.$this->school_folder.	PATH_DELIM.EVALUATION_COMMENTS_FOLDER;
+		}
+		return $result;
+	}
+
 	function folders_signature(){
 		$this->update_properties();
 		// Crea el directorio Firmas
@@ -223,12 +255,15 @@ class SME_Model extends CI_Model {
 	}
 	
 	public function	get_get_idmatric(){
-		$query 	= "SELECT id_matric FROM matriculas ".
-		" WHERE id_inst = '".$this->get_id_school()."' AND year = '".
-		$this->get_year()."' AND cod_est = '".$this->get_id_student()."' LIMIT 1";
-		$query	= $this->db->query($query);
-		if ($query) {
-			$result = $query->row('id_matric');
+		$db		= $this->get_db_name();
+		$this->db->select('id');
+		$this->db->where('id_student', $this->get_student_id());
+		$this->db->where('year', $this->get_year());
+		$this->db->limit(1);
+		$query 	= $this->db->get($db.".student_enrollment");
+		$row	= $query->row();
+		if ($row) {
+			$result = $row->id;
 		}else{
 			$result	= 0;
 		}
@@ -286,10 +321,10 @@ class SME_Model extends CI_Model {
 		$fileSize = $file['size'];
 		if ($fileSize > 2048000) {
 			$request = array(
-					'success'       =>FALSE,
-					'error'			=> 'No se permite subir archivos mayores a 2 MB'
-				);
-				$request = json_encode($request);
+				'success'       =>FALSE,
+				'error'			=> 'No se permite subir archivos mayores a 2 MB'
+			);
+			$request = json_encode($request);
 		}else{
 	        if (is_dir($this->directory_path.$path)){
 		        $foto	= $this->directory_path.$path.PATH_DELIM.basename($fileName);	
@@ -919,17 +954,9 @@ class SME_Model extends CI_Model {
 	  * @return
 	  */
   	public function insertData($table, $data, $primaryKey = 'id', $serial, $primary_value = FALSE, $where = []) {
-		$db         = $this->get_db_name();	
-		$db_field 	= '';	
-		$db_value 	= '';
-		$table		= $db.'.'.$table;
-		$db_field1 	= '';
-		$db_value1 	= '';
-		
-		$value_insert	= '';
-		
-		$i		= 0;
-		$count 	= 0;
+		$db         	= $this->get_db_name();	
+		$primaryKeyName	= 'id';	
+		$table			= $db.'.'.$table;
 		
 		try{			
 
@@ -1085,7 +1112,9 @@ class SME_Model extends CI_Model {
 						* para  preparar el insert
 						* 
 						*/
-						if($primaryKey == 0){
+						if($primaryKey == 1){
+							$primaryKeyName	= $name;
+						}else{
 							/**
 							* @var Si los campos son iguales almacena los datos en las 
 							* variables $db_field y $db_value
@@ -1112,9 +1141,9 @@ class SME_Model extends CI_Model {
 					if($primary_value){
 						$request	= $id;
 					}else{			
-						$this->db->where($primaryKey, $id);
+						$this->db->where($primaryKeyName, $id);
 						$query		= $this->db->get($table,1);
-						$request	= $this->getJsonResponse($query->result_array(),1);
+						$request	= $this->getJsonResponse($query->result(),1);
 					}
 				}else{
 					$request	= $this->getJsonResponse([],0);
@@ -1459,6 +1488,13 @@ class SME_Model extends CI_Model {
 		* Enviamos la repustas en formato Json
 		*/
 	 	return $request	;
+	}
+
+	public function getJosnSuccess()
+	{
+		return json_encode(array(
+			'success'	=> true
+		));
 	}
 		
 	/**

@@ -111,6 +111,9 @@ Ext.define('Admin.grid.CustomGrid' ,{
 			if (me.down('#noveltyButton')){
 				me.down('#noveltyButton').setDisabled(!selected.length);
 			}
+			if (me.down('#extrabutton')){
+				me.down('#extrabutton').setDisabled(!selected.length);
+			}
 
 			if (me.down('#btnViewQuestion')){
 				me.down('#btnViewQuestion').setDisabled(!selected.length);

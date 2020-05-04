@@ -24,7 +24,8 @@ Ext.define('Admin.view.main.Main', {
         render: 'onMainViewRender'
     },
     initComponent: function () {
-        var 
+        let 
+            me          = this,
             treeStore   = 'NavigationTreeMain',
             nameApp     = AppLang.getSMainMenu();
         switch (parseInt(Global.getData().user_type)) {
@@ -34,11 +35,11 @@ Ext.define('Admin.view.main.Main', {
                 Global.setDataDirGroup(Global.getData().dir_group);
             break;
             case 5: // Estudiantes
-                treeStore   = 'NavigationTreeEstudiantes';
+                treeStore   = 'NavigationTreeStudents';
                 nameApp     = AppLang.getSStudentMenu();
             break;
         }
-        this.items = [
+        me.items = [
             {
                 xtype   : 'toolbar',
                 cls     : 'sencha-dash-dash-headerbar shadow',
@@ -84,7 +85,7 @@ Ext.define('Admin.view.main.Main', {
                                 mainCard    = refs.mainCardPanel,
                                 msg;
                             ts.mask(AppLang.getSGenerating());
-                            Ext.onReady(function() {
+                            Ext.oneready(function() {
                                 me.onStore('general.YearStore');
                                 extra = {
                                     pYear : newValue
@@ -112,6 +113,130 @@ Ext.define('Admin.view.main.Main', {
                         }
                     },
                     '->',
+                    ,'-',
+                    {
+                        xtype       : 'badgebutton',
+                        badgeCls    : 'x-btn-badgeCls-green',
+                        tooltip     : 'Actividades',
+                        itemId      : 'activityButton',
+                        iconCls     : 'x-fa fa-spinner',
+                        initComponent   : function(){
+                            this.callParent(arguments);
+                            this.setVisible(parseInt(Global.getData().user_type) == 5 ? true : false);
+                        },
+                        listeners   : {
+                            scope       : this,
+                            afterrender : function (btn) {
+                                var
+                                    me      = this,
+                                    socket  = Global.getSocket(),
+                                    e       = Ext.getElementById('notif_docs');
+                                socket.on('receiveActivity',function (d) {
+                                    if(d.cfg.db == Global.getDbName()){
+                                        xsocket      = Global.getSocket();
+                                        xsocket.emit('querySelect',{
+                                            dataName    : Global.getDbName(),
+                                            fields      : 'COUNT(activity_id) total ',
+                                            table       : 'ta_shared_online_activities',
+                                            where       : 'enrollment_id = ? AND leido = ? ',
+                                            values      : [Global.getData().enrollment[0].id,0]
+                                        },(error, d)=>{
+                                            if (d) {
+                                                if (d.length > 0) {
+                                                    let val   = d[0].total,
+                                                        btn  = me.down('#activityButton');
+                                                    if (val > 0 ){
+                                                        cls  = 'x-btn-badgeCls';
+                                                        if (e) {
+                                                            e.play();
+                                                        }
+                                                    }else {
+                                                        cls  = 'x-btn-badgeCls-green';
+                                                    }
+                                                    btn.setBadgeCls(cls);
+                                                    btn.setBadgeText(val.toString());
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        },
+                        handler     : 'onStudentsActivities'
+                    },
+                    {
+                        xtype       : 'badgebutton',
+                        badgeCls    : 'x-btn-badgeCls-green',
+                        tooltip     : 'Evaluaciones',
+                        iconCls     : 'x-fa fa-question-circle',
+                        itemId      : 'evaluationButton',
+                        initComponent   : function(){
+                            this.callParent(arguments);
+                            this.setVisible(parseInt(Global.getData().user_type) == 5 ? true : false);
+                        },
+                        listeners   : {
+                            scope       : this,
+                            afterrender : function (btn) {
+                                var
+                                    me      = this,
+                                    e       = Ext.getElementById('notif_eval'),
+                                    socket  = Global.getSocket();
+                                socket.on('receiveEvaluation',function (d) {
+                                    console.log(d);
+                                    if(d.cfg.db == Global.getDbName()){
+                                        xsocket     = Global.getSocket();
+                                        xsocket.emit('querySelect',{
+                                            dataName    : Global.getDbName(),
+                                            fields      : 'COUNT(evaluation_id) total ',
+                                            table       : 'te_shared_evaluation',
+                                            where       : 'enrollment_id = ? AND eread = ? ',
+                                            values      : [Global.getData().enrollment[0].id,0]
+                                        },(error, d)=>{
+                                            if (d) {
+                                                if (d.length > 0) {
+                                                    let val   = d[0].total,
+                                                        btn  = me.down('#evaluationButton');
+                                                    if (val > 0 ){
+                                                        cls  = 'x-btn-badgeCls';
+                                                        if (e) {
+                                                            e.play();
+                                                        }
+                                                    }else {
+                                                        cls  = 'x-btn-badgeCls-green';
+                                                    }
+                                                    btn.setBadgeCls(cls);
+                                                    btn.setBadgeText(val.toString());
+                                                }
+                                            }
+                                        });
+                                    }
+                                });
+                            }
+                        },
+                        handler     : function (btn) {
+                            var
+                                app  = Admin.getApplication();
+                                app.onStore('estudiantes.EvaluacionesEstudiantesStore');
+                                win  = app.getWindow(null,'Admin.view.estudiantes.EvaluacionesEstudiantesView');
+                                app.onMsgClose();
+                                win.show();
+                        }                        
+                    },
+                    {
+                        xtype       : 'badgebutton',
+                        badgeCls    : 'x-btn-badgeCls-green',
+                        itemId      : 'emailButton',
+                        visible     : false,
+                        tooltip     : 'Correos recividos',
+                        handler     : function (btn) {
+                            var
+                                e  = Ext.getElementById('notif_email');
+                            if (e) {
+                                e.play();
+                            }
+                        },
+                        iconCls     : 'x-fa fa-envelope'
+                    },
                     {
                         xtype   : 'btnChat',
                         tooltip: AppLang.getSTootTipHelp()
@@ -193,6 +318,57 @@ Ext.define('Admin.view.main.Main', {
                 ]
             }
         ];
-        this.callParent(arguments);
+        me.callParent(arguments);
+
+        switch (parseInt(Global.getData().user_type)) {
+            case 5: // Estudiantes
+                socket      = Global.getSocket();
+                socket.emit('querySelect',{
+                    dataName    : Global.getDbName(),
+                    fields      : 'COUNT(evaluation_id) total ',
+                    table       : 'te_shared_evaluation',
+                    where       : 'enrollment_id = ? AND eread = ? ',
+                    values      : [Global.getData().enrollment[0].id,0]
+                },(error, d)=>{
+                    if (d) {
+                        if (d.length > 0) {
+                            var val   = d[0].total,
+                                btn  = me.down('#evaluationButton');
+                            if (val > 0 ){
+                                cls  = 'x-btn-badgeCls';
+                            }else {
+                                cls  = 'x-btn-badgeCls-green';
+                            }
+                            btn.setBadgeCls(cls);
+                            btn.setBadgeText(val.toString());
+                        }
+                    }
+                });
+
+                xsocket      = Global.getSocket();
+                xsocket.emit('querySelect',{
+                    dataName    : Global.getDbName(),
+                    fields      : 'COUNT(activity_id) total ',
+                    table       : 'ta_shared_online_activities',
+                    where       : 'enrollment_id = ? AND leido = ? ',
+                    values      : [Global.getData().enrollment[0].id,0]
+                },(error, d)=>{
+                    if (d) {
+                        if (d.length > 0) {
+                            var val   = d[0].total,
+                                btn  = me.down('#activityButton');
+                            if (val > 0 ){
+                                cls  = 'x-btn-badgeCls';
+                            }else {
+                                cls  = 'x-btn-badgeCls-green';
+                            }
+                            btn.setBadgeCls(cls);
+                            btn.setBadgeText(val.toString());
+                        }
+                    }
+                });
+            break;
+        }
+
     }
 });

@@ -8,6 +8,6 @@ Ext.define('Admin.store.estudiantes.NotasEstudiantesStore', {
     model		: 'Admin.model.docentes.NotasModel',
     pageSize	: 60,
     proxy: {
-		url	: 'c_estudiantes/get_notas'
+		url	: 'students/get_notas'
 	}
 });

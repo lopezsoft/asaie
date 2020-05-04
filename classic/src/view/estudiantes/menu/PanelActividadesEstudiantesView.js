@@ -75,10 +75,10 @@ Ext.define('Admin.view.estudiantes.menu.PanelActividadesEstudiantesView',{
                         var
                             app  = Admin.getApplication();
                         app.onMsgWait();
-                        Ext.require('Admin.view.estudiantes.MaterialEducativoEstudiantesView');
+                        Ext.require('Admin.view.estudiantes.StudentsActivities');
                         Ext.onReady(function () {
                             app.onStore('estudiantes.MaterialEducativoEstudiantesStore');
-                            win  = app.getWindow(null,'Admin.view.estudiantes.MaterialEducativoEstudiantesView');
+                            win  = app.getWindow(null,'Admin.view.estudiantes.StudentsActivities');
                             app.onMsgClose();
                             win.show();
                         });

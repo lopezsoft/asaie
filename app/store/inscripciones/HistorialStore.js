@@ -11,9 +11,9 @@ Ext.define('Admin.store.inscripciones.HistorialStore',{
 		},
         api: {
             create  : '',
-            read    : 'c_academico/get_select_historial',
+            read    : 'academic/get_select_historial',
             update  : '',
-            destroy : 'c_academico/get_force_delete_matricula'
+            destroy : 'academic/get_force_delete_matricula'
         }
     },
     requires: [

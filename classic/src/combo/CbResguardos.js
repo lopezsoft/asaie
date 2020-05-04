@@ -3,11 +3,15 @@ Ext.define('Admin.combo.CbResguardos',{
 	 requires: [
        'Admin.store.general.ResguardosStore'
     ],
-	alias	: 'widget.CbResguardos',
+    initComponent: function(){
+        Admin.getApplication().onStore('general.ResguardosStore');
+        this.callParent(arguments);
+    },
+	alias	    : 'widget.CbResguardos',
 	fieldLabel	: 'Resguardo',
 	name		: 'cod_resgua',
-    displayField: 'NOMB_RESG',
-    valueField	: 'COD_RESGUA',
+    displayField: 'nombre_resguardo',
+    valueField	: 'id',
     itemId		: 'CbResguardos',
 	reference 	: 'CbResguardos',
     publishes   : 'value',

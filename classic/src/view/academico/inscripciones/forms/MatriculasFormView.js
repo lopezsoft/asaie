@@ -3,35 +3,59 @@ Ext.define('Admin.view.academico.inscripciones.forms.MatriculasFormView' ,{
     alias 	: 'widget.matriculas',
     xtype 	: 'matriculas',
 	maximized	: false,
-	maxWdth		: 550,
+	maxWidth	: 750,
 	controller: 'academico',
 	initComponent: function () {
 		this.callParent(arguments);
 		this.setTitle(AppLang.getSTitleViewEnrollment());
 	},
-	onSave: function (btn) {
-		var
-			store 	= this.getStore(),
-			me 		= this.getController(),
-			sm		= Admin.getApplication();		
-		if (store) {
-			var win = this,
-				form 		= win.down('form'),
-				values 		= form.getValues(),
-				record 		= form.getRecord(),
-				dataGrid 	= Ext.ComponentQuery.query('InscripcionesView')[0].down('grid').getSelection()[0];
-			store = Ext.getStore(store);
-			if (dataGrid) {
-				values.id_student = dataGrid.get('id');
-				me.onDataSave(record, values, store, values, win);
-				xStore = Ext.getStore('HistorialStore')
-				xStore.reload();
-			} else {
-				sm.showResult('Debe seleccionar un estudiante.');
+	saveData	: function(storeName,reload){
+		var me 		= this.getApp(),
+			win		= this,
+			form    = win.down('form'),
+			record  = form.getRecord(),
+			values  = form.getValues(),
+			datastud= win.getRecord(),
+			store   = Ext.getStore(storeName);
+		if (record) { //Edición
+			if (store.getModifiedRecords().length > 0) {
+				win.mask('Guardando...');
 			}
-		}
+			record.set(values);
+			store.sync({
+				success : function(batch, o) {
+					me.showResult('Se han guardado los datos');
+					win.unmask();
+					if (reload == true){
+						store.reload();
+					}
+					win.close();
+				},
+				failure	: function (re) {
+					win.unmask();
+					store.rejectChanges();
+				}
+			});
+		}else{ // Insertar
+			win.mask('Guardando...');
+			values.id_student = datastud.get('id');
+			store.insert(0,values);
+			store.sync({
+				success : function(batch, o){
+					me.showResult('Se han guardado los datos');
+					win.unmask();
+					xStore = Ext.getStore('HistorialStore')
+					xStore.reload();
+					win.close();
+				},
+				failure	: function (re) {
+					store.rejectChanges();
+					win.unmask();
+				}
+			});
+		};
 	},
-	store	: 'MatriculasStore',
+	store			: 'MatriculasStore',
 	defaultFocus    : 'CbSedes',
     items : [
     	{

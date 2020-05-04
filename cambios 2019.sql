@@ -3941,5 +3941,41 @@ ALTER TABLE `obs_items_modelo_3`
 ALTER TABLE `users`
 	CHANGE COLUMN `message` `message` LONGTEXT NULL COLLATE 'utf8_general_ci' AFTER `lectur`;
 
-INSERT INTO `user_types` (`id`, `name`, `description`, `active`, `timestamp`) VALUES (5, 'Estudiantes', NULL, 1, '2019-11-30 07:31:36');
-INSERT INTO `user_types` (`id`, `name`, `description`, `active`, `timestamp`) VALUES (7, 'Familiares', NULL, 1, '2019-11-30 07:31:56');
+INSERT IGNORE INTO `user_types` (`id`, `name`, `description`, `active`, `timestamp`) VALUES (5, 'Estudiantes', NULL, 1, '2019-11-30 07:31:36');
+INSERT IGNORE INTO `user_types` (`id`, `name`, `description`, `active`, `timestamp`) VALUES (7, 'Familiares', NULL, 1, '2019-11-30 07:31:56');
+
+
+ALTER TABLE `te_shared_evaluation`
+	CHANGE COLUMN `read` `eread` TINYINT(1) NOT NULL DEFAULT '0' AFTER `enrollment_id`;
+
+ALTER TABLE `ta_online_activities_history`
+	CHANGE COLUMN `id_material` `shared_activity_id` BIGINT(20) NOT NULL AFTER `id`,
+	DROP COLUMN `id_matric`,
+	DROP INDEX `id_matric`,
+	DROP INDEX `id_material`,
+	ADD INDEX `shared_activity_id` (`shared_activity_id`);
+ALTER TABLE `ta_online_activities_history`
+	ADD CONSTRAINT `FK_ta_online_activities_history_ta_shared_online_activities` FOREIGN KEY (`shared_activity_id`) REFERENCES `ta_shared_online_activities` (`id`) ON UPDATE CASCADE;
+
+CREATE TABLE `ta_comments_activities` (
+	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`shared_activity_id` BIGINT(20) NOT NULL,
+	`comment_activity` MEDIUMTEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`comment_title` VARCHAR(120) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`url_attached` VARCHAR(200) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
+	`mime` VARCHAR(200) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
+	`hour_comment` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+	`type_comment` TINYINT(1) NOT NULL DEFAULT '0',
+	`state` TINYINT(1) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `shared_activity_id` (`shared_activity_id`) USING BTREE,
+	CONSTRAINT `FK_ta_comments_activities_ta_shared_online_activities` FOREIGN KEY (`shared_activity_id`) REFERENCES `asaie`.`ta_shared_online_activities` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT
+)
+COMMENT='Comentarios de las actividades'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+ALTER TABLE `users`
+	DROP INDEX `username`,
+	ADD UNIQUE INDEX `user_type_username` (`user_type`, `username`);

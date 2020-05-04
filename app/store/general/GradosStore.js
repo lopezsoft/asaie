@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 5/12/2015.
- */
 Ext.define('Admin.store.general.GradosStore',{
     extend  : 'Admin.store.base.StoreApi',
     storeId : 'GradosStore',

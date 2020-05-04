@@ -76,7 +76,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
 					};
 
 					Ext.Ajax.request({
-						url: gb.SetUrls.UrlBase + 'c_academico/get_mover_estudiantes',
+						url: gb.SetUrls.UrlBase + 'academic/get_mover_estudiantes',
 						params: param,
 						success: function (response, opts) {
 							store.reload();
@@ -393,7 +393,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
                             pdbGradoMove: cgrado
                         };
                         Ext.Ajax.request({
-                            url: Global.getUrlBase() + 'c_academico/get_mover_estudiantes',
+                            url: Global.getUrlBase() + 'academic/get_mover_estudiantes',
                             params: param,
                             success: function (response, opts) {
                                 store.reload();
@@ -485,7 +485,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
                             pdbGrado: grado
                         },
                         api: {
-                            create		: 'c_academico/get_add_asignaturas',
+                            create		: 'academic/get_add_asignaturas',
                             read		: 'General/get_select',
                             update		: 'General/update_data',
                             destroy		: 'General/delete_data'
@@ -669,7 +669,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
                 };
             };
 
-            win2.urlPhoto 	= me.getUrlBase()+'c_academico/insert_archivos_digitales';
+            win2.urlPhoto 	= me.getUrlBase()+'academic/insert_archivos_digitales';
             win2.extParam	= extParam;
             win2.show();
         });
@@ -683,8 +683,8 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
         var win = Ext.create({
             xtype       : 'WebcamView',
             title       : 'Captura de imagen por Webcam',
-            pathReadFile    : 'c_academico/read_images',
-            pathUploadFile  : 'c_academico/upload_foto_webcam',
+            pathReadFile    : 'academic/read_images',
+            pathUploadFile  : 'academic/upload_foto_webcam',
             titlePanelLoad  : 'Capturar',
             titlePanelView  : 'Mis imágenes',
             textButtonApply : 'Aceptar',
@@ -710,8 +710,8 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
         var win = Ext.create({
             xtype       : 'FilesView',
             title       : 'Seleccionar archivo',
-            pathReadFile    : 'c_academico/read_files_dig_est',
-            pathUploadFile  : 'c_academico/upload_files_dig_est',
+            pathReadFile    : 'academic/read_files_dig_est',
+            pathUploadFile  : 'academic/upload_files_dig_est',
             titlePanelLoad  : 'Subir archivos',
             titlePanelView  : 'Mis archivos',
             textButtonLoad  : 'Seleccionar una archivo en el equipo',
@@ -867,28 +867,18 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
     onViewIscripciones : function (btn) {
         Ext.create('Admin.view.academico.inscripciones.InscripcionesView').show();
     },
-    onSaveMatricula : function (btn) {
-        var win     = btn.up('window'),
-            form    = win.down('form'),
-            record  = form.getRecord(),
-            values  = form.getValues(),
-            store   = Ext.getStore('MatriculasStore'),
-            me      = this,
-            dataGrid= Ext.ComponentQuery.query('InscripcionesCrudView')[0].down('grid').getSelection()[0];
-			values.id   = dataGrid.get('id');
-        me.onDataSave(record, values, store, values, win);
-    },
     onMatricula : function (btn) {
         var 
             me  = Admin.getApplication(),
             ts  = btn.up('window');
         var
-            data    = btn.up('window').down('#gridMat').getSelection()[0],
+            data    = ts.down('#gridMat').getSelection()[0],
             xparam  = {
                 pdbTable    : 'student_enrollment',
                 id          : btn.itemId == 'btnNewMat' ? 0 :  data.get('id')
             },
-        store   = Ext.getStore('MatriculasStore');
+            store   = Ext.getStore('MatriculasStore'),
+            record  = ts.down('#studentgrid').getSelection()[0];
         me.setParamStore('MatriculasStore',xparam,false);
         ts.mask(AppLang.getSMsgLoading());
         store.load({
@@ -914,6 +904,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
                             form.down('#inst_address').setReadOnly(true);
                         }
                     }
+                    win.setRecord(record);
                     win.setAlwaysOnTop(true).show();
                 };
             }

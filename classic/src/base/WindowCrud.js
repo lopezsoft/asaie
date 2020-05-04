@@ -84,6 +84,9 @@ Ext.define('Admin.base.WindowCrud' ,{
 			if(me.getRecord()){
 				me.getWinObject().setRecord(me.getRecord());
 			}
+			if(me.getRecords()){
+				me.getWinObject().setRecords(me.getRecords());
+			}
 			me.getWinObject().show();
 		}
 	},
@@ -181,7 +184,6 @@ Ext.define('Admin.base.WindowCrud' ,{
 
     doDestroy: function () {
         Ext.un(this.resizeListeners);
-
         this.callParent();
     },
 

@@ -1,21 +1,18 @@
-/**
- * Created by LOPEZSOFT on 25/01/2016.
- */
-Ext.define('Admin.store.estudiantes.MaterialEducativoEstudiantesStore',{
+Ext.define('Admin.store.estudiantes.StudentsActivitiesStore',{
     extend  : 'Admin.store.base.StoreApi',
-    storeId : 'MaterialEducativoEstudiantesStore',
+    storeId : 'StudentsActivitiesStore',
     requires : [
         'Admin.model.estudiantes.MaterialEducativoEstudiantesModel'
     ],
     model   : 'Admin.model.estudiantes.MaterialEducativoEstudiantesModel',
     proxy : {
         extraParams : {
-            pdbTable    : 'material_educ_compartido'
+            pdbTable    : 'ta_shared_online_activities'
         },
         api: {
             create  : '',
-            read    : 'c_estudiantes/get_select_material_educ',
-            update  : 'General/update_data',
+            read    : 'students/getStudentsActivities',
+            update  : 'master/updateData',
             destroy : ''
         }
     }

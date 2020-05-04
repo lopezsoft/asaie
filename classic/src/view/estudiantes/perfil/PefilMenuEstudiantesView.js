@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 18/05/2016.
- */
 Ext.define('Admin.view.estudiantes.perfil.PefilMenuEstudiantesView',{
     extend  : 'Admin.base.WinMenu',
     alias   : 'widget.PefilMenuEstudiantesView',
@@ -36,8 +33,8 @@ Ext.define('Admin.view.estudiantes.perfil.PefilMenuEstudiantesView',{
                                     var win = Ext.create({
                                         xtype       : 'FilesView',
                                         title       : 'Seleccionar foto de Perfil del estudiante',
-                                        pathReadFile    : 'c_estudiantes/read_images',
-                                        pathUploadFile  : 'c_estudiantes/upload_foto',
+                                        pathReadFile    : 'students/read_images',
+                                        pathUploadFile  : 'students/upload_foto',
                                         titlePanelLoad  : 'Subir foto',
                                         titlePanelView  : 'Mis fotos',
                                         textButtonLoad  : 'Seleccionar una foto en el equipo',

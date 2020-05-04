@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 25/01/2016.
- */
 Ext.define('Admin.model.estudiantes.MaterialEducativoEstudiantesModel',{
     extend  : 'Admin.model.base.BaseModel',
     fields  : [
@@ -13,6 +10,12 @@ Ext.define('Admin.model.estudiantes.MaterialEducativoEstudiantesModel',{
         { name: 'jornada'},
         { name: 'nombre'},
         { name: 'descripcion'},
+        { name: 'nombre'},
+        { name: 'comment_activity'},
+        { name: 'comment_title'},
+        { name: 'type_comment'},
+        { name: 'docente'},
+        { name: 'estudiante'},
         { name: 'asignatura'},
         { name: 'url_video'},
         { name: 'url_archivo'},

@@ -1,9 +1,6 @@
-/**
- * Created by LOPEZSOFT2 on 23/09/2016.
- */
-Ext.define('Admin.view.admin.DirGruposView',{
-    extend  : 'Admin.base.WindowCrud',
-    alias   : 'widget.DirGruposView',
+Ext.define('Admin.view.admin.GroupManagers',{
+    extend  : 'Admin.forms.CustomForm',
+    alias   : 'widget.groupmanagers',
     requires: [
         'Admin.store.general.GradosStore',
         'Admin.store.admin.DirGrupoStore'
@@ -11,94 +8,22 @@ Ext.define('Admin.view.admin.DirGruposView',{
     controller      : 'admin',
     showSaveButton  : false,
     initComponent   : function () {
-        this.callParent(arguments);
-        this.setTitle(AppLang.getSTitleViewGroupDirectors());
-    },
-    buildWindow: function () {
-        var
-            me = this.getApp();
+        let me  = Admin.getApplication();
         me.onStore('general.GradosStore');
+        me.onStore('general.GradesAllStore');
         me.onStore('general.GrupoStore');
         me.onStore('general.SedesStore');
         me.onStore('general.JornadasStore');
+        me.onStore('admin.DirGrupoStore');
         me.onStore('admin.DocentesDirGrupoStore');
-        this.winObject = Ext.create('Admin.view.admin.forms.DirGrupoFormView');
+        this.callParent(arguments);
+        this.setTitle(AppLang.getSTitleViewGroupDirectors());
     },
-    showWindow: function (btn) {
-        var me = this.app,
-            ts = this;
-        Ext.require([
-            'Admin.view.admin.forms.DirGrupoFormView'
-        ]);
-
-        Ext.onReady(function () {
-            if (!ts.getWinObject()) {
-                ts.buildWindow();
-            }
-            ts.winObject.show();
-        });
-    },
-    layout: {
-        type: 'hbox',
-        align: 'stretch'
-    },
+    modalView   : 'Admin.view.admin.forms.SaveGroupManagers',
     items : [
         {
             xtype   : 'customgrid',
-            selModel: 'rowmodel',
-            plugins		: [
-                {
-                    ptype : 'gridfilters'
-                },
-                {
-                    ptype : 'responsive'
-                }
-            ],
-            listeners : {
-                'selectionchange': function(grid, selected, eOpts) {
-                    var me      = Admin.getApplication(),
-                        extra   = [];
-                    if (!Ext.isEmpty(selected)) {
-                        gdo = selected[0].get('id');
-                        extra = {
-                            pdbTable: 'dir_grupo',
-                            pdbGrado: gdo
-                        };
-                        me.setParamStore('DirGrupoStore', extra, true);
-                    }
-
-                }
-            },
-            collapseFirst       : true,
-            collapseDirection   : 'right',
-            collapseMode        : 'undefined',
-            collapsible         : true,
-            title   : 'GRADOS ACADÉMICOS',
-            store   : 'GradosStore',
-            margin  : '0 3 0 0',
-            width   : 300,
-            columns: [
-                {
-                    xtype: 'customrownumberer'
-                },
-                {
-                    text        : 'Grados',
-                    dataIndex   : 'grado',
-                    flex        : 1,
-                    filter  : 'string'
-                }
-            ],
-            dockedItems: [
-                {
-                    xtype: 'pagination',
-                    itemId: 'pToolbar'
-                }
-            ]
-        },
-        {
-            xtype   : 'customgrid',
-            flex    : 2,
-            title   : 'DIRECTORES DE GRUPO',
+            // title   : 'DIRECTORES DE GRUPO',
             store   : 'DirGrupoStore',
             plugins		: [
                 {
@@ -201,8 +126,7 @@ Ext.define('Admin.view.admin.DirGruposView',{
                     ]
                 },
                 {
-                    xtype: 'pagination',
-                    itemId: 'pToolbar'
+                    xtype: 'pagination'
                 }
             ]
         }

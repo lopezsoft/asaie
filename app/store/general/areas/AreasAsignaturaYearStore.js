@@ -14,7 +14,7 @@ Ext.define('Admin.store.general.AreasAsignaturaYearStore', {
         },
         api: {
             create  : 'General/insert_data',
-            read    : 'c_academico/get_select_asignaturas_year',
+            read    : 'academic/get_select_asignaturas_year',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

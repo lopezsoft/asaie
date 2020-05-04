@@ -14,7 +14,7 @@ Ext.define('Admin.store.general.AsignaturaStore', {
         },
         api: {
             create  : 'General/insert_data',
-            read    : 'c_academico/get_select_asignaturas',
+            read    : 'academic/get_select_asignaturas',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

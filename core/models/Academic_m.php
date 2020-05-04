@@ -1,6 +1,6 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class M_academico extends SME_Model {
+class Academic_m extends SME_Model {
 	function __construct() {
 		parent::__construct();
 	}
@@ -533,9 +533,6 @@ class M_academico extends SME_Model {
 	
 	function insert_inscripciones($list){
 		$lista = json_decode($list);		
-		$extra = array(
-			'year'	=> $this->get_year()
-		);		
 		$result = '';		
 		$doc	= $lista->nro_documento;	
 		$db		= $this->get_db_name();	
@@ -545,35 +542,41 @@ class M_academico extends SME_Model {
 		$this->db->limit(1);		
 		$query_sel	= $this->db->get();
 		if ($query_sel){
-			if ($query_sel->num_rows() > 0){
-				$this->db->select("*,CONCAT(RTRIM(apellido1),' ',RTRIM(apellido2),' ',RTRIM(nombre1),' ',RTRIM(nombre2)) AS nombres");
-				$this->db->from($db.'.inscripciones');				
-				$this->db->where('nro_documento', $doc);
-				$this->db->limit(1);
-				$this->db->order_by('nombres');
-				$query_ins	= $this->db->get();
-
-				$lista->id_student = $query_sel->row('id');				
-				$query	= $this->insert_data_primary('student_enrollment',$lista,$extra,FALSE);				
-				$result = $this->get_request_select($query_ins->result_array(),1);
-			}else{					
+			try {
 				$this->trans_start();	
-
-				$id = $this->insert_data_primary('inscripciones',$lista,null,TRUE);					
-				$lista->id_student = $id;			
-				$query	= $this->insert_data_primary('student_enrollment',$lista,$extra,FALSE);
-				$this->trans_complete();				
-				if ($this->trans_status()){
+				if ($query_sel->num_rows() > 0){
 					$this->db->select("*,CONCAT(RTRIM(apellido1),' ',RTRIM(apellido2),' ',RTRIM(nombre1),' ',RTRIM(nombre2)) AS nombres");
 					$this->db->from($db.'.inscripciones');				
-					$this->db->where('id', $id);
+					$this->db->where('nro_documento', $doc);
 					$this->db->limit(1);
-					$this->db->order_by('nombres');				
+					$this->db->order_by('nombres');
 					$query_ins	= $this->db->get();
-					$result 	= $this->get_request_select($query_ins->result_array(),1);
-				}else{
-					$result = $this->getError();
+
+					$lista->id_student = $query_sel->row('id');				
+					$this->insertData('student_enrollment',$lista,'id',NULL);			
+					$this->trans_commit();	
+					$result = $this->getJsonResponse($query_ins->result_array(),1);
+				}else{					
+
+					$id = $this->insertData('inscripciones',$lista,'id',NULL,TRUE);					
+					$lista->id_student = $id;			
+					$this->insertData('student_enrollment',$lista,'id',NULL);
+					$this->trans_complete();				
+					if ($this->trans_status()){
+						$this->db->select("*,CONCAT(RTRIM(apellido1),' ',RTRIM(apellido2),' ',RTRIM(nombre1),' ',RTRIM(nombre2)) AS nombres");
+						$this->db->from($db.'.inscripciones');				
+						$this->db->where('id', $id);
+						$this->db->limit(1);
+						$this->db->order_by('nombres');				
+						$query_ins	= $this->db->get();
+						$result 	= $this->getJsonResponse($query_ins->result_array(),1);
+					}else{
+						$result = $this->getError();
+					}
 				}
+			} catch (Exception $e) {
+				$this->trans_rollback();
+				$result = $this->getError();
 			}
 		}else{
 			$result = $this->getError();
