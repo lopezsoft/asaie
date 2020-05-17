@@ -149,7 +149,7 @@ Ext.define('Admin.view.academico.ConstanciasView',{
                             }
                         },'-',
                         {
-                            xtype       : 'radioGroup',
+                            xtype       : 'customradiogroup',
                             columns     : 2,
                             vertical    : false,
                             itemId      : 'rdGroup',

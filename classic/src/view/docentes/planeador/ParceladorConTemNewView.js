@@ -21,7 +21,7 @@ Ext.define('Admin.view.docentes.ParceladorConTemNewView', {
                     itemId		: 'comboTipoConTem'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     fieldLabel  : 'Descripción',
                     name        : 'descripcion'
                 }

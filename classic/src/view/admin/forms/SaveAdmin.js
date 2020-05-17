@@ -96,7 +96,7 @@ Ext.define('Admin.view.admin.forms.SaveAdmin' ,{
 							allowBlank 	: true
 						},
 						{
-							xtype		: 'radioGroup',
+							xtype		: 'customradiogroup',
 							columns		: 2,
 							fieldLabel	: 'Estado',
 							items		: [

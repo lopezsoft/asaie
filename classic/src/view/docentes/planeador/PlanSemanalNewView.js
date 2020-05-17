@@ -9,7 +9,7 @@ Ext.define('Admin.view.docentes.PlanSemanalNewView', {
     items: [
         {
             xtype : 'customform',
-            defaultType     :'textAreaField',
+            defaultType     :'customtextarea',
             items : [
                 {
                     xtype 		: 'CbGrados',

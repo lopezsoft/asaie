@@ -196,7 +196,7 @@ class M_jreport extends SME_Model {
 	  	$this->p_img_right	= $this->directory_path.$delim.SCHOOL_DIRECTORY.$delim.$this->get_school_folder().
 	  	$delim.'resources'.$delim.'img'.$delim.$this->logo_report;
 	  	$this->p_img_left	= $this->directory_path.$delim.SCHOOL_DIRECTORY.$delim.$this->get_school_folder().
-	  	$delim.'resources'.$delim.'img'.$delim.$this->school_logo;;
+	  	$delim.'resources'.$delim.'img'.$delim.$this->school_logo;
 	  	$this->p_escudo		= $this->directory_path.$delim.SCHOOL_DIRECTORY.$delim.$this->get_school_folder().
 	  	$delim.'resources'.$delim.'img'.$delim.$this->shield;;
 	  	
@@ -570,6 +570,7 @@ class M_jreport extends SME_Model {
 	* @return
 	*/	
 	public function get_report_export ($report_name, $report_name_export, $format, $query, $param = NULL,$g="") {
+
 		//Reporte a Procesar : Este nombre es del reporte creado en JasReport
 		$name_report	=	$report_name;		
 		// Nombre dado al informe de salida
@@ -586,6 +587,7 @@ class M_jreport extends SME_Model {
 			
 		//Parametro en caso de que el reporte no este parametrizado		
 		$escala	= $this->escala($g);
+		$this->set_report_params();
 		if($param == NULL){			
 			$parm	= array(
 				'SQL_PARAM' 	=> $query,
@@ -649,14 +651,22 @@ class M_jreport extends SME_Model {
 	}
 
 	public function set_report_params () {	
-		$db	= $this->get_db_name();		
-		$query	= $this->db->get($db.".encabezado_reportes");	
+		$db			= $this->get_db_name();		
+		$query		= $this->db->get($db.".encabezado_reportes");	
+		$imgleft	= $this->directory_path.PATH_DELIM.$query->row('logo');
+		$imgright	= $this->directory_path.PATH_DELIM.$query->row('escudo');
+		if(file_exists($imgleft)){
+			$this->p_img_left	= $imgleft;
+		}
+		if(file_exists($imgright)){
+			$this->p_img_right	= $imgright;
+		}
 		$this->p_title		= $query->row('encabezado');
  		$this->p_nit		= $query->row('dane');
  		$this->p_dane		= $query->row('dni');
 		$this->p_footer		= $query->row('pie'); 
 		$this->p_resol		= $query->row('resolucion');
-		$this->p_marketing	= SOFT_NAME.' - '.FOOTER_EMAIL_SME.' - '.FOOTER_MOVIL_SME.' - '.FOOTER_WEB_SME;
+		$this->p_marketing	= SOFT_NAME.' - '.FOOTER_EMAIL_SME.' - '.FOOTER_WEB_SME;
 	}	
 }
 

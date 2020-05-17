@@ -88,7 +88,7 @@ Ext.define('Admin.Application', {
                     Global.setDbConfig(result.data.config);
                     me.setMainView('Admin.view.main.Main');
                     mainView = me.getMainView();
-                    mainView.getController().redirectTo((localStorage.getItem('currentRoute')) ? localStorage.getItem('currentRoute') : 'dashboard', true);
+                    mainView.getController().redirectTo('dashboard', true);
                     toastr.options = {
                         "closeButton": false,
                         "debug": false,

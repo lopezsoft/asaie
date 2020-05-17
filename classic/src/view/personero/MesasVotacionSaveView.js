@@ -10,7 +10,7 @@ Ext.define('Admin.view.personero.MesasVotacionSaveView',{
     items   : [
         {
             xtype   : 'customform',
-            defaultType : 'textAreaField',
+            defaultType : 'customtextarea',
             items   : [
                 {
                     fieldLabel  : 'Nombre de la mesa',

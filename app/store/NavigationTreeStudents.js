@@ -24,19 +24,21 @@ Ext.define('Admin.store.NavigationTreeStudents', {
                     routeId     : 'studentnotes',
                     viewType    : 'studentnotes'
                 },
-                {
-                    text        : 'Nivelaciones',
-                    iconCls     : 'x-fa fa-thumbs-up',
-                    leaf        : true
-                },
-                {
-                    text        : 'Seguimiento académico',
-                    iconCls     : 'x-fa fa-eye',
-                    leaf        : true
-                },
+                // {
+                //     text        : 'Nivelaciones',
+                //     iconCls     : 'x-fa fa-thumbs-up',
+                //     leaf        : true
+                // },
+                // {
+                //     text        : 'Seguimiento académico',
+                //     iconCls     : 'x-fa fa-eye',
+                //     leaf        : true
+                // },
                 {
                     text        : 'Actividades académicas',
                     iconCls     : 'x-fa fa-spinner',
+                    routeId     : 'academicactivities',
+                    viewType    : 'academicactivitiesstudents',
                     leaf        : true
                 }
             ]

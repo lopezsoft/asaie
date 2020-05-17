@@ -1,12 +1,10 @@
-/**
- * Created by LOPEZSOFT on 25/01/2016.
- */
-Ext.define('Admin.model.estudiantes.EvaluacionesEstudiantesModel',{
+
+Ext.define('Admin.model.estudiantes.StudentsEvaluationsModel',{
     extend  : 'Admin.model.base.BaseModel',
     fields  : [
         { name: 'id'},
-        { name: 'id_matric'},
-        { name: 'id_evaluacion'},
+        { name: 'enrollment_id'},
+        { name: 'evaluation_id'},
         { name: 'docente'},
         { name: 'grado'},
         { name: 'grupo'},
@@ -28,6 +26,6 @@ Ext.define('Admin.model.estudiantes.EvaluacionesEstudiantesModel',{
         { name: 'column_nota'},
         { name: 'id_column_nota', type : 'int'},
         { name: 'periodo'},
-        { name: 'leida', type : 'bool'}
+        { name: 'eread', type : 'bool'}
     ]
 });

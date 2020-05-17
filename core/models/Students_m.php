@@ -85,9 +85,11 @@ class Students_m extends SME_Model {
 		$query	= "SELECT * FROM te_evaluaciones_estudiantes WHERE id_evaluacion_compartida=".$id;
 		return	$this->get_query($this->limit_min,$this->limit_max,$query);
 	}
-	public function get_select_evaluaciones() {		
-		$param	= "'".$this->get_id_school()."','".$this->get_year()."','".$this->get_get_idmatric()."'";
-		return $this->get_call('sp_select_evaluacion_estudiantes',$param);
+	public function getStudentsEvaluations() {		
+		$param	= array(
+			$this->get_get_idmatric()
+		);
+		return $this->getExecute('sp_select_students_evaluations(?)',$param);
 	}
 	public function getStudentsActivities() {		
 		$param	= array(
@@ -99,9 +101,9 @@ class Students_m extends SME_Model {
 	public function get_notas(){
 		$id			= $this->get_get_idmatric();
 		$param 		= array(
-				$this->get_year(),
-				$id
-			);
+			$id,
+			$this->get_year()
+		);
 		return $this->getExecute('sp_select_notas_academicas_estudiante (?, ?) ',$param);
 	}
 	

@@ -26,7 +26,7 @@ Ext.define('Admin.view.configuraciones.SaveProyCuposView',{
                     fieldLabel  : 'Total cupos'
                 },
                 {
-                    xtype       : 'radioGroup',
+                    xtype       : 'customradiogroup',
                     fieldLabel  : 'Tipo proyección',
                     items       : [
                         {

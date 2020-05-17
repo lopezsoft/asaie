@@ -7,6 +7,19 @@ class M_login extends SME_Model {
 		{
 			parent::__construct();
 		}
+
+		function getCurrentUser(){
+			$sess   = $this->session;
+			$db		= $sess->userdata('db_name');
+			$this->user_id	= $sess->userdata('user_id');
+
+			$this->db->select('id,user_type,names, last_name,username,email,image,mime');
+			$this->db->from($db.'.users');
+			$this->db->where('id', $this->user_id);
+			$user	= $this->db->get();
+
+			return $this->getJsonResponse($user->result(), $user->num_rows());
+		}
 		
 		function get_user() {
 			$sess   = $this->session;
@@ -96,9 +109,12 @@ class M_login extends SME_Model {
 				$this->db->where('user_type', $type);
 				$re		= $this->db->get($row->database_name.'.users', 1);
 				$re		= $re->row();
-				
-				$user_type	= $re->user_type;
-				$request = $this->getLogin($user,$pass,$year,$inst,$user_type);
+				if($re){
+					$user_type	= $re->user_type;
+					$request 	= $this->getLogin($user,$pass,$year,$inst,$user_type);
+				}else{
+					$request	= $this->error_success();
+				}
 			}else{
 				 $request = $this->getError();
 			}						

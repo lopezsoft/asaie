@@ -10,11 +10,11 @@ Ext.define('Admin.view.estudiantes.home.StudentsDashboard', {
     items   : [
         {
             xtype           : 'widget-a',
-            userCls         : 'small-100 big-40'
+            userCls         : 'small-100 big-100'
         },
         {
             xtype           : 'teacherscourses',
-            userCls         : 'small-100 big-60'
+            userCls         : 'small-100 big-100'
         }
     ]
 });

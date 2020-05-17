@@ -8,7 +8,7 @@ Ext.define('Admin.view.configuraciones.AspectosObservadorSaveView',{
     alias       : 'widget.aspectososervadorsaveview',
     maxHeight	: 350,
     maxWidth    : 500,
-    defaultFocus: 'textAreaField',
+    defaultFocus: 'customtextarea',
     store       : 'AspectosObservadorStore',
     initComponent: function () {
         this.callParent(arguments);
@@ -24,7 +24,7 @@ Ext.define('Admin.view.configuraciones.AspectosObservadorSaveView',{
                     name    : 'id_modelo'
                 },
                 {
-                    xtype   : 'textAreaField',
+                    xtype   : 'customtextarea',
                     name    : 'descripcion',
                     fieldLabel  : 'Descripción',
                     labelAlign  : 'top'
@@ -35,7 +35,7 @@ Ext.define('Admin.view.configuraciones.AspectosObservadorSaveView',{
                     name        : 'convivencia'
                 },
                 {
-                    xtype       : 'radioGroup',
+                    xtype       : 'customradiogroup',
                     fieldLabel  : 'Activo',
                     items       : [
                         {

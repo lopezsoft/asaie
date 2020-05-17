@@ -29,8 +29,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  		$id	= $this->input->get_post('pdbIdEva');
 		echo $this->Students_m->get_select_evaluaciones_estudiantes($id);
 	} 
- 	public function get_select_evaluaciones(){
-		echo $this->Students_m->get_select_evaluaciones();
+ 	public function getStudentsEvaluations(){
+		echo $this->Students_m->getStudentsEvaluations();
 	} 
  	public function getStudentsActivities(){
 		echo $this->Students_m->getStudentsActivities();

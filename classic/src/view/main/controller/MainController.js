@@ -141,6 +141,13 @@ Ext.define('Admin.view.main.MainController', {
         this.redirectTo('studentsactivities', true);
     },
 
+    onStudentsEvaluations : function(){
+        this.redirectTo('studentsevaluations', true);
+    },
+
+    onProfile   : function(){
+        this.redirectTo('profile', true);
+    },
     onToolBarChange : function(){
         this.redirectTo("dashboard");
     }

@@ -40,6 +40,11 @@ Ext.define('Admin.view.main.Main', {
             break;
         }
         me.items = [
+            // {
+            //     xtype   : 'toolbar',
+            //     cls     : 'sencha-dash-dash-headerbar shadow',
+            //     height  : 64
+            // },
             {
                 xtype   : 'toolbar',
                 cls     : 'sencha-dash-dash-headerbar shadow',
@@ -85,30 +90,28 @@ Ext.define('Admin.view.main.Main', {
                                 mainCard    = refs.mainCardPanel,
                                 msg;
                             ts.mask(AppLang.getSGenerating());
-                            Ext.oneready(function() {
-                                me.onStore('general.YearStore');
-                                extra = {
-                                    pYear : newValue
-                                };
-                                store = Ext.getStore('YearStore');
-                                me.setParamStore('YearStore',extra,false);
-                                store.load({
-                                    scope: this,
-                                    callback: function(records, operation, success) {
-                                        ts.unmask();
-                                        if (success){
-                                            Global.setYear(newValue);
-                                            msg = AppLang.getSDbChangeYear();
-                                            if(mainCard){
-                                                mainCard.removeAll(true);
-                                            }
-                                            ts.getController().redirectTo((localStorage.getItem('currentRoute')) ? localStorage.getItem('currentRoute') : 'dashboard',true);
-                                        }else {
-                                            msg = AppLang.getSDbNotChangeYear();
-                                        };
-                                        me.showResult(msg);
-                                    }
-                                });
+                            me.onStore('general.YearStore');
+                            extra = {
+                                pYear : newValue
+                            };
+                            store = Ext.getStore('YearStore');
+                            me.setParamStore('YearStore',extra,false);
+                            store.load({
+                                scope: this,
+                                callback: function(records, operation, success) {
+                                    ts.unmask();
+                                    if (success){
+                                        Global.setYear(newValue);
+                                        msg = AppLang.getSDbChangeYear();
+                                        if(mainCard){
+                                            mainCard.removeAll(true);
+                                        }
+                                        ts.getController().redirectTo((localStorage.getItem('currentRoute')) ? localStorage.getItem('currentRoute') : 'dashboard',true);
+                                    }else {
+                                        msg = AppLang.getSDbNotChangeYear();
+                                    };
+                                    me.showResult(msg);
+                                }
                             });
                         }
                     },
@@ -182,7 +185,6 @@ Ext.define('Admin.view.main.Main', {
                                     e       = Ext.getElementById('notif_eval'),
                                     socket  = Global.getSocket();
                                 socket.on('receiveEvaluation',function (d) {
-                                    console.log(d);
                                     if(d.cfg.db == Global.getDbName()){
                                         xsocket     = Global.getSocket();
                                         xsocket.emit('querySelect',{
@@ -213,14 +215,7 @@ Ext.define('Admin.view.main.Main', {
                                 });
                             }
                         },
-                        handler     : function (btn) {
-                            var
-                                app  = Admin.getApplication();
-                                app.onStore('estudiantes.EvaluacionesEstudiantesStore');
-                                win  = app.getWindow(null,'Admin.view.estudiantes.EvaluacionesEstudiantesView');
-                                app.onMsgClose();
-                                win.show();
-                        }                        
+                        handler     : 'onStudentsEvaluations'                     
                     },
                     {
                         xtype       : 'badgebutton',
@@ -262,7 +257,7 @@ Ext.define('Admin.view.main.Main', {
                         width   : 32,
                         alt     : AppLang.getSToolTipUserProfile(),
                         itemId  : 'imgUser',
-                        src     : Global.getAvatarUnknoun(),
+                        src     : (Ext.isEmpty(Global.getData().user_data[0].image)) ? Global.getAvatarUnknoun() : Global.getData().user_data[0].image,
                         imgCls  : 'avatar-background',
                         tooltip : AppLang.getSToolTipUserProfile()
                     },
@@ -272,7 +267,8 @@ Ext.define('Admin.view.main.Main', {
                         menu    : [
                             {
                                 text    : 'Perfíl',
-                                iconCls : 'far fa-id-badge'
+                                iconCls : 'far fa-id-badge',
+                                handler : 'onProfile'
                             },'-',
                             {
                                 text    : 'Salir',

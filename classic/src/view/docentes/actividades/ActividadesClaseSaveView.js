@@ -6,14 +6,14 @@ Ext.define('Admin.view.docentes.ActividadesClaseSaveView',{
     alias  	: 'widget.ActividadesClaseSaveView',
     width	: 580,
     height	: 250,
-    defaultFocus    : 'textAreaField',
+    defaultFocus    : 'customtextarea',
     controller : 'actividades',
     items 	: [
         {
             xtype 	: 'customform',
             items : [
                 {
-                    xtype 	    : 'textAreaField',
+                    xtype 	    : 'customtextarea',
                     name 	    : 'actividad',
                     fieldLabel	: 'Descripción de la actividad'
                 },

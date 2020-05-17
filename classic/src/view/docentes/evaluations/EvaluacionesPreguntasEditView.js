@@ -6,7 +6,7 @@ Ext.define('Admin.view.docentes.EvaluacionesPreguntasEditView',{
     alias  	: 'widget.EvaluacionesPreguntasEditView',
     width	: 700,
     height	: 550,
-    defaultFocus    : 'textAreaField',
+    defaultFocus    : 'customtextarea',
     controller      : 'actividades',
     itemsCount      : 0,
     defaultListenerScope: true,

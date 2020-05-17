@@ -10,19 +10,19 @@ Ext.define('Admin.view.docentes.ParceladorCliNewView', {
 		'Admin.combo.CbTipoProcesos'
     ],
     height  : 450,
-	defaultFocus    : 'textAreaField',
+	defaultFocus    : 'customtextarea',
     items: [
         {
             xtype   : 'customform',
             items   : [
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
 					labelAlign	: 'top',
                     fieldLabel  : 'Descripción',
                     name        : 'descripcion'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
 					labelAlign	: 'top',
                     fieldLabel  :  'Estrategias de aprendizaje',
                     allowBlank  : true,

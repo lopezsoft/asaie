@@ -3035,9 +3035,10 @@ class SME_Model extends CI_Model {
 	* @return INT
 	*/
 	public function get_grado_promocion($id_grado = 0){
-		$sql = "SELECT t2.id_grado FROM grados_agrupados AS t1 
-			LEFT JOIN aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
-			WHERE t2.id_grado = ".$id_grado." AND t1.fin_ciclo_escolar = 1;";
+		$db		= $this->get_db_name();
+		$sql 	= "SELECT t2.id_grado FROM ".$db.".grados_agrupados AS t1 
+				LEFT JOIN ".$db.".aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
+				WHERE t2.id_grado = ".$id_grado." AND t1.fin_ciclo_escolar = 1;";
 		$sql = $this->db->query($sql);
 		if($sql->num_rows() > 0){
 			$_result = $id_grado;

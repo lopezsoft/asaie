@@ -32,7 +32,7 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
         this.winObject = Ext.create('Admin.view.academico.inscripciones.forms.InscripcionesForm');
     },
     showWindow: function (btn) {
-        var me = this.app,
+        var 
             ts = this,
             data = ts.down('grid').getSelection()[0],
             form = [];
@@ -76,6 +76,7 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                         {
                             xtype       : 'customgrid',
                             itemId      : 'studentgrid',
+                            selModel    : 'rowmodel',
                             syncHeight  : false,
                             plugins		: [
                                 {
@@ -256,6 +257,7 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                             store       : 'HistorialStore',
                             syncHeight  : false,
                             itemId      : 'gridMat',
+                            selModel    : 'rowmodel',
                             plugins		: [
                                 {
                                     ptype : 'gridfilters'

@@ -40,7 +40,7 @@ Ext.define('Admin.view.academico.ConstanciasSaveView' ,{
                     height: 120
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     labelAlign  : 'top',
                     fieldLabel  : 'Fecha y lugar de expedición',
                     name        : 'expedition'

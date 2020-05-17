@@ -6,12 +6,12 @@ Ext.define('Admin.view.configuraciones.FirmasView',{
     title   : 'Firmas',
     controller  : 'configuraciones',
     alias       : 'widget.FirmasView',
-	defaultFocus    : 'textAreaField',
+	defaultFocus    : 'customtextarea',
 	store 			: 'FirmasStore',
     items       : [																							 		
         {
             xtype   : 'customform',
-			defaultType : 'textAreaField',
+			defaultType : 'customtextarea',
             items: [
 				{
 					fieldLabel  : 'Firma rector(a)/Director(a)',

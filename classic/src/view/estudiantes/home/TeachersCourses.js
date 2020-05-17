@@ -93,6 +93,7 @@ Ext.define('Admin.view.estudiantes.home.TeachersCourses', {
         ];
         this.callParent(arguments);
         this.setTitle('Docentes de curso');
+        Ext.getStore('DocentesCursoSocketStore').reload();
     },
     select      : function(view, record){
         this.setRecord(record);

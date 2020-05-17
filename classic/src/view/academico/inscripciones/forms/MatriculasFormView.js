@@ -122,7 +122,7 @@ Ext.define('Admin.view.academico.inscripciones.forms.MatriculasFormView' ,{
 							name		: 'date'
 						},
 						{
-							xtype		: 'textAreaField',
+							xtype		: 'customtextarea',
 							fieldLabel	: 'Observaciones',
 							name		: 'obs',
 							allowBlank	: true

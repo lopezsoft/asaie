@@ -12,7 +12,7 @@ Ext.define('Admin.view.convivencia.psicorientacion.AccionesRerEstudiantesSaveVie
     items   : [
         {
             xtype       : 'customform',
-            defaultType : 'textAreaField',
+            defaultType : 'customtextarea',
             items   : [
                 {
                     xtype       : 'Combo',

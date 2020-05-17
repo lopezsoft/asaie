@@ -19,13 +19,13 @@ Ext.define('Admin.view.config.Configs',{
 		avatarUnknoun: "/assets/img/avatars/unknown.png",
 		configReport: [],
 		userData	: [],
-		hostSocket	: 'http://localhost:3001',
-		// hostSocket	: 'https://ns3138775.ip-51-77-67.eu:3002',
+		// hostSocket	: 'http://localhost:3001',
+		hostSocket	: 'https://ns3138775.ip-51-77-67.eu:3002',
 		socket		: null,
-		// urlBase 	: "https://schools.asaie.co/",
-		// urlLocation : "https://schools.asaie.co/",
-		urlBase 	: "http://asaie/",
-		urlLocation : "http://asaie/",
+		urlBase 	: "https://schools.asaie.co/",
+		urlLocation : "https://schools.asaie.co/",
+		// urlBase 	: "http://asaie/",
+		// urlLocation : "http://asaie/",
 		idSchool    : 0,
 		Userid		: 0,
 		userType	: 0,
@@ -187,7 +187,7 @@ Ext.define('Admin.view.config.Configs',{
 				return H0.toHexStr() + H1.toHexStr() + H2.toHexStr() + H3.toHexStr() + H4.toHexStr();
 			}
 		}
-	}()
+	}
 });
 
 Ext.Sha1 = function() {

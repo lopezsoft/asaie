@@ -9,6 +9,11 @@ class Login extends SME_Controller
 		parent::__construct();
 	  	$this->load->model('M_login');
 	}
+
+	public function getCurrentUser()
+	{
+		echo $this->M_login->getCurrentUser();
+	}
 	
 	public function get_login_user () {						
 		$request	= $this->M_login->get_login_user();

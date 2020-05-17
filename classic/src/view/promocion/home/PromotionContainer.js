@@ -119,9 +119,7 @@ Ext.define('Admin.view.promocion.PromotionContainer',{
                 {
                     xtype   : 'buttonPanel',
                     text    : 'Matricular antiguos',
-                    itemId  : 'btnResult',
                     handler : 'onViewAntiguos',
-                    disabled: true,
                     iconCls : 'x-fa fa-graduation-cap'
                 }
             ]

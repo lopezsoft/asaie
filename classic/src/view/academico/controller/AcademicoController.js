@@ -678,11 +678,11 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
 		var me  	= Admin.getApplication(),
             view    = btn.up('window') || btn.up('form'),
 			rec 	= view.down('grid').getSelection()[0],
-            store = view.down('grid').getStore();
+            store   = view.down('grid').getStore();
         me.onStore('docs.ImageBrowserStore');
         var win = Ext.create({
-            xtype       : 'WebcamView',
-            title       : 'Captura de imagen por Webcam',
+            xtype           : 'webcamwiew',
+            title           : 'Captura de imagen por Webcam',
             pathReadFile    : 'academic/read_images',
             pathUploadFile  : 'academic/upload_foto_webcam',
             titlePanelLoad  : 'Capturar',

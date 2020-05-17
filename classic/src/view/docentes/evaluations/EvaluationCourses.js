@@ -89,6 +89,15 @@ Ext.define('Admin.view.docentes.EvaluationCourses',{
                     }
                 },'-',
                 {
+                    text    : 'Resultados',
+                    iconCls : 'fas fa-poll',
+                    ui      : 'header-blue',
+                    itemId  : 'viewresults',
+                    disabled: true,
+                    tooltip : 'Ver resultados obtenidos por los estudiantes.',
+                    handler : 'viewResults'
+                },'-',
+                {
                     text    : 'Lista de estudiantes',
                     iconCls : 'fas fa-user-graduate',
                     ui      : 'header-blue',
@@ -113,9 +122,11 @@ Ext.define('Admin.view.docentes.EvaluationCourses',{
         this.setRecord(record);
         this.down('#deletebutton').setDisabled(false);
         this.down('#viewstudents').setDisabled(false);
+        this.down('#viewresults').setDisabled(false);
     },
     deselect    : function(view, record){
         this.down('#deletebutton').setDisabled(false);
         this.down('#viewstudents').setDisabled(false);
+        this.down('#viewresults').setDisabled(false);
     }
 });

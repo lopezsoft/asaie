@@ -21,7 +21,7 @@ Ext.define('Admin.view.convivencia.psicorientacion.FormatosViewSave',{
                     itemId		: 'CbAcciones'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     fieldLabel  : 'Titulo',
                     name        : 'titulo'
                 },

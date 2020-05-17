@@ -19,7 +19,7 @@ Ext.define('Admin.view.docentes.IndicadoresNewView',{
             defaultFocus    : 'textareafield',
             items : [
                 {
-                    xtype	: 'radioGroup',
+                    xtype	: 'customradiogroup',
                     columns	: 3,
                     fieldLabel: 'Tipo',
                     defaults	: {
@@ -75,7 +75,7 @@ Ext.define('Admin.view.docentes.IndicadoresNewView',{
                     }
                 },
                 {
-                    xtype		: 'radioGroup',
+                    xtype		: 'customradiogroup',
                     itemId		: 'estado',
                     fieldLabel	: 'Estado',
                     defaults	: {

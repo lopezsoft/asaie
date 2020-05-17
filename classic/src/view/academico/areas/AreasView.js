@@ -32,7 +32,7 @@ Ext.define('Admin.view.academico.AreasView' ,{
                             name        : 'ordenar'
                         },
                         {
-                            xtype		: 'radioGroup',
+                            xtype		: 'customradiogroup',
                             columns		: 1,
                             vertical	: true,
                             fieldLabel	: 'Estado',

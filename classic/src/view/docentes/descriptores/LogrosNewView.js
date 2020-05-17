@@ -7,7 +7,7 @@ Ext.define('Admin.view.docentes.LogrosNewView',{
     alias 		: 'widget.LogrosNewView',
     controller  : 'logros',
     maximized   : true,
-    defaultFocus: 'textAreaField',
+    defaultFocus: 'customtextarea',
     items : [
         {
             xtype 			: 'customform',
@@ -15,11 +15,11 @@ Ext.define('Admin.view.docentes.LogrosNewView',{
                 labelAlign	: 'top',
                 labelStyle	: 'font-weight:bold'
             },
-            defaultType : 'textAreaField',
-            defaultFocus    : 'textAreaField',
+            defaultType : 'customtextarea',
+            defaultFocus    : 'customtextarea',
             items : [
                 {
-                    xtype		: 'radioGroup',
+                    xtype		: 'customradiogroup',
                     fieldLabel	: 'Estado',
                     itemId		: 'estado',
                     defaults	: {

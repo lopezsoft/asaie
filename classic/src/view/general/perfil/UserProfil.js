@@ -15,7 +15,7 @@ Ext.define('Admin.view.general.perfil.UserProfil', {
             userCls : 'big-50 small-100 shadow'
         },
         {
-            xtype   : 'PerfilUserView',
+            xtype   : 'userprofilform',
             userCls : 'big-50 small-100 shadow'
         }
     ]

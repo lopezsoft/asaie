@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="estadistica_edades" pageWidth="612" pageHeight="792" whenNoDataType="NoDataSection" columnWidth="556" leftMargin="28" rightMargin="28" topMargin="43" bottomMargin="20" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="35"/>
@@ -308,7 +308,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center">
-						<font fontName="DejaVu Serif" isBold="true"/>
+						<font fontName="Arial" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{sede}]]></textFieldExpression>
 				</textField>
@@ -324,7 +324,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e1_1}]]></textFieldExpression>
 				</textField>
@@ -340,7 +340,7 @@
 						<rightPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e2_1}]]></textFieldExpression>
 				</textField>
@@ -352,7 +352,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e3_1}]]></textFieldExpression>
 				</textField>
@@ -364,7 +364,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e4_1}]]></textFieldExpression>
 				</textField>
@@ -376,7 +376,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e5_1}]]></textFieldExpression>
 				</textField>
@@ -388,7 +388,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e6_1}]]></textFieldExpression>
 				</textField>
@@ -400,7 +400,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e7_1}]]></textFieldExpression>
 				</textField>
@@ -412,7 +412,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e8_1}]]></textFieldExpression>
 				</textField>
@@ -424,7 +424,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e9_1}]]></textFieldExpression>
 				</textField>
@@ -436,7 +436,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e10_1}]]></textFieldExpression>
 				</textField>
@@ -448,7 +448,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e11_1}]]></textFieldExpression>
 				</textField>
@@ -460,7 +460,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e12_1}]]></textFieldExpression>
 				</textField>
@@ -472,7 +472,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e13_1}]]></textFieldExpression>
 				</textField>
@@ -484,7 +484,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e14_1}]]></textFieldExpression>
 				</textField>
@@ -496,7 +496,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e15_1}]]></textFieldExpression>
 				</textField>
@@ -508,7 +508,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e16_1}]]></textFieldExpression>
 				</textField>
@@ -520,7 +520,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e17_1}]]></textFieldExpression>
 				</textField>
@@ -532,7 +532,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e18_1}]]></textFieldExpression>
 				</textField>
@@ -544,7 +544,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e19_1}]]></textFieldExpression>
 				</textField>
@@ -556,7 +556,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sf_1}]]></textFieldExpression>
 				</textField>
@@ -568,7 +568,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ss_1}]]></textFieldExpression>
 				</textField>
@@ -580,7 +580,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total_1}]]></textFieldExpression>
 				</textField>
@@ -590,7 +590,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
@@ -611,7 +611,7 @@
 				<staticText>
 					<reportElement x="0" y="14" width="100" height="12" uuid="240179cf-1c05-4000-9413-fd5b880fd098"/>
 					<textElement verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="10" isBold="true" isItalic="true"/>
+						<font fontName="Arial" size="10" isBold="true" isItalic="true"/>
 					</textElement>
 					<text><![CDATA[Totales]]></text>
 				</staticText>
@@ -630,7 +630,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Left" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="true"/>
+						<font fontName="Arial" size="8" isBold="true"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{grado}+" - "+$F{grupo}+" - "+$F{jornada}]]></textFieldExpression>
 				</textField>
@@ -646,7 +646,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e1}]]></textFieldExpression>
 				</textField>
@@ -662,7 +662,7 @@
 						<rightPen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e2}]]></textFieldExpression>
 				</textField>
@@ -674,7 +674,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e3}]]></textFieldExpression>
 				</textField>
@@ -686,7 +686,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e4}]]></textFieldExpression>
 				</textField>
@@ -698,7 +698,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e5}]]></textFieldExpression>
 				</textField>
@@ -710,7 +710,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e6}]]></textFieldExpression>
 				</textField>
@@ -722,7 +722,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e7}]]></textFieldExpression>
 				</textField>
@@ -734,7 +734,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e8}]]></textFieldExpression>
 				</textField>
@@ -746,7 +746,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e9}]]></textFieldExpression>
 				</textField>
@@ -758,7 +758,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e10}]]></textFieldExpression>
 				</textField>
@@ -770,7 +770,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e11}]]></textFieldExpression>
 				</textField>
@@ -782,7 +782,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e12}]]></textFieldExpression>
 				</textField>
@@ -794,7 +794,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e13}]]></textFieldExpression>
 				</textField>
@@ -806,7 +806,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e14}]]></textFieldExpression>
 				</textField>
@@ -818,7 +818,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e15}]]></textFieldExpression>
 				</textField>
@@ -830,7 +830,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e16}]]></textFieldExpression>
 				</textField>
@@ -842,7 +842,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e17}]]></textFieldExpression>
 				</textField>
@@ -854,7 +854,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e18}]]></textFieldExpression>
 				</textField>
@@ -866,7 +866,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{e19}]]></textFieldExpression>
 				</textField>
@@ -878,7 +878,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{sf}]]></textFieldExpression>
 				</textField>
@@ -890,7 +890,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{ss}]]></textFieldExpression>
 				</textField>
@@ -902,7 +902,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Right" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif"/>
+						<font fontName="Arial"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$V{total}]]></textFieldExpression>
 				</textField>
@@ -912,7 +912,7 @@
 						<pen lineWidth="0.75"/>
 					</box>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8"/>
+						<font fontName="Arial" size="8"/>
 					</textElement>
 					<text><![CDATA[Total]]></text>
 				</staticText>
@@ -935,42 +935,21 @@
 			<textField pattern="h.mm.ss a">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="58" width="390" height="10" isRemoveLineWhenBlank="true" uuid="e07f8e5f-b140-4565-92d4-69c519c198aa"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7" isBold="false"/>
+					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="48" width="390" height="10" isRemoveLineWhenBlank="true" uuid="169ff577-189e-4547-9c65-0112d6b2ee38"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7" isBold="false"/>
+					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" isPrintRepeatedValues="false" mode="Transparent" x="74" y="38" width="390" height="10" isRemoveLineWhenBlank="true" uuid="96bc92f2-149e-4c4c-95fe-997e16982462"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="6" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_RESOL}.trim()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="18" width="390" height="10" isRemoveLineWhenBlank="true" uuid="3e99c72e-8beb-4875-93de-b1f89f28e248"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Serif" size="7" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_DANE}.trim()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="28" width="390" height="10" isRemoveLineWhenBlank="true" uuid="9e928676-92fa-4675-9c37-9fede111b34a"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Serif" size="7" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_NIT}.trim()]]></textFieldExpression>
-			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="74" y="2" width="390" height="16" uuid="3582b553-7640-4449-95cd-d0713ebc4ba8"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Serif" size="12" isBold="false"/>
+				<reportElement isPrintRepeatedValues="false" x="74" y="2" width="390" height="46" uuid="3582b553-7640-4449-95cd-d0713ebc4ba8"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="html">
+					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_TITLE}.trim()]]></textFieldExpression>
 			</textField>
@@ -984,7 +963,7 @@
 					<property name="com.jaspersoft.studio.unit.y" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="12" isBold="true"/>
+					<font fontName="Arial" size="12" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ESTADÍSTICA POR EDADES]]></text>
 			</staticText>
@@ -1001,7 +980,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sexo]]></text>
 			</staticText>
@@ -1013,7 +992,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[<2]]></text>
 			</staticText>
@@ -1025,7 +1004,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[2]]></text>
 			</staticText>
@@ -1037,7 +1016,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[3]]></text>
 			</staticText>
@@ -1049,7 +1028,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[4]]></text>
 			</staticText>
@@ -1061,7 +1040,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[5]]></text>
 			</staticText>
@@ -1073,7 +1052,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[6]]></text>
 			</staticText>
@@ -1085,7 +1064,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[7]]></text>
 			</staticText>
@@ -1097,7 +1076,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[8]]></text>
 			</staticText>
@@ -1109,7 +1088,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[9]]></text>
 			</staticText>
@@ -1121,7 +1100,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[10]]></text>
 			</staticText>
@@ -1133,7 +1112,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[11]]></text>
 			</staticText>
@@ -1145,7 +1124,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[12]]></text>
 			</staticText>
@@ -1157,7 +1136,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[13]]></text>
 			</staticText>
@@ -1169,7 +1148,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[14]]></text>
 			</staticText>
@@ -1181,7 +1160,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[15]]></text>
 			</staticText>
@@ -1193,7 +1172,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[16]]></text>
 			</staticText>
@@ -1205,7 +1184,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[17]]></text>
 			</staticText>
@@ -1217,7 +1196,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[18]]></text>
 			</staticText>
@@ -1229,7 +1208,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[>18]]></text>
 			</staticText>
@@ -1241,7 +1220,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SE]]></text>
 			</staticText>
@@ -1253,7 +1232,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SS]]></text>
 			</staticText>
@@ -1265,7 +1244,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Total]]></text>
 			</staticText>
@@ -1281,7 +1260,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sexo}]]></textFieldExpression>
 			</textField>
@@ -1293,7 +1272,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e1}]]></textFieldExpression>
 			</textField>
@@ -1305,7 +1284,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e2}]]></textFieldExpression>
 			</textField>
@@ -1317,7 +1296,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e3}]]></textFieldExpression>
 			</textField>
@@ -1329,7 +1308,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e4}]]></textFieldExpression>
 			</textField>
@@ -1341,7 +1320,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e5}]]></textFieldExpression>
 			</textField>
@@ -1353,7 +1332,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e6}]]></textFieldExpression>
 			</textField>
@@ -1365,7 +1344,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e7}]]></textFieldExpression>
 			</textField>
@@ -1377,7 +1356,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e8}]]></textFieldExpression>
 			</textField>
@@ -1389,7 +1368,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e9}]]></textFieldExpression>
 			</textField>
@@ -1401,7 +1380,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e10}]]></textFieldExpression>
 			</textField>
@@ -1413,7 +1392,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e11}]]></textFieldExpression>
 			</textField>
@@ -1425,7 +1404,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e12}]]></textFieldExpression>
 			</textField>
@@ -1437,7 +1416,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e13}]]></textFieldExpression>
 			</textField>
@@ -1449,7 +1428,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e14}]]></textFieldExpression>
 			</textField>
@@ -1461,7 +1440,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e15}]]></textFieldExpression>
 			</textField>
@@ -1473,7 +1452,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e16}]]></textFieldExpression>
 			</textField>
@@ -1485,7 +1464,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e17}]]></textFieldExpression>
 			</textField>
@@ -1497,7 +1476,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e18}]]></textFieldExpression>
 			</textField>
@@ -1509,7 +1488,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{e19}]]></textFieldExpression>
 			</textField>
@@ -1521,7 +1500,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{sf}]]></textFieldExpression>
 			</textField>
@@ -1533,7 +1512,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{ss}]]></textFieldExpression>
 			</textField>
@@ -1545,7 +1524,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif"/>
+					<font fontName="Arial"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{total}]]></textFieldExpression>
 			</textField>
@@ -1570,21 +1549,21 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="16" y="1" width="507" height="21" isRemoveLineWhenBlank="true" uuid="60f4683a-0284-4fea-9cb7-bb6a102fcce2"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="8" isBold="false" isItalic="false"/>
+					<font fontName="Arial" size="8" isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_FOOTER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="535" y="1" width="21" height="10" uuid="184a72c7-f142-4496-b933-89d1fe3009b0"/>
 				<textElement>
-					<font fontName="DejaVu Serif" size="8" isBold="false"/>
+					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="16" y="22" width="507" height="8" isRemoveLineWhenBlank="true" forecolor="#052E85" uuid="7829f300-5387-4522-b2ae-d6bf773009d8"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<font fontName="Arial" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_MARKETING}]]></textFieldExpression>
 			</textField>

@@ -29,12 +29,12 @@ $('.login').on('submit', function(e) {
                     alertify.message('Datos de autenticación incorrectos!');
                 }
             } else {
-                alertify.message('Datos de autenticación incorrectos!');
+                alertify.error('Datos de autenticación incorrectos!');
             }
 
         },
         failure: function (data) {
-            alertify.message('Error inesperado...!');
+            alertify.error('Error inesperado...!');
         }
     });
 });

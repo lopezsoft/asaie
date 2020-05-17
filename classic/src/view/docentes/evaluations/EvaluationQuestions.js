@@ -1,7 +1,8 @@
 Ext.define('Admin.view.docentes.EvaluationQuestions',{
-    extend  : 'Admin.base.WindowCrud',
-    alias   : 'widget.evaluationquestions',
-    controller : 'actividades',
+    extend      : 'Admin.base.WindowCrud',
+    alias       : 'widget.evaluationquestions',
+    controller  : 'actividades',
+    modalView   : 'Admin.view.docentes.EvaluationQuestionSave',
     items   : [
         {
             xtype   : 'custompanel',
@@ -65,10 +66,10 @@ Ext.define('Admin.view.docentes.EvaluationQuestions',{
                             text        : 'Pregunta',
                             dataIndex   : 'pregunta',
                             width       : 300,
-                            editor      : {
-                                xtype       : 'textfield',
-                                allowBlank  : false
-                            },
+                            // editor      : {
+                            //     xtype       : 'textfield',
+                            //     allowBlank  : false
+                            // },
                             filter      : 'string'
                         },
                         {
@@ -104,12 +105,15 @@ Ext.define('Admin.view.docentes.EvaluationQuestions',{
                             xtype   : 'toolbarCrud',
                             items   : [
                                 '->',
-                                {
-                                    xtype   : 'saveButton',
-                                    handler : function (btn) {
-                                        store   = Ext.getStore('EvaluationQuestionsStore');
-                                        store.sync();
-                                    }
+                                // {
+                                //     xtype   : 'saveButton',
+                                //     handler : function (btn) {
+                                //         store   = Ext.getStore('EvaluationQuestionsStore');
+                                //         store.sync();
+                                //     }
+                                // },
+                                {   
+                                    xtype   : 'editButton'
                                 },
                                 {
                                     xtype   : 'deletebutton'
@@ -120,8 +124,7 @@ Ext.define('Admin.view.docentes.EvaluationQuestions',{
                             ]
                         },
                         {
-                            xtype 		: 'pagination',
-                            itemId		: 'pToolbar'
+                            xtype 		: 'pagination'
                         }
                     ]
                 },

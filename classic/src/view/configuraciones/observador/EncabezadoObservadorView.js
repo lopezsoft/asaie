@@ -28,7 +28,7 @@ Ext.define('Admin.view.configuraciones.EncabezadoObservadorView',{
                     labelAlign  : 'top'
                 },
                 {
-                    xtype   : 'textAreaField',
+                    xtype   : 'customtextarea',
                     name    : 'firma',
                     fieldLabel  : 'Lugar y fecha de expedición',
                     labelAlign  : 'top'

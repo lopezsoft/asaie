@@ -9,7 +9,7 @@ Ext.define('Admin.view.convivencia.coordidacion.ControlSeguimientoEstudiantesSav
     items   : [
         {
             xtype       : 'customform',
-            defaultType : 'textAreaField',
+            defaultType : 'customtextarea',
             items   : [
                 {
                     fieldLabel  : 'Compromiso del estudiante',

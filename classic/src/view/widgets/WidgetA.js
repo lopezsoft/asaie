@@ -42,8 +42,7 @@ Ext.define('Admin.view.widgets.WidgetA', {
                 height  : 72,
                 width   : 72,
                 alt     : 'profile-image',
-                src     : Global.getAvatarUnknoun(),
-                itemId  : 'ImgPerfil'
+                src     : (Ext.isEmpty(Global.getData().user_data[0].image)) ? Global.getAvatarUnknoun() : Global.getData().user_data[0].image,
             },
             {
                 xtype: 'component',
@@ -137,8 +136,6 @@ Ext.define('Admin.view.widgets.WidgetA', {
                 ]
             }
         ]
-
         me.callParent(arguments);
-
     }
 });

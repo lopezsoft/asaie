@@ -1,11 +1,8 @@
-/**
- * Created by LOPEZSOFT on 10/02/2016.
- */
-Ext.define('Admin.group.CheckboxGroup',{
+Ext.define('Admin.group.CustomCheckboxGroup',{
     extend      : 'Ext.form.CheckboxGroup',
     labelStyle	: 'font-weight:bold',
     labelWidth	: 180,
-    alias       : 'widget.checkboxGroup',
+    alias       : 'widget.customcheckboxgroup',
     msgTarget	: 'side',
     allowBlank  :false,
     columns     : 1,

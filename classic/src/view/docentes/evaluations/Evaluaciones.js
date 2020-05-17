@@ -65,10 +65,6 @@ Ext.define('Admin.view.docentes.Evaluaciones',{
                     tooltip : 'Visata previa',
                     handler : 'onViewEval'
                 },
-                ResultsEval: {
-                    iconCls : 'fas fa-poll',
-                    tooltip : 'Ver resultados'
-                }   ,
                 viewCourses: {
                     iconCls : 'fas fa-chalkboard-teacher',
                     tooltip : 'Ver cursos asignados',
@@ -95,13 +91,6 @@ Ext.define('Admin.view.docentes.Evaluaciones',{
                             sortable    : false,
                             width       : 30,
                             items       : ['@viewEval']
-                        },
-                        {
-                            xtype       : 'actioncolumn',
-                            menuDisabled: true,
-                            sortable    : false,
-                            width       : 30,
-                            items       : ['@ResultsEval']
                         },
                         {
                             xtype       : 'actioncolumn',

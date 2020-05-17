@@ -5,6 +5,299 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
         me  = this;
         me.setConfigVar();
     },
+    onStudentsEvaluations (){
+        this.redirectTo('studentsevaluations',true);
+    },
+    onStudentsActivities (){
+        this.redirectTo('studentsactivities',true);
+    },
+    responseEvaluation : function(record, btn, hora, intentos){
+        let
+            sql         = '',
+            app         = Admin.getApplication(),
+            tbarItems   = [],
+            newItems    = [],
+            ncount      = 0;
+        sql = "SELECT * FROM te_evaluation_questions a WHERE a.evaluation_id = "+ record.get('evaluation_id') +" ORDER BY RAND()";
+        socket  = gb.getSocket();
+        socket.emit('sqlQuery',{
+            dataName    : Global.getDbName(),
+            sql         : sql
+        },(err, res)=>{
+            if(err){
+                app.showResult('Se produjo un error, no se puede continuar.','error');
+                return;
+            }
+            if(!res.length > 0){
+                app.showResult('La evaluación no tiene preguntas, no se puede continuar.','error');
+                return;
+            }
+            tbarItems.push({
+                step        : 0,
+                iconCls     : 'fa fa-home',
+                formId      : null,
+                enableToggle: true,
+                pressed     : true,
+                text        : 'Home'
+            });
+            newItems.push({
+                xtype   : 'panel',
+                ui      : 'panel-white',
+                items   : [{
+                    xtype   : 'container',    
+                    cls     : 'widget-bottom-first-container postion-class',
+                    layout: {
+                        type    : 'vbox',
+                        align   : 'center'
+                    },
+                    items: [
+                        {
+                            xtype   : 'label',
+                            cls     : 'widget-name-text',
+                            html    : '<br>' +  record.get('nombre') + '<br>'
+                        },
+                        {
+                            xtype   : 'label',
+                            cls     : 'widget-name-text',
+                            html    : '<br>' + record.get('asignatura') + '<br>'
+                        },
+                        {
+                            xtype   : 'label',
+                            cls     : 'widget-name-text',
+                            html    : '<br>' + record.get('docente') + '<br>'
+                        }
+                    ]
+                },{
+                    xtype   : 'label',
+                    cls     : 'widget-name-text space-left-10',
+                    html    : '<br>' + record.get('descripcion') + '<br>'
+                }]
+            });
+            res.forEach(ele => {
+                ncount++;
+                tbarItems.push({
+                    step        : ncount,
+                    enableToggle: true,
+                    formId      : 'questionId' + ele.id,
+                    text        : ncount + '/' + res.length
+                });
+
+                newItems.push({
+                    xtype               : 'form',
+                    scrollable          : true,		
+                    layout			    : 'anchor',
+                    ui                  : 'panel-white',
+                    itemId              : 'questionId' + ele.id,
+                    defaultType         : 'textfield',
+                    defaults: {
+                        labelWidth      : 90,
+                        labelAlign      : 'top',
+                        labelSeparator  : '',
+                        submitEmptyText : false,
+                        anchor          : '100%'
+                    },
+                    items:[
+                        {
+                            xtype   : 'label',
+                            html    : '<br>'+ ncount +' de ' + res.length,
+                            cls     : 'widget-name-text'
+                        },
+                        {
+                            xtype   : 'label',
+                            cls     : 'widget-name-text space-left-10',
+                            html    : '<br>' +  ele.pregunta
+                        },
+                        {
+                            xtype       : 'fieldcontainerquestions',
+                            record      : ele,
+                            questionId  : ele.id
+                        }                
+                    ]
+                });
+            });
+            btn.up('window').close();
+            Ext.create('Admin.view.docs.ResponseEvaluation',{
+                record          : record,
+                questions       : res.length,
+                hora            : hora,
+                intentos        : parseInt(intentos) + 1,
+                questionRecords : res,
+                // maxHeight       : 600,
+                items   : [{
+                    xtype       : 'containerquestions',      
+                    tbarItems   : tbarItems,
+                    newItems    : newItems
+                }],
+                dockedItems   : [
+                    {
+                        xtype	: 'toolbarSave',
+                        cls     : 'widget-tool-button',
+                        flex    : 1,
+                        dock	: 'top',
+                        items   : [
+                            ,'->',
+                            {
+                                xtype   : 'saveButton',
+                                ui      : 'header-red',
+                                text    : 'Finalizar y envíar',
+                                handler : function (b) {
+                                    Ext.Msg.show({
+                                        alwaysOnTop : true,
+                                        title       : 'Guardar evaluación?',
+                                        message     : 'Desea finalizar la evaluación y guardar los cambios?',
+                                        buttons     : Ext.Msg.YESNO,
+                                        icon        : Ext.Msg.QUESTION,
+                                        fn: function(btn) {
+                                            if (btn === 'yes') {
+                                                b.up('window').savechanges();
+                                            }
+                                        }
+                                    });
+                                }
+                            },
+                            {
+                                xtype   : 'imagecomponent',
+                                glyph   : 'xf017@FontAwesome',
+                                cls     : 'widget-name-text top-info-container',
+                                html    : '39:59',
+                                itemId  : 'clockButton'
+                            },'-',
+                            {
+                                xtype   : 'imagecomponent',
+                                glyph   : 'xf046@FontAwesome',
+                                cls     : 'widget-name-text',
+                                html    : 'Preguntas con respuesta 0/' + record.get('num_preguntas')+ ' ',
+                                itemId  : 'requestButton'
+                            },'-',
+                            {
+                                xtype   : 'closebutton'
+                            }
+                        ]
+                    }
+                ],
+            }).show();
+        });
+    },
+
+    replyEvaluation : function(grid, rowIndex){
+        let rec     = grid.getStore().getAt(rowIndex),
+            app     = Admin.getApplication();
+            gb      = Global,
+            socket  = gb.getSocket(),
+            me      = this,
+            dt      = new Date();
+
+        socket.emit('sqlQuery',{
+            dataName: Global.getDbName(),
+            sql     : 'select CURDATE() fecha_sis,CURRENT_TIME() hora_sis, CAST(CURRENT_TIMESTAMP() AS CHAR) AS hora_inicio'
+        },(err, data) => {
+            if (data.length > 0){
+                var hoy         = Ext.Date.format(dt, 'Y-m-d'),
+                    db          = data[0],
+                    dts         = new Date(db.fecha_sis),
+                    hora_inicio = db.hora_inicio.toString(),
+                    hoyS        = Ext.Date.format(dts, 'Y-m-d'),
+                    contunue= false;
+                if (hoy == hoyS){
+                    if (!rec.get('estado')){
+                        app.onError('La fecha se ha vencido.');
+                    }else {
+                        contunue    = true;
+                    }
+                    if (contunue){
+                        xsocket = Global.getSocket();
+                        xsocket.emit('querySelect',{
+                            dataName    : Global.getDbName(),
+                            fields      : 'COUNT(intento) total ',
+                            table       : 'te_evaluation_result',
+                            where       : 'shared_evaluation_id = ? ',
+                            values      : [rec.get('id')]
+                        },(err, res) => {
+                            if(err){
+                                app.showResult('Error en el servidor','error');
+                                return;
+                            }
+                            if (res.length > 0) {
+                                var val   = res[0].total;
+                                Ext.create('Admin.view.docs.VideoView',{
+                                    maxHeight  : 250,
+                                    maxWidth   : 350,
+                                    title   : rec.get('nombre'),
+                                    alwaysOnTop	: false,
+                                    items   :[
+                                        {
+                                            xtype   : 'form',
+                                            items   : [
+                                                {
+                                                    xtype: 'container',
+                                                    cls: 'widget-bottom-first-container postion-class',
+                                                    height: 165,
+                                                    padding: '30 0 0 0',
+                                                    layout: {
+                                                        type: 'vbox',
+                                                        align: 'center'
+                                                    },
+                                                    items: [
+                                                        {
+                                                            xtype   : 'label',
+                                                            cls     : 'widget-name-text',
+                                                            html    : 'Intentos permitidos: '+rec.get('intentos')
+                                                        },
+                                                        {
+                                                            xtype   : 'label',
+                                                            cls     : 'widget-name-text',
+                                                            html    : 'Limite de tiempo: '+rec.get('tiempo')+' minutos'
+                                                        },
+                                                        {
+                                                            xtype   : 'label',
+                                                            cls     : 'widget-name-text',
+                                                            html    : 'Intentos realizados: '+val.toString()
+                                                        },
+                                                        {
+                                                            xtype   : 'toolbar',
+                                                            cls     : 'widget-tool-button',
+                                                            flex    : 1,
+                                                            items   : [
+                                                                {
+                                                                    ui      : 'soft-purple',
+                                                                    iconCls : 'x-fa fa-check-square-o',
+                                                                    text    : 'Responder evaluación',
+                                                                    disabled: val < rec.get('intentos') ? false : true,
+                                                                    handler : function (btn) {
+                                                                        me.responseEvaluation(rec, btn, hora_inicio, val);
+                                                                    }
+                                                                }
+                                                            ]
+                                                        }
+                                                    ]
+                                                }
+                                            ]
+                                        }
+                                    ]
+                                }).show();
+                            }
+                        });
+                    }
+                }else{
+                    app.onError('La fecha de su computador está mal configurada.')
+                }
+            }
+        });
+        if (!rec.get('eread')) {
+            rec.set('eread',1);
+            grid.getStore().sync({
+                success : function (r, o) {
+                    var
+                        socket  = Global.getSocket();
+                    socket.emit('sendEvaluation',{
+                        cfg : Global.getCfg()
+                    },()=>{
+                        socket.close();
+                    });
+                }
+            });
+        }
+    },
 
     onCommentsActivities : function(grid, rowIndex){
         let
@@ -178,8 +471,8 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
             me      = this;
         if (!Ext.isEmpty(values.password_u) && !Ext.isEmpty(values.pasw2)){
             var
-                p1      = globales.General.sha1.hash(values.password_u),
-                p2      = globales.General.sha1.hash(values.pasw2);
+                p1      = Global.sha1.hash(values.password_u),
+                p2      = Global.sha1.hash(values.pasw2);
         };
 
         if (p1 === p2) {

@@ -37,6 +37,7 @@ Ext.define('Admin.forms.CustomForm',{
         modalView		: undefined,
 		record		    : undefined,
         showSaveButton  : true,
+        showCloseButton : true,
         showUndoButton  : false
     },
     constructor: function (cfg) {
@@ -47,13 +48,17 @@ Ext.define('Admin.forms.CustomForm',{
         afterrender: function (e) {
             var
                 btn     = this.down('#saveButton'),
-                btnU     = this.down('#undoButton');
+                btnC    = this.down('#closebutton'),
+                btnU    = this.down('#undoButton');
             this.onCreateStore();
             if (btn) {
                 btn.setVisible(this.getShowSaveButton());
             }
             if (btnU) {
                 btnU.setVisible(this.getShowUndoButton());
+            }
+            if (btnC) {
+                btnC.setVisible(this.getShowCloseButton());
             }
         },
         show : function(t,e){

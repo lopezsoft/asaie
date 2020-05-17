@@ -16,7 +16,7 @@ Ext.define('Admin.view.convivencia.configuraciones.SituacionesViewCrud',{
                     name        : 'numero'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     fieldLabel  : 'Descripción',
                     name        : 'descripcion'
                 },

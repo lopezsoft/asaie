@@ -172,17 +172,17 @@ Ext.define('Admin.view.docentes.AusenciasWinView',{
                     ]
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     name        : 'motivo',
                     fieldLabel  : 'Motivo de la ausencia'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     name        : 'observacion',
                     fieldLabel  : 'Observación'
                 },
                 {
-                    xtype       : 'radioGroup',
+                    xtype       : 'customradiogroup',
                     fieldLabel  : 'Tipo',
                     defaults    : {
                         name    : 'tipo'

@@ -6,7 +6,8 @@ Ext.define('Admin.view.estudiantes.EditStudentInformation' ,{
 		this.callParent(arguments);
 		this.setTitle(AppLang.getSTitleNewEdit() + ' ' + AppLang.getSTitleViewStudents());
 	},
-    store		: 'InscripcionesStore',
+	store		: 'InscripcionesStore',
+	maxWidth	: 750,
 	defaultFocus: 'CbCountries',
     items : [
     	{

@@ -1,9 +1,9 @@
-Ext.define('Admin.field.TextAreaField',{
+Ext.define('Admin.field.CustomTextArea',{
 	extend 		: 'Ext.form.field.TextArea',
     name      	: 'message',
     width    	: '100%',
     allowBlank 	: false,
-	alias		: 'widget.textAreaField',
+	alias		: 'widget.customtextarea',
 	selectOnFocus  : true,
     tooltip 	: '',
     emptyText 	: 'Digite los datos',
@@ -16,7 +16,7 @@ Ext.define('Admin.field.TextAreaField',{
 	shim		: true,
 	growMin		: 40,
     listeners: {
-	    'focus' : function (TextAreaField, event, eOpts) {
+	    'focus' : function (customtextarea, event, eOpts) {
 	        var me = this;
 	        if (!Ext.isEmpty(this.tooltip)) {
 	            new Ext.ToolTip({

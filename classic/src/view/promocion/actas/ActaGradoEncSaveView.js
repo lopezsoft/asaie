@@ -33,7 +33,7 @@ Ext.define('Admin.view.promocion.ActaGradoEncSaveView' ,{
                     name        : 'al_alumno'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     name        : 'copia_folio'
                 },
                 {
