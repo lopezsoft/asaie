@@ -25,12 +25,12 @@ Ext.define('Admin.Application', {
         'charts.RegisteredStore',
         'charts.TeachersStore',
         'NavigationTree',
-        'NavigationTreeEstudiantes',
+        'NavigationTreeStudents',
         'NavigationTreeMain'
     ],
 
 
-    // defaultToken : 'dashboard',
+    defaultToken : 'dashboard',
 
     // The name of the initial view to create. This class will gain a "viewport" plugin
     // if it does not extend Ext.Viewport.
@@ -88,7 +88,7 @@ Ext.define('Admin.Application', {
                     Global.setDbConfig(result.data.config);
                     me.setMainView('Admin.view.main.Main');
                     mainView = me.getMainView();
-                    mainView.getController().redirectTo((localStorage.getItem('currentRoute')) ? localStorage.getItem('currentRoute') : 'dashboard', true);
+                    mainView.getController().redirectTo('dashboard', true);
                     toastr.options = {
                         "closeButton": false,
                         "debug": false,

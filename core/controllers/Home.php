@@ -21,6 +21,11 @@ class Home extends SME_Controller {
 			$this->db->where('state', 1);
 			$query	= $this->db->get('schools');
 			$data['schools']	= $query->result_array();
+			
+			$this->db->where('active', 1);
+			$query	= $this->db->get('user_types');
+			$data['user_types']	= $query->result_array();
+
 			if($this->M_login->check_session()){
             	$this->close_session();
 			}

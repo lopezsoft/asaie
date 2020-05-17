@@ -60,7 +60,7 @@ Ext.define('Admin.view.academico.MayusView',{
                                                 params  : {
                                                     pdbPeriodo : win.down('#periodo').value
                                                 },
-                                                url: gb.getUrlBase() +'c_academico/get_mayus',
+                                                url: gb.getUrlBase() +'academic/get_mayus',
 
                                                 success: function(response, opts) {
                                                     me.showResult('Proceso realizado correctamente');

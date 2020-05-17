@@ -132,64 +132,72 @@ class M_general extends SME_Model {
 	}	
 		
 	function matricular_antiguos($grado,$grupo,$jorn,$sede,$list){
+		$db		= $this->get_db_name();
 		$lista	= json_decode($list);
 		$count	= count($lista); // Contamos la cantidad de registros a insertar.
 		$this->trans_start();
 		$in	= FALSE;
-		for($i = 0; $i < $count; $i++){					
-			$fields = $lista[$i];			
-			foreach ($fields as $field => $value) {					
-				$sqlActa	= "SELECT estado FROM acta_promocion WHERE ".$field." = ".$value." LIMIT 1";
-				$sqlActa	= $this->db->query($sqlActa);
-				if ($grado <= 4){
-					$in = TRUE;
+		foreach ($lista as $value) {	
+			$sqlActa	= "SELECT estado FROM ".$db.".acta_promocion WHERE id_matric = ".$value->id." LIMIT 1";
+			$sqlActa	= $this->db->query($sqlActa);
+			if ($grado <= 4){
+				$in = TRUE;
+			}else{
+				$in = $sqlActa->num_rows() > 0 ? TRUE : FALSE;
+			}
+			if ($in){
+				$sqlMat	= "SELECT tm.*, ts.NOMBRE_SEDE AS sede, ts.DIRECCION_SEDE AS dir_sede
+							FROM ".$db.".student_enrollment AS tm 
+							LEFT JOIN ".$db.".sedes AS ts ON tm.id_headquarters = ts.ID 
+							WHERE tm.id = ".$value->id." LIMIT 1";
+				$sqlMat	= $this->db->query($sqlMat);	
+				if($grado > 4){
+					$estado	= $sqlActa->row('estado');	
 				}else{
-					$in = $sqlActa->num_rows() > 0 ? TRUE : FALSE;
+					$estado	= 1;
 				}
-				if ($in){
-					$sqlMat	= "SELECT tm.*, ts.NOM_SEDE AS sede, ts.DIREC_SEDE AS dir_sede
-								FROM student_enrollment AS tm 
-								LEFT JOIN sedes AS ts ON tm.id_sede = ts.ID 
-								WHERE ".$field." = ".$value." LIMIT 1";
-					$sqlMat	= $this->db->query($sqlMat);	
-					if($grado > 4){
-						$estado	= $sqlActa->row('estado');	
-					}else{
-						$estado	= 1;
+				//Se actuliza la student_enrollment con los nuevos datos
+				if ($sqlMat->num_rows() > 0){
+					switch($estado){
+						case 3 : // No Promovido
+							$data	= array(
+								'id_student'		=> $sqlMat->row('id_student'),
+								'id_grade'			=> $grado,
+								'id_group'			=> $grupo,
+								'id_headquarters'	=> $sede,
+								'id_study_day'		=> $jorn,
+								'year'				=> $this->get_year(),
+								'id_state'			=> 2,
+								'inst_address'		=> $sqlMat->row('dir_sede'),
+								'inst_origin'		=> $sqlMat->row('sede')
+							);
+							break;							
+						default:// Promovido
+							$ngrado	= $this->get_grado_promocion($grado);
+							$data	= array(
+								'id_student'		=> $sqlMat->row('id_student'),
+								'id_grade'			=> $ngrado,
+								'id_group'			=> $grupo,
+								'id_headquarters'	=> $sede,
+								'id_study_day'		=> $jorn,
+								'year'				=> $this->get_year(),
+								'id_state'			=> 2,
+								'inst_address'		=> $sqlMat->row('dir_sede'),
+								'inst_origin'		=> $sqlMat->row('sede')
+							);
+							break;
 					}
-					//Se actuliza la student_enrollment con los nuevos datos
-					if ($sqlMat->num_rows() > 0){
-						$sql = "INSERT INTO student_enrollment (cod_est,id_grado,grupo,id_sede,id_jorn,id_inst,año,
-														condicion,situacion,promovido,nuevo,repite,subsidio,
-														id_estado,dir_inst,ins_proced)";
-														
-						switch($estado){
-							case 3 : // No Promovido
-								$values	= " VALUES(".$sqlMat->row('cod_est').",'".$grado."','".$grupo."',".$sede.
-								",".$jorn.",".$this->get_id_school().",".$this->get_year().",1,1,0,'No','Si','".
-								$sqlMat->row('subsidio')."',2,'".
-								$sqlMat->row('dir_sede')."','".$sqlMat->row('sede')."')";
-								break;							
-							default:// Promovido
-								$nGrado	= $this->get_grado_promocion($grado);
-								$values	= " VALUES(".$sqlMat->row('cod_est').",'".$nGrado."','".$grupo."',".$sede.
-								",".$jorn.",".$this->get_id_school().",".$this->get_year().",1,1,0,'No','No','".
-								$sqlMat->row('subsidio')."',2,'".
-								$sqlMat->row('dir_sede')."','".$sqlMat->row('sede')."')";
-								break;
-						}
-						$sql = $this->db->query($sql.$values);						
-						$sql = "UPDATE student_enrollment SET promovido = 1  WHERE id_matric=".$value." LIMIT 1";
-						$this->db->query($sql);
-					}
-										
+					$this->db->insert($db.".student_enrollment", $data);
+									
+					$sql = "UPDATE ".$db.".student_enrollment SET promoted = 1  WHERE id=".$value->id." LIMIT 1";
+					$this->db->query($sql);
 				}
-	  		}
-			  														  		
-		}	
+									
+			}
+		}
 		$this->trans_complete();
 		if ($this->trans_status()) {
-			$result = $this->get_request_ab();
+			$result = $this->getJosnSuccess();
 		}else{
 			$result	= $this->getError();
 		}
@@ -455,34 +463,27 @@ class M_general extends SME_Model {
 		return $result;
 	}
 	
-	function get_select_matricula_antiguos($cod_grado,$grupo,$sede,$jornada,$a){
-		$query	= "SELECT tm.*, CONCAT(rtrim(ti.apellido1),' ',rtrim(ti.apellido2),' ',
+	function get_select_matricula_antiguos($grado,$grupo,$sede,$jornada,$a){
+		$db		= $this->get_db_name();
+
+		$this->db->select("tm.*, CONCAT(rtrim(ti.apellido1),' ',rtrim(ti.apellido2),' ',
 					rtrim(ti.nombre1),' ',rtrim(ti.nombre2)) AS nombres,
-					rtrim(tg.grado) AS grado, rtrim(ts.nom_sede) AS sede, tj.jornada 
-					FROM student_enrollment AS tm 
-					LEFT JOIN inscripciones AS ti ON tm.cod_est=ti.cod_est
-					LEFT JOIN grados AS tg ON tm.id_grado=tg.id 
-					LEFT JOIN sedes AS ts ON tm.id_sede=ts.id 
-					LEFT JOIN jornadas AS tj ON tm.id_jorn=tj.cod_jorn ";
-		$where	= "tm.id_grado= ? AND tm.grupo= ? AND tm.id_inst= ?  AND tm.año= ?
-					AND ts.id_inst= ? AND ti.id_inst= ? AND tm.id_jorn=? AND tm.id_sede = ? AND
-					tm.promovido=0 AND tm.id_estado=2 ORDER BY nombres";
-		
-		$param	= array(
-			$cod_grado,
-			$grupo,
-			$this->get_id_school(),
-			$a > 0 ? $a : $this->get_year() - 1,
-			$this->get_id_school(),
-			$this->get_id_school(),
-			$jornada,
-			$sede
-		);
-		
-		
-		$request	= $this->get_query_param($this->limit_min,$this->limit_max,$query,$where,$param,'',FALSE);
-		
-		return $request;
+					rtrim(tg.grado) AS grado, rtrim(ts.NOMBRE_SEDE) AS sede, tj.jornada");
+		$this->db->from($db.".student_enrollment AS tm ");
+		$this->db->join($db.'.inscripciones AS ti', 'tm.id_student=ti.id', 'left');
+		$this->db->join($db.'.grados AS tg', 'tm.id_grade=tg.id', 'left');
+		$this->db->join($db.'.sedes AS ts', 'tm.id_headquarters=ts.id', 'left');
+		$this->db->join($db.'.jornadas AS tj', 'tm.id_study_day=tj.cod_jorn', 'left');
+		$this->db->where('tm.id_grade', $grado);
+		$this->db->where('tm.id_group', $grupo);
+		$this->db->where('tm.id_study_day', $jornada);
+		$this->db->where('tm.id_headquarters', $sede);
+		$this->db->where('tm.promoted',0);
+		$this->db->where('tm.id_state',2);
+		$this->db->where('tm.year',$a);
+		$this->db->order_by('nombres', 'asc');
+		$query	= $this->db->get();		
+		return $this->getJsonResponse($query->result(), $query->num_rows());
 	}
 	
 	function change_year($year){
@@ -500,23 +501,6 @@ class M_general extends SME_Model {
 		return $this->get_query($this->limit_min,$this->limit_max,'SELECT * FROM tipo_discapacidad');
 	}
 	
-	function get_resguardos($q){
-		if(empty($q)){
-			$query = 'SELECT * FROM resguardos';
-		}else{
-			$query = "SELECT * FROM resguardos WHERE NOMB_RESG REGEXP '".$q."'";
-		}
-		return $this->get_query($this->limit_min,$this->limit_max,$query);
-	}
-	
-	function get_etnias($q){
-		if(empty($q)){
-			$query = 'SELECT * FROM etnias';
-		}else{
-			$query = "SELECT * FROM etnias WHERE NOM_ETNIA REGEXP '".$q."'";
-		}
-		return $this->get_query($this->limit_min,$this->limit_max,$query);
-	}
 	
 	function get_poblacion_victima_conflicto(){
 		return $this->get_query($this->limit_min,$this->limit_max,'SELECT * FROM poblacion_victima_conflicto');

@@ -647,7 +647,7 @@ class M_notas extends SME_Model {
 		$where	= '';
 
 		if ($sexo != 'MX') {
-			$where = " AND tx.abrev_sexo =".$sexo;
+			$where = " AND tx.abrev_sexo ='".$sexo."'";
 		}					
 		$query	= "INSERT INTO ".$table." (id_matric, year, periodo, id_curso)
 			SELECT tm.id, tm.year, ".$periodo.", ".$curso."
@@ -659,7 +659,7 @@ class M_notas extends SME_Model {
 			tm.id_state = 2 ".$where." AND NOT EXISTS(
 			SELECT a.id_curso, a.id_matric, a.year, a.periodo
 			FROM ".$table." AS a 
-			WHERE a.id_curso = ".$curso." AND a.periodo = ".$periodo.");";
+			WHERE a.id_curso = ".$curso." AND a.id_matric = tm.id  AND a.periodo = ".$periodo.");";
 		$this->db->query($query);
 			
 		$param	= array(

@@ -24,7 +24,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraGeneralView',{
 					title   : 'Trabajar procesos educativos para impresión de boletines por:',
 					items   : [
 						{
-							xtype   : 'radioGroup',
+							xtype   : 'customradiogroup',
 							items   : [
 								{
 									boxLabel    : 'Objetivos',
@@ -105,7 +105,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraGeneralView',{
 					title   : 'Trabajar año  lectivo por:',
 					items   : [
 						{
-							xtype   : 'radioGroup',
+							xtype   : 'customradiogroup',
 							items   : [
 								{
 									boxLabel    : 'Áreas',
@@ -126,7 +126,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraGeneralView',{
 					title   : 'Pierden directamente con:',
 					items   : [
 						{
-							xtype   : 'radioGroup',
+							xtype   : 'customradiogroup',
 							vertical: false,
 							items   : [
 								{
@@ -153,7 +153,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraGeneralView',{
 					title   : 'Luego de las estrategias de apoyo, pierden año lectivo los estudiantes que persistan en perdida de:',
 					items   : [
 						{
-							xtype   : 'radioGroup',
+							xtype   : 'customradiogroup',
 							items   : [
 								{
 									boxLabel    : '1 De las recuperaciones',
@@ -179,7 +179,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraGeneralView',{
 					title   : 'Trabajar Grupos por:',
 					items   : [
 						{
-							xtype   : 'radioGroup',
+							xtype   : 'customradiogroup',
 							items   : [
 								{
 									boxLabel    : 'Números. Ej. 01, 02. Etc.',
@@ -200,7 +200,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraGeneralView',{
 					title   : 'Promocionar estudiantes por:',
 					items   : [
 						{
-							xtype   : 'radioGroup',
+							xtype   : 'customradiogroup',
 							items   : [
 								{
 									boxLabel    : 'Promedios',

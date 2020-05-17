@@ -1,9 +1,6 @@
-/**
- * Created by LOPEZSOFT on 30/04/2016.
- */
 Ext.define('Admin.view.docs.WebcamView',{
     extend : 'Admin.base.WindowCrud',
-    alias   : 'widget.WebcamView',
+    alias   : 'widget.webcamwiew',
     title   : 'Seleccionar un archivo',
     iconCls     : 'x-fa fa-user',
     uses: [
@@ -101,7 +98,7 @@ Ext.define('Admin.view.docs.WebcamView',{
 								},
 								items:[
 									{
-										html	:'<video  id="video" width="512" height="256" autoplay></video>'
+										html	:'<video  id="videowebcamasaie" width="512" height="256" autoplay></video>'
 									},
 									{
 										html 	: '<canvas id="canvas" width="328" height="256"></canvas>'
@@ -113,16 +110,7 @@ Ext.define('Admin.view.docs.WebcamView',{
 										iconCls	: 'x-fa fa-play',
 										text	:"Iniciar Cámara Web",
 										handler:function(){
-											var videoObj    = { "video": true };
-											// Pedir permisos al Navegador para usar la Webcam
-											if(navigator.getUserMedia){// Standard
-												navigator.getUserMedia(videoObj,me.initWebcam, me.errorWebcam);
-											}else if(navigator.webkitGetUserMedia){        // WebKit
-												navigator.webkitGetUserMedia(videoObj,me.initWebcam, me.errorWebcam);
-											}else if(navigator.mozGetUserMedia){        // Firefox
-												navigator.mozGetUserMedia(videoObj, me.initWebcam, me.errorWebcam);
-											}
-
+											this.up('window').initWebcam();
 										}
 									},
 									{
@@ -130,10 +118,7 @@ Ext.define('Admin.view.docs.WebcamView',{
 										text	: "Capturar",
 										iconCls	: 'x-fa fa-camera-retro',
 										handler	: function(){
-											var video = document.getElementById("video");
-											var canvas = document.getElementById("canvas");
-											context = canvas.getContext("2d");
-											context.drawImage(video, 5, 0, 328, 256);
+                                            this.up('window').onCapture();
 										}
 									},
 									{
@@ -144,7 +129,7 @@ Ext.define('Admin.view.docs.WebcamView',{
 											var xParam	= {},
 												xParam  = me.extraParams,
 												app     = Admin.getApplication(),
-												url 	= globales.SetUrls.UrlBase + me.pathUploadFile,
+												url 	= Global.getUrlBase() + me.pathUploadFile,
 												canvas 	= document.getElementById("canvas"),
 												context = canvas.getContext("2d"),
 												data 	= canvas.toDataURL("image/jpeg");
@@ -307,27 +292,57 @@ Ext.define('Admin.view.docs.WebcamView',{
         this.callParent(arguments);
     },
 
-    errorWebcam: function (error) {
-        console.log(error);
-		Admin.getApplication().onError("Error Capturando el video: ", error.name + ": " + error.message);
-	},
+    onCapture   : function(){
+        let video   = document.getElementById("videowebcamasaie"),
+            canvas  = document.getElementById("canvas");
+            context = canvas.getContext("2d");
+            context.drawImage(video, 5, 0, 328, 256);
+    },
 
 	initWebcam : function(stream){
-		var
-			video            = document.getElementById('video'),
-			canvas           = document.getElementById('canvas');
-        console.log(stream);    
-		video.width = video.offsetWidth;
-		if(navigator.getUserMedia){                    // Standard
-			video.src = stream;
-			video.play();
-		}else if(navigator.webkitGetUserMedia){        // WebKit
-			video.src = window.webkitURL.createObjectURL(stream);
-			video.play();
-		}else if(navigator.mozGetUserMedia){        // Firefox
-			video.src = window.URL.createObjectURL(stream);
-			video.play();
-		};
+        let
+			video            = document.getElementById('videowebcamasaie'),
+            canvas           = document.getElementById('canvas');
+        
+        // Pedir permisos al Navegador para usar la Webcam
+        navigator.getMedia = ( navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.msGetUserMedia);
+        window.URL = window.URL || 
+             window.webkitURL || 
+             window.mozURL || 
+             window.msURL;
+        console.log(window.URL);
+        console.log(navigator);
+        navigator.getMedia(
+            {
+              video: true,
+              audio: false
+            },
+            function(stream) {
+                console.log(stream);
+                if (navigator.mozGetUserMedia) {
+                    video.mozSrcObject = stream;
+                }else {
+                    video.src = window.URL.createObjectURL(stream);
+                }
+                video.play();
+            },
+            function(error) {
+                console.log("An error occured! " + error);
+                Admin.getApplication().onError("Error Capturando el video: ", error.name + ": " + error.message);
+            }
+        );
+        
+        video.width = video.offsetWidth;
+        video.addEventListener('canplay', function(ev){
+            if (!streaming) {
+                height = video.videoHeight / (video.offsetWidth/width);
+                video.setAttribute('width', video.offsetWidth);
+                video.setAttribute('height', height);
+                canvas.setAttribute('width', video.offsetWidth);
+                canvas.setAttribute('height', height);
+                streaming = true;
+            }
+        }, false);       
 	},
     /**
      * @private
@@ -355,7 +370,7 @@ Ext.define('Admin.view.docs.WebcamView',{
      */
     onIconSelect: function(dataview, selections) {
         var selected = selections[0],
-            bd  = this.down('#deleteButton');
+            bd  = this.down('#deletebutton');
             bd.setDisabled(!selected),
             me  = this;
         if (selected) {

@@ -9,6 +9,7 @@ $('.login').on('submit', function(e) {
         user  : elem.getElementById('user').value,
         pass  : Sha1.hash(elem.getElementById('pass').value),
         inst  : elem.getElementById('inst').value,
+        type  : elem.getElementById('user_type').value,
         year  : elem.getElementById('year').value
     };
     $.ajax({
@@ -19,21 +20,21 @@ $('.login').on('submit', function(e) {
         {
             var
                 res = JSON.parse(data),
-                req = res.request;
-            if (req) {
-                if (req == 1) {
+                req = res;
+            if (req.success == true) {
+                if (req.request == 1) {
                     alertify.message('Ingresando al sistema');
                     window.location.reload();
                 } else {
                     alertify.message('Datos de autenticación incorrectos!');
                 }
             } else {
-                alertify.message('Datos de autenticación incorrectos!');
+                alertify.error('Datos de autenticación incorrectos!');
             }
 
         },
         failure: function (data) {
-            alertify.message('Error inesperado...!');
+            alertify.error('Error inesperado...!');
         }
     });
 });

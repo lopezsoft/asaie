@@ -11,7 +11,7 @@ Ext.define('Admin.store.inscripciones.MatriculasStore',{
         },
         api: {
             create  : 'master/insertData',
-            read    : 'c_academico/get_select_matriculas',
+            read    : 'academic/get_select_matriculas',
             update  : 'master/updateData',
             destroy : 'master/deleteData'
         }

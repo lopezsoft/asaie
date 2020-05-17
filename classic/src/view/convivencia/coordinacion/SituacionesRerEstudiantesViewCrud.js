@@ -24,7 +24,7 @@ Ext.define('Admin.view.convivencia.configuraciones.SituacionesRerEstudiantesView
                     itemId		: 'CbSituacionesReg'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     fieldLabel  : 'Observación',
                     name        : 'observacion'
                 },

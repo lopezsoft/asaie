@@ -45,7 +45,7 @@ Ext.define('Admin.view.simulacros.controller.SimulacrosController',{
                             pdbGrado: grado
                         },
                         api: {
-                            create: 'c_academico/get_add_asignaturas',
+                            create: 'academic/get_add_asignaturas',
                             read: 'General/get_select',
                             update: 'General/update_data',
                             destroy: 'General/delete_data'

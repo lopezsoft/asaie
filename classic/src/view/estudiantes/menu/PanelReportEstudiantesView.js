@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 2/06/2016.
- */
 Ext.define('Admin.view.estudiantes.menu.PanelReportEstudiantesView',{
     extend: 'Ext.container.Container',
     requires: [
@@ -101,8 +98,8 @@ Ext.define('Admin.view.estudiantes.menu.PanelReportEstudiantesView',{
                             var win = Ext.create({
                                 xtype       : 'FilesView',
                                 title       : 'Seleccionar archivo',
-                                pathReadFile    : 'c_academico/read_files_dig_est',
-                                pathUploadFile  : 'c_academico/upload_files_dig_est',
+                                pathReadFile    : 'academic/read_files_dig_est',
+                                pathUploadFile  : 'academic/upload_files_dig_est',
                                 titlePanelLoad  : 'Subir archivos',
                                 titlePanelView  : 'Mis archivos',
                                 textButtonLoad  : 'Seleccionar una archivo en el equipo',

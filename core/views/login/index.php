@@ -1,13 +1,18 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
-
 <!DOCTYPE html>
 <html lang="es" xmlns="http://www.w3.org/1999/html">
-
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+        <meta name="language" content="Spanish">
+        <meta name="title" content="ASAIE ÉXODO - Sistema académico y administrativo">
+        <meta name="description" content="Software en la nube para la gestión académica y administrativa de Instituciones educativas públicas y privadas en Colombia">
+        <meta name="keywords" content="Sistema académico,Clases virtuales, gestión académica,Notas académicas, clases en linea">
+        <meta name="robots" content="index, follow">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <title>ASAIE ÉXODO - Sistema académico y administrativo</title>
         <title>
             <?php echo lang('login_title') ?>
         </title>
@@ -48,6 +53,17 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         ?>
                     </select>
                 </div>
+
+                <div class="form-group">
+                    <select class="form-control" name="user_type" required="" id="user_type">
+                        <option value="0"><?php echo lang('login_type') ?></option>
+                        <?php 
+                            foreach ($user_types as $key => $value) {
+                                echo '<option value="'.$value['id'].'">'.$value['name'].'</option>';
+                            }
+                        ?>
+                    </select>
+                </div>
                 <div class="form-group">
                     <input class="form-control" type="number" name="year" id="year" required=""
                         value="<?php echo date('Y') ?>" placeholder="<?php echo lang('login_year') ?>" min="2000"
@@ -66,8 +82,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="https://cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js">
         </script>
-        <script src="<?php echo base_url();?>assets/js/index.js"></script>
-        <script src="<?php echo base_url();?>assets/js/hash.js"></script>
+        <script src="<?php echo base_url();?>assets/js/index.min.js"></script>
+        <script src="<?php echo base_url();?>assets/js/hash.min.js"></script>
         <script src="<?php echo base_url();?>assets/alertifyjs/alertify.min.js"></script>
         <!--Start of Tawk.to Script-->
         <script type="text/javascript">

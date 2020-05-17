@@ -398,7 +398,7 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
      * @constructor
      */
 
-    onClickGridNotas : function (grid, record, item, index, e, eOpts ) {
+    onClickGridNotas : function (grid) {
 
         var win		= grid.up('form'),
             btn3	= win.down('#btnCalcular'),
@@ -423,7 +423,7 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
                 btn5.setDisabled(false);
             }
         }else{
-            if (gb.getScale()){
+            if (gb.getScale().length > 0){
                 if (btn3.isDisabled()) {
                     btn3.setDisabled(false);
                 }
@@ -536,7 +536,7 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
             btn2	        = win.down('#btnUndo'),
             me		        = this,
             glo             = Global,
-            addLind         = glo.getConfigReport().permi_ind,
+            addLind         = glo.getConfigReport()[0].permi_ind,
             rerult          = false,
 			dbConfig        = Global.getDbConfig(),
 			hasta	        = 0,
@@ -545,63 +545,66 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 			_n_aplica		= 0,
             msg     = '';
         me.onStopTimer(btn);
-        if (!Ext.isEmpty(glo.getIndicatorsRecord()) && !Ext.isEmpty(glo.getRecordAchievements())) {
+        if(addLind == '5'){
             rerult = true;
-        }else if(!Ext.isEmpty(glo.getIndicatorsRecord()) && Ext.isEmpty(glo.getRecordAchievements())){
-            switch (addLind) {
-                case   '1' :
-                    rerult  = true;
-                    break;
-                case   '2' :
-                    rerult  = false;
-                    msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
-                    break;
-                case   '3' :
-                    rerult  = true;
-                    break;
-                case   '4' :
-                    rerult  = false;
-                    msg     = 'Le falta digitar los DESEMPEÑOS - LOGROS para poder generar los desempeños.';
-                    break;
-                default :
-                    rerult  = true;
-                    break;
-            }
-        }else if(Ext.isEmpty(glo.getIndicatorsRecord()) && !Ext.isEmpty(glo.getRecordAchievements())){
-            switch (addLind) {
-                case   '1' :
-                    rerult  = true;
-                    break;
-                case   '2' :
-                    rerult  = false;
-                    msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
-                    break;
-                case   '3' :
-                    rerult  = false;
-                    msg     = 'Le falta digitar los indicadores de DESEMPEÑO para poder generar los desempeños.';
-                    break;
-                case   '4' :
-                    rerult  = true;
-                    break;
-                default :
-                    rerult  = true;
-                    break;
-            }
-        }else {
-            switch (addLind) {
-                case   '1' :
-                    rerult  = true;
-                    break;
-                case   '5' :
-                    rerult  = true;
-                    break;
-                default :
-                    rerult  = false;
-                    msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
-                    break;
+        }else{
+            if (glo.getIndicatorsRecord().length > 0 && glo.getRecordAchievements().length > 0) {
+                rerult = true;
+            }else if(glo.getIndicatorsRecord().length > 0 && !glo.getRecordAchievements().length > 0){
+                switch (addLind) {
+                    case   '1' :
+                        rerult  = true;
+                        break;
+                    case   '2' :
+                        rerult  = false;
+                        msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
+                        break;
+                    case   '3' :
+                        rerult  = true;
+                        break;
+                    case   '4' :
+                        rerult  = false;
+                        msg     = 'Le falta digitar los DESEMPEÑOS - LOGROS para poder generar los desempeños.';
+                        break;
+                    default :
+                        rerult  = true;
+                        break;
+                }
+            }else if(!glo.getIndicatorsRecord().length > 0 && glo.getRecordAchievements().length > 0){
+                switch (addLind) {
+                    case   '1' :
+                        rerult  = true;
+                        break;
+                    case   '2' :
+                        rerult  = false;
+                        msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
+                        break;
+                    case   '3' :
+                        rerult  = false;
+                        msg     = 'Le falta digitar los indicadores de DESEMPEÑO para poder generar los desempeños.';
+                        break;
+                    case   '4' :
+                        rerult  = true;
+                        break;
+                    default :
+                        rerult  = true;
+                        break;
+                }
+            }else {
+                switch (addLind) {
+                    case   '1' :
+                        rerult  = true;
+                        break;
+                    case   '5' :
+                        rerult  = true;
+                        break;
+                    default :
+                        rerult  = false;
+                        msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
+                        break;
+                }
             }
         }
-
         if (rerult) {
             grid.el.mask('Generando promedios', 'x-mask-loading');
             if (btn1.isDisabled()) {
@@ -882,25 +885,24 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
      * @param eOpts
      */
     onClickDesemp : function	(btn, e, eOpts) {
-        var win 	= null,
-            me		= Admin.getApplication();
-
-        me.onMsgWait();
-        this.onStopTimer(btn);
-        Ext.require([
-            'Admin.view.docentes.DesempenoView'
-        ]);
-        Ext.onReady(function () {
-            Ext.Msg.hide();
+        var     me		= Admin.getApplication(),
+                select  = btn.up('form').down('grid').getSelection();
+        if (select.length > 0) {
+            this.onStopTimer(btn);
             me.onStore('general.EscalaNacionalStore');
             extra	= {
-				pdbTable: 'escala_nacional',
-				pdbAll	: 0
-			};
-			me.setParamStore('EscalaNacionalStore',extra);
-            win	= me.getWindow('Desempeños','Admin.view.docentes.DesempenoView');
-            win.show();
-        });
+                pdbTable: 'escala_nacional',
+                pdbAll	: 0,
+                where   : '{"estado":"1"}'
+            };
+            me.setParamStore('EscalaNacionalStore',extra);
+            Ext.create('Admin.view.docentes.DesempenoView',{
+                title   : 'Desempeños',
+                records : select
+            }).show();
+        }else{
+            me.onAler('Debe seleccionar al menos un estudiante...','error');
+        }
     },
 
     onConfigSave : function (btn) {
@@ -926,45 +928,6 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
             me.app.onAler('No hay cambios que guardar');
         }
     },
-
-    /**
-     * Guardar deseñpeño a los estudiantes, esto aplica a preescolar
-     * @param btn
-     * @param e
-     * @param eOpts
-     */
-
-    onDesempSave : function (btn, e, eOpts) {
-        var win 	= btn.up('form'),
-            grid 	= win.down('grid'),
-            selectS = grid.getSelection()[0],
-            winNota = Ext.ComponentQuery.query('notasacademicasdocentes')[0],
-            gridNot	= winNota.down('#notasGrid'),
-            select  = gridNot.getSelection(),
-            btn1	= winNota.down('#btnSave'),
-            btn2	= winNota.down('#btnUndo');
-        Ext.each(select,function (rec) {
-			rec.set('id_escala',selectS.get('id'));
-			rec.set('nombre_escala',selectS.get('nombre_escala'));
-		});
-       // this.onAutoSave(btn1);
-        if (btn1.isDisabled()) {
-            btn1.setDisabled(false);
-        }
-
-        if (btn2.isDisabled()) {
-            btn2.setDisabled(false);
-        }
-        win.close();
-        gridNot.setSelection(0);
-    },
-
-    /**
-     * Funcion que se ejecuta para guardar el logro a los estudiantes, cuando se hace click en el boton
-     * guardar de las vista LogrosInsertView en la vista NotasView
-     * @param btn
-     */
-    
 
     /**
      *  Funcion que configura la interfaz para el llenado de notas
@@ -997,50 +960,6 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 		store.reload();
     },
 
-	onEachColumsCompetencia : function (editor, idComp) {
-		var
-			colums	= [],
-			store	= Ext.getStore('ColumnDocentesStore');
-		store.each(function (data) {
-			if ( data.get('id_competencia') == idComp){
-				switch (data.get('nombre')){
-					case 'PROM' :
-						colums.push({
-							text 	        : data.get('nombre'),
-							width			: 77,
-							dataIndex	    : data.get('name_column'),
-							tooltip     	: data.get('descripcion'),
-							hidden			: data.get('activa') > 0 ? false :  true,
-							renderer :  function(val) {
-								return '<span style="color:Darkviolet;"> <b>' + val + '</b></span>'
-							}
-						});
-						break;
-					case '%' :
-						colums.push({
-							text 	        : data.get('nombre'),
-							dataIndex	    : data.get('name_column'),
-							tooltip     	: data.get('descripcion'),
-							hidden			: data.get('activa') > 0 ? false :  true,
-							renderer :  function(val) {
-								return '<span style="color:red;"> <b>' + val + '</b></span>'
-							}
-						});
-						break;
-					default :
-						colums.push({
-							text 	        : data.get('nombre'),
-							dataIndex	    : data.get('name_column'),
-							tooltip     	: data.get('descripcion'),
-							hidden			: data.get('activa') > 0 ? false :  true,
-							editor      	: editor
-						});
-						break;
-				}
-			}
-		});
-		return colums;
-	},
 
 	onRenderColorEscala : function (val) {
 		var
@@ -1128,7 +1047,7 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 				]
 			};
 		// Se agregan las columnas para las calificaciones númericas
-		if (Global.getScale()){
+		if (Global.getScale().length > 0){
 			desde	= Global.getScale()[0].desde; // Nota minima
 			hasta	= Global.getScale()[Global.getScale().length-1].hasta; // Nota maxima
 			Ext.each(Global.getCompetences(),function (data) {
@@ -1174,7 +1093,7 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 				tooltip     : 'Promedio de notas'
 			});
 		columns.push(finalColums);
-		grid = Ext.create('Ext.grid.Panel', {
+		grid = Ext.create('Admin.grid.CustomGrid', {
 			reference	: 'notasGrid',
 			itemId		: 'notasGrid',
 			flex		: 1,
@@ -1353,16 +1272,16 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 						btn1.setDisabled(false);
 					}
 					if (btn2.isDisabled()) {
-						btn2.setDisabled(Global.getScale());
+						btn2.setDisabled(Global.getScale().length > 0);
 					}
 					if (btn3.isDisabled()) {
-						btn3.setDisabled(!Global.getScale());
+						btn3.setDisabled(!Global.getScale().length > 0);
 					}
 					if (btn4.isDisabled()) {
 						btn4.setDisabled(false);
 					}
 					if (btn5.isDisabled()) {
-						btn5.setDisabled(Global.getScale());
+						btn5.setDisabled(Global.getScale().length > 0);
 					}
 					if (btn6.isDisabled()) {
 						btn6.setDisabled(false);
@@ -1379,6 +1298,51 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 		form.remove('notasGrid',true);
 		form.add(grid);
     },
+
+    onEachColumsCompetencia : function (editor, idComp) {
+		var
+			colums	= [],
+			store	= Ext.getStore('ColumnDocentesStore');
+		store.each(function (data) {
+			if ( data.get('id_competencia') == idComp){
+				switch (data.get('nombre')){
+					case 'PROM' :
+						colums.push({
+							text 	        : data.get('nombre'),
+							width			: 77,
+							dataIndex	    : data.get('name_column'),
+							tooltip     	: data.get('descripcion'),
+							hidden			: data.get('activa') > 0 ? false :  true,
+							renderer :  function(val) {
+								return '<span style="color:Darkviolet;"> <b>' + val + '</b></span>'
+							}
+						});
+						break;
+					case '%' :
+						colums.push({
+							text 	        : data.get('nombre'),
+							dataIndex	    : data.get('name_column'),
+							tooltip     	: data.get('descripcion'),
+							hidden			: data.get('activa') > 0 ? false :  true,
+							renderer :  function(val) {
+								return '<span style="color:red;"> <b>' + val + '</b></span>'
+							}
+						});
+						break;
+					default :
+						colums.push({
+							text 	        : data.get('nombre'),
+							dataIndex	    : data.get('name_column'),
+							tooltip     	: data.get('descripcion'),
+							hidden			: data.get('activa') > 0 ? false :  true,
+							editor      	: editor
+						});
+						break;
+				}
+			}
+		});
+		return colums;
+	},
 
     onDeleteLog : function (btn) {
        var  me      = this,

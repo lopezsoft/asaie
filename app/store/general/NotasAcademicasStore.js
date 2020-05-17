@@ -11,8 +11,8 @@ Ext.define('Admin.store.general.NotasAcademicasStore', {
 	type	: 'ajax',
 	    api: {
 		    create  : 'c_notas/get_notas_insert',
-		    read    : 'c_academico/get_notas',
-		    update  : 'c_academico/get_notas_save',
+		    read    : 'academic/get_notas',
+		    update  : 'academic/get_notas_save',
 		    destroy : 'c_notas/notas_delete'
 		}
 	}

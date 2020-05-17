@@ -111,7 +111,7 @@ Ext.define('Admin.view.admin.forms.SaveTeacher' ,{
 							xtype		: 'CbNivelEdu'
 						},
 						{
-							xtype		: 'radioGroup',
+							xtype		: 'customradiogroup',
 							columns		: 2,
 							fieldLabel	: 'Estado',
 							items		: [

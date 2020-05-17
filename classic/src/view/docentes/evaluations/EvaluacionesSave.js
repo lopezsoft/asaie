@@ -41,23 +41,6 @@ Ext.define('Admin.view.docentes.EvaluacionesSave',{
                     ]
                 },
                 {
-                    xtype       : 'radioGroup',
-                    fieldLabel  : 'Esquema',
-                    columns     : 2,
-                    items       : [
-                        {
-                            boxLabel    : 'Inserción',
-                            name        : 'esquema',
-                            inputValue  : 1
-                        },
-                        {
-                            boxLabel    : 'Aleatorio',
-                            name        : 'esquema',
-                            inputValue  : 2
-                        }
-                    ]
-                },
-                {
                     xtype   : 'customcontainer',
                     items   :[
                         {
@@ -110,7 +93,7 @@ Ext.define('Admin.view.docentes.EvaluacionesSave',{
                     labelWidth	: 180
                 },
                 {
-                    xtype       : 'radioGroup',
+                    xtype       : 'customradiogroup',
                     fieldLabel  : 'Registro de notas',
                     items       : [
                         {

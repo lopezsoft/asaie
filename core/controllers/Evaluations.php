@@ -5,7 +5,14 @@ class Evaluations extends SME_Controller {
     {
         parent::__construct();
         $this->load->model('Evaluations_m');
-    }
+	}
+	
+	public function getEvaluationResult()
+	{
+		$evaluationId	= $this->input->get_post('id');
+		$courseId  		= $this->input->get_post('courseId');
+		echo $this->Evaluations_m->getEvaluationResult($evaluationId, $courseId);
+	}
 	
 	
 	public function getStudentsByCourses()

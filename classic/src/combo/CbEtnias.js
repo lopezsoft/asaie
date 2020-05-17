@@ -3,11 +3,15 @@ Ext.define('Admin.combo.CbEtnias',{
 	 requires: [
        'Admin.store.general.EtniasStore'
     ],
-	alias	: 'widget.CbEtnias',
+    initComponent: function(){
+        Admin.getApplication().onStore('general.EtniasStore');
+        this.callParent(arguments);
+    },
+	alias	    : 'widget.CbEtnias',
 	fieldLabel	: 'Etnia',
 	name		: 'cod_etnia',
-    displayField: 'NOM_ETNIA',
-    valueField	: 'COD_ETNIA',
+    displayField: 'nombre_etnia',
+    valueField	: 'id',
     itemId		: 'CbEtnias',
 	reference 	: 'CbEtnias',
     publishes   : 'value',

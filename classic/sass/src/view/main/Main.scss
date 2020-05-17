@@ -1554,3 +1554,343 @@ $ended  : #F1485B;
     left    :0
   }
   
+
+  // News
+
+  .news {
+    background-image: url("icons/news-icon.png") !important;
+
+    .x-ie8 & {
+        background-image: url("icons/news-icon-small.png") !important;
+    }
+}
+
+.forum {
+    background-image: url("icons/forum-icon.png") !important;
+
+    .x-ie8 & {
+        background-image: url("icons/forum-icon-small.png") !important;
+    }
+}
+
+.news-title {
+    font-size: $exec-font-size-large-title;
+    line-height: $exec-font-size-large-title;
+    color: $exec-font-dark-color;
+    margin-bottom: 5px;
+}
+
+.news-small {
+    font-size: $exec-font-size-small-content;
+    color: $exec-font-color;
+
+    img {
+        vertical-align: top;
+        margin: 0 5px 0 10px;
+        height: 12px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.a-blank {
+    display         : none;
+}
+
+.text-wrapper {
+    position: relative;
+    overflow: visible;
+
+    word-wrap: break-word;
+    white-space: pre-wrap;      /* CSS3 */
+    /*white-space: -moz-pre-wrap; /* Firefox */
+    /*white-space: -pre-wrap;     /* Opera <7 */
+    /*white-space: -o-pre-wrap;   /* Opera 7 */
+    /*word-wrap: break-word;      /* IE */
+
+    .news-icon {
+        width: 35px;
+        height: 35px;
+        margin-top: 15px;
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        background-repeat: no-repeat;
+        background-size: contain;
+    }
+
+    .news-data {
+        background-color: $exec-tile-background;
+        margin: 0 0 8px 55px;
+        padding: 15px;
+        border-radius: 3px;
+
+        -webkit-box-shadow: 0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+        -moz-box-shadow:    0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+        box-shadow:         0px 1px 1px 0px rgba(0, 0, 0, 0.25);
+    }
+
+    .news-content {
+        margin-left: 50px;
+    }
+
+    .news-author {
+        text-transform: uppercase;
+    }
+
+    .news-paragraph {
+        background-color: $exec-tile-background;
+        min-height: 20px;
+        overflow: hidden;
+        font-weight: $exec-font-regular;
+        margin-top: 20px;
+    }
+
+    .news-picture {
+        width: 35px;
+        height: 35px;
+        background-color: $exec-light-background;
+        float: left;
+        border-radius: 3px;
+        overflow: hidden;
+
+        img {
+            width: 35px;
+        }
+    }
+
+    .news-toggle {
+        text-align: right;
+        margin-top: 15px;
+
+        span {
+            color: $exec-blue-color;
+            font-size: $exec-font-size-small-title;
+            font-weight: $exec-font-semibold;
+            cursor: pointer;
+            width: 100px;
+            display: inline-block;
+            //text-align: left;
+        }
+
+        img {
+            height: 14px;
+            vertical-align: middle;
+            margin: 0 5px 0 5px;
+        }
+    }
+
+    .news-download {
+        height: 40px;
+        width: 40px;
+
+        background-image: url(icons/download-small.png);
+        background-position: right center;
+        background-repeat: no-repeat;
+        background-size: 50%;
+
+        opacity: 0.5;
+
+        float: right;
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.company-news-grid {
+
+    margin: 20px 0 0 20px;
+
+    .x-grid-row-expanded .x-grid-row .news-data {
+        margin-bottom: 0;
+        border-bottom-right-radius: 0;
+        border-bottom-left-radius: 0;
+    }
+
+    .x-grid-body {
+        text-transform: none;
+    }
+
+    .x-toolbar-default {
+        background-color: #fff;
+        padding-bottom: 5px;
+        margin-bottom: 5px;
+        border-radius: 6px;
+    }
+
+    .x-grid-item {
+        border: 0px !important;
+        border-bottom: 0px;
+        background-color: transparent;
+    }
+
+    .x-grid-item:last-child {
+        margin-bottom: 15px;
+    }
+
+    .x-grid-cell-inner {
+        margin-right: 20px;
+        padding: 0px;
+        overflow: visible;
+    }
+
+    .x-grid-view {
+        background-color: $exec-light-background;
+        background-image: url("icons/icon-line-bg.png");
+        background-size: 9px 9px;
+        background-repeat: repeat-y;
+        background-position: 13px 20px;
+    }
+
+    .x-grid-view:before {
+        content: '';
+        background-color: $exec-light-background;
+        width: 50px;
+        height: 20px;
+        position: absolute;
+    }
+
+    .x-grid-with-row-lines {
+        border-top: none;
+    }
+
+    .x-grid-row {
+        background-color: transparent;
+        outline: none;
+    }
+
+    .x-grid-item-selected > tbody > .x-grid-row, .x-grid-item-over > tbody > .x-grid-row {
+        outline: none;
+    }
+
+    .x-grid-item.x-grid-item-over {
+        background-color: none;
+        border: none;
+    }
+
+    .x-grid-item-container {
+         border-top: 0px;
+    }
+
+    .x-grid-rowbody {
+        padding-left: 0;
+        padding-top: 0;
+        margin-right: 5px;
+        .news-data {
+            padding-top: 5px;
+            margin-bottom: 3px;
+            border-bottom-right-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+        .news-paragraph {
+            margin-left: 50px;
+            margin-top: 0;
+        }
+    }
+
+    .x-grid-item-focused {
+        .news-content {
+            z-index: 1;
+            position: relative;
+        }
+        .news-content:before {
+            content: "";
+            position: absolute;
+            z-index: -1;
+            top: -1px;
+            right: -1px;
+            bottom: -5px;
+            left: -5px;
+
+            border: $grid-row-cell-focus-border-width dotted $grid-row-cell-focus-border-color;
+        }
+        .x-grid-cell-inner:before {
+            display: none;
+        }
+    }
+}
+
+#news-menu {
+    .x-menu-body {
+        background-color: $exec-blue-color !important;
+        span {
+            opacity: 1 !important;
+        }
+    }
+    .x-menu-item-icon {
+        opacity: 1 !important;
+    }
+    .x-menu-item-active {
+        background-color: $exec-blue-color !important;
+    }
+}
+
+
+// wizards
+
+.wizards .x-panel{
+    background: #fff;
+}
+
+.wizardthree .wizardprogressbar {
+    background-color: $wizard-three-button-background-color;
+}
+
+@include extjs-button-small-ui(
+    $ui: 'wizard-blue',
+    $color: $button-toolbar-color,
+    $color-pressed: $wizard-primary-background-color,
+    $background-color: transparent,
+    $opacity-disabled: 1,
+    $glyph-color: $button-toolbar-glyph-color,
+    $border-width: 0
+);
+
+@include extjs-button-small-ui(
+    $ui: 'wizard-soft-purple',
+    $color: $button-toolbar-color,
+    $color-pressed: #fff,
+    $background-color: transparent,
+    $background-color-pressed: $wizard-two-button-background-color,
+    $opacity-disabled: 1,
+    $glyph-color: $button-toolbar-glyph-color,
+    $border-width: 0
+);
+
+@include extjs-button-small-ui(
+    $ui: 'wizard-soft-green',
+    $color: #fff,
+    $color-pressed: $color,
+    $background-color: transparent,
+    $opacity-disabled: 1,
+    $glyph-color: #fff,
+    $border-width: 0
+);
+
+// This rule is required because the button mixin does not currently support
+// separate icon colors for each state
+.x-btn-pressed {
+    .x-btn-icon-el-wizard-blue-small {
+        color: $wizard-primary-background-color;
+    }
+
+    &.x-btn-disabled {
+        &.x-btn-wizard-soft-purple-small,
+        .x-btn-wizard-soft-purple-small-mc {
+            background-color: $wizard-two-button-background-color;
+        }
+    }
+
+    .x-btn-icon-el-wizard-soft-purple-small {
+        color: #fff;
+    }
+
+    .x-btn-icon-el-wizard-soft-green-small {
+        color: $color;
+    }
+}

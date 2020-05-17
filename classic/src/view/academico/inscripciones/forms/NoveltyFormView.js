@@ -1,5 +1,5 @@
 Ext.define('Admin.view.academico.inscripciones.forms.NoveltyFormView', {
-	extend: 'Admin.base.WindowCrud',
+	extend: 'Admin.base.SaveWindow',
 	alias: 'widget.NoveltyFormView',
 	maximized: false,
 	maxWidth: 450,
@@ -12,26 +12,52 @@ Ext.define('Admin.view.academico.inscripciones.forms.NoveltyFormView', {
 	config : {
 		record : null
 	},
-	closeAction	: 'hide',
-	onSave: function (btn) {
-		var
-			store 	= this.getStore(),
-			me 	  	= this.getController(),
-			sm 	  	= Admin.getApplication();
-		if (store) {
-			var win 		= this,
-				form 		= win.down('form'),
-				values 		= form.getValues(),
-				record 		= form.getRecord(),
-				dataGrid 	= win.getRecord();
-			store = Ext.getStore(store);
-			if (dataGrid) {
-				values.id_register	= dataGrid.get('id');
-				me.onDataSave(record, values, store, values, win);
-			} else {
-				sm.showResult('Debe seleccionar una matricula.');
+	saveData	: function(storeName,reload){
+		var me 		= this.getApp(),
+			win		= this,
+			form    = win.down('form'),
+			record  = form.getRecord(),
+			values  = form.getValues(),
+			dataGrid= win.getRecord(),
+			store   = Ext.getStore(storeName);
+		if (record) { //Edición
+			if (store.getModifiedRecords().length > 0) {
+				win.mask('Guardando...');
 			}
-		}
+			record.set(values);
+			store.sync({
+				success : function(batch, o) {
+					me.showResult('Se han guardado los datos');
+					win.unmask();
+					if (reload == true){
+						store.reload();
+					}
+					win.close();
+				},
+				failure	: function (re) {
+					win.unmask();
+					store.rejectChanges();
+				}
+			});
+		}else{ // Insertar
+			win.mask('Guardando...');
+			values.id_register	= dataGrid.get('id');
+			store.insert(0,values);
+			store.sync({
+				success : function(batch, o){
+					me.showResult('Se han guardado los datos');
+					win.unmask();
+					win.close();
+					if (reload == true){
+						store.reload();
+					}
+				},
+				failure	: function (re) {
+					store.rejectChanges();
+					win.unmask();
+				}
+			});
+		};
 	},
 	store: 'NoveltyStore',
 	items: [
@@ -48,7 +74,7 @@ Ext.define('Admin.view.academico.inscripciones.forms.NoveltyFormView', {
 					name	: 'date'
 				},
 				{
-					xtype		: 'textAreaField',
+					xtype		: 'customtextarea',
 					fieldLabel	: 'Movtivo',
 					name		: 'motive'
 				}

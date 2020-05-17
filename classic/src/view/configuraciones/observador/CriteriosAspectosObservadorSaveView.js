@@ -12,7 +12,7 @@ Ext.define('Admin.view.configuraciones.CriteriosAspectosObservadorSaveView',{
         this.callParent(arguments);
         this.setTitle('Nuevo/Editar Criterios - '+ Global.getYear());
     },
-    defaultFocus: 'textAreaField',
+    defaultFocus: 'customtextarea',
     items       : [
         {
             xtype       : 'customform',
@@ -23,13 +23,13 @@ Ext.define('Admin.view.configuraciones.CriteriosAspectosObservadorSaveView',{
                     itemId      : 'id_item_modelo'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     name        : 'descripcion',
                     fieldLabel  : 'Descripción',
                     labelAlign  : 'top'
                 },
                 {
-                    xtype       : 'radioGroup',
+                    xtype       : 'customradiogroup',
                     fieldLabel  : 'Activo',
                     items       : [
                         {

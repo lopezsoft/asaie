@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 2/06/2016.
- */
 Ext.define('Admin.view.estudiantes.menu.PanelMejoramientoEstudiantesView',{
     extend: 'Ext.container.Container',
     requires: [

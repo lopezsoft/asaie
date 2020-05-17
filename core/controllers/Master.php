@@ -127,7 +127,7 @@ class Master extends SME_Controller {
 		if(isset($order)){
 			$order 	= json_decode($order);
 			$zorder	= [];
-			foreach ($where as $key => $value) {
+			foreach ($order as $key => $value) {
 				$zorder[$key]	= $value;
 			}
 			$order	= $zorder;

@@ -156,7 +156,7 @@ Ext.define('Admin.view.academico.container.AcademicContainerView',{
                         var
                             me  = Admin.getApplication(),
                             ts  = btn.up('container').up('container'),
-                            url = Global.getUrlBase()+'c_academico/get_update_pass_est';
+                            url = Global.getUrlBase()+'academic/get_update_pass_est';
                         ts.mask();
                         Ext.Ajax.request({
                             url: url,

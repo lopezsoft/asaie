@@ -48,7 +48,7 @@ Ext.define('Admin.view.academico.controller.NotasController',{
 			};
 
 			Ext.Ajax.request({
-				url: Global.getUrlBase() + 'c_academico/get_transferir_notas',
+				url: Global.getUrlBase() + 'academic/get_transferir_notas',
 				params: param,
 				success: function (response, opts) {
 					store.reload();

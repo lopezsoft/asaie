@@ -16,7 +16,7 @@ Ext.define('Admin.store.general.MatCursoStore', {
         },
         api: {
             create  : 'General/insert_data',
-            read    : 'c_academico/get_select_matcurso',
+            read    : 'academic/get_select_matcurso',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

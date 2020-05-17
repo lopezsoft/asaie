@@ -2742,6 +2742,9 @@ WHERE estado = 1;
 INSERT INTO aux_asignaturas (id_asign, id_area, YEAR) 
 SELECT id_pk, id_area, 2019 FROM asignaturas 
 WHERE estado = 1;
+INSERT INTO aux_asignaturas (id_asign, id_area, YEAR) 
+SELECT id_pk, id_area, 2020 FROM asignaturas 
+WHERE estado = 1;
 
 ALTER TABLE `asignaturas`
 	DROP COLUMN `id_inst`,
@@ -3804,11 +3807,11 @@ CREATE TABLE `promoted_header` (
 	INDEX `grade_id` (`grade_id`) USING BTREE,
 	INDEX `subject_id` (`subject_id`) USING BTREE,
 	INDEX `studyday_id` (`studyday_id`) USING BTREE,
-	CONSTRAINT `FK_promoted_header_asignaturas` FOREIGN KEY (`subject_id`) REFERENCES `asaie`.`asignaturas` (`id_pk`) ON UPDATE CASCADE ON DELETE RESTRICT,
-	CONSTRAINT `FK_promoted_header_grados` FOREIGN KEY (`grade_id`) REFERENCES `asaie`.`grados` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
-	CONSTRAINT `FK_promoted_header_inscripciones` FOREIGN KEY (`student_id`) REFERENCES `asaie`.`inscripciones` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
-	CONSTRAINT `FK_promoted_header_jornadas` FOREIGN KEY (`studyday_id`) REFERENCES `asaie`.`jornadas` (`cod_jorn`) ON UPDATE CASCADE ON DELETE RESTRICT,
-	CONSTRAINT `FK_promoted_header_sedes` FOREIGN KEY (`headq_id`) REFERENCES `asaie`.`sedes` (`ID`) ON UPDATE CASCADE ON DELETE RESTRICT
+	CONSTRAINT `FK_promoted_header_asignaturas` FOREIGN KEY (`subject_id`) REFERENCES `asignaturas` (`id_pk`) ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT `FK_promoted_header_grados` FOREIGN KEY (`grade_id`) REFERENCES `grados` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT `FK_promoted_header_inscripciones` FOREIGN KEY (`student_id`) REFERENCES `inscripciones` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT `FK_promoted_header_jornadas` FOREIGN KEY (`studyday_id`) REFERENCES `jornadas` (`cod_jorn`) ON UPDATE CASCADE ON DELETE RESTRICT,
+	CONSTRAINT `FK_promoted_header_sedes` FOREIGN KEY (`headq_id`) REFERENCES `sedes` (`ID`) ON UPDATE CASCADE ON DELETE RESTRICT
 )
 COLLATE='utf8_general_ci'
 ENGINE=InnoDB
@@ -3902,7 +3905,7 @@ ALTER TABLE `obs_anotaciones_mod_3`
 	CHANGE COLUMN `id` `id` BIGINT NOT NULL AUTO_INCREMENT FIRST,
 	CHANGE COLUMN `fecha` `fecha` DATE NULL DEFAULT NULL AFTER `periodo`,
 	CHANGE COLUMN `estado` `estado` TINYINT(1) NOT NULL DEFAULT 1 AFTER `timestamp`,
-	ADD CONSTRAINT `obs_anotaciones_mod_3_ibfk_1` FOREIGN KEY (`id_observador`) REFERENCES `asaie`.`obs_observador_mod_3` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT;
+	ADD CONSTRAINT `obs_anotaciones_mod_3_ibfk_1` FOREIGN KEY (`id_observador`) REFERENCES `obs_observador_mod_3` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT;
 
 ALTER TABLE `obs_items_modelo_3`
 	DROP FOREIGN KEY `obs_items_modelo_3_ibfk_1`,
@@ -3927,6 +3930,65 @@ ALTER TABLE `obs_items_modelo_3`
 	CHANGE COLUMN `s4` `s4` SMALLINT(1) NOT NULL DEFAULT 0 AFTER `s3`,
 	CHANGE COLUMN `estado` `estado` TINYINT(1) NOT NULL DEFAULT 1 AFTER `s4`,
 	CHANGE COLUMN `fecha` `fecha` DATE NULL DEFAULT NULL AFTER `estado`,
-	ADD CONSTRAINT `obs_items_modelo_3_ibfk_1` FOREIGN KEY (`id_observador`) REFERENCES `asaie`.`obs_observador_mod_3` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
-	ADD CONSTRAINT `obs_items_modelo_3_ibfk_3` FOREIGN KEY (`id_item_criterio`) REFERENCES `asaie`.`obs_criterios` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT;
+	ADD CONSTRAINT `obs_items_modelo_3_ibfk_1` FOREIGN KEY (`id_observador`) REFERENCES `obs_observador_mod_3` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT,
+	ADD CONSTRAINT `obs_items_modelo_3_ibfk_3` FOREIGN KEY (`id_item_criterio`) REFERENCES `obs_criterios` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT;
 
+
+
+/***                          CAMBIOS 2020                ********/
+
+
+ALTER TABLE `users`
+	CHANGE COLUMN `message` `message` LONGTEXT NULL COLLATE 'utf8_general_ci' AFTER `lectur`;
+
+INSERT IGNORE INTO `user_types` (`id`, `name`, `description`, `active`, `timestamp`) VALUES (5, 'Estudiantes', NULL, 1, '2019-11-30 07:31:36');
+INSERT IGNORE INTO `user_types` (`id`, `name`, `description`, `active`, `timestamp`) VALUES (7, 'Familiares', NULL, 1, '2019-11-30 07:31:56');
+
+
+ALTER TABLE `te_shared_evaluation`
+	CHANGE COLUMN `read` `eread` TINYINT(1) NOT NULL DEFAULT '0' AFTER `enrollment_id`;
+
+ALTER TABLE `ta_online_activities_history`
+	CHANGE COLUMN `id_material` `shared_activity_id` BIGINT(20) NOT NULL AFTER `id`,
+	DROP COLUMN `id_matric`,
+	DROP INDEX `id_matric`,
+	DROP INDEX `id_material`,
+	ADD INDEX `shared_activity_id` (`shared_activity_id`);
+ALTER TABLE `ta_online_activities_history`
+	ADD CONSTRAINT `FK_ta_online_activities_history_ta_shared_online_activities` FOREIGN KEY (`shared_activity_id`) REFERENCES `ta_shared_online_activities` (`id`) ON UPDATE CASCADE;
+
+CREATE TABLE `ta_comments_activities` (
+	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`shared_activity_id` BIGINT(20) NOT NULL,
+	`comment_activity` MEDIUMTEXT NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`comment_title` VARCHAR(120) NULL DEFAULT NULL COLLATE 'utf8_general_ci',
+	`url_attached` VARCHAR(200) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
+	`mime` VARCHAR(200) NOT NULL DEFAULT '' COLLATE 'utf8_general_ci',
+	`hour_comment` TIMESTAMP NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+	`type_comment` TINYINT(1) NOT NULL DEFAULT '0',
+	`state` TINYINT(1) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `shared_activity_id` (`shared_activity_id`) USING BTREE
+)
+COMMENT='Comentarios de las actividades'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB
+;
+
+ALTER TABLE `ta_comments_activities`
+ADD CONSTRAINT `FK_ta_comments_activities_ta_shared_online_activities` FOREIGN KEY (`shared_activity_id`) REFERENCES `ta_shared_online_activities` (`id`) ON UPDATE CASCADE ON DELETE RESTRICT;
+
+ALTER TABLE `users`
+	DROP INDEX `username`,
+	ADD UNIQUE INDEX `user_type_username` (`user_type`, `username`);
+
+
+/******************** mayo 07 *****************************/
+
+ALTER TABLE `promoted_header`
+	CHANGE COLUMN `group` `group_id` VARCHAR(2) NOT NULL COLLATE 'utf8_general_ci' AFTER `studyday_id`;
+
+
+/******************** mAYO 14 ****************************/
+ALTER TABLE `users`
+	CHANGE COLUMN `image` `image` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci' AFTER `date`;

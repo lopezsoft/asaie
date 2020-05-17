@@ -1,21 +1,11 @@
-/**
- * Created by LOPEZSOFT2 on 23/09/2016.
- */
 Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
     extend  : 'Admin.base.WindowCrud',
     alias   : 'widget.inscripcionesView',
     xtype   : 'inscripcionesView',
     controller: 'academico',
     initComponent: function () {
-        var me  = Admin.getApplication();
-        me.onStore('inscripciones.InscripcionesStore');
-        me.onStore('inscripciones.HistorialStore');
-        this.callParent(arguments);
-        this.setTitle(AppLang.getSTitleViewStudents());
-    },
-    buildWindow: function () {
-        var
-            me = this.getApp();
+        var 
+            me  = Admin.getApplication();
         me.onStore('general.DocumentosStore');
         me.onStore('general.CountryStore');
         me.onStore('general.CiudStore');
@@ -31,10 +21,18 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
         me.onStore('general.JornadasStore');
         me.onStore('general.EstadoStore');
         me.onStore('inscripciones.MatriculasStore');
+        me.onStore('inscripciones.InscripcionesStore');
+        me.onStore('inscripciones.ExtraInscripcionesStore');
+        me.onStore('inscripciones.FamiliesStudentStore');
+        me.onStore('inscripciones.HistorialStore');
+        this.setTitle(AppLang.getSTitleViewStudents());
+        this.callParent(arguments);
+    },
+    buildWindow: function () {
         this.winObject = Ext.create('Admin.view.academico.inscripciones.forms.InscripcionesForm');
     },
     showWindow: function (btn) {
-        var me = this.app,
+        var 
             ts = this,
             data = ts.down('grid').getSelection()[0],
             form = [];
@@ -77,6 +75,9 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                     items   : [
                         {
                             xtype       : 'customgrid',
+                            itemId      : 'studentgrid',
+                            selModel    : 'rowmodel',
+                            syncHeight  : false,
                             plugins		: [
                                 {
                                     ptype : 'gridfilters'
@@ -160,6 +161,7 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                                 {
                                     xtype   : 'toolbarCrud',
                                     items   : [
+                                        '->',
                                         {
                                             xtype   : 'addButton'
                                         },'-',
@@ -171,14 +173,58 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                                         },'-',
                                         {
                                             xtype   : 'closebutton'
-                                        },'-','->',
+                                        },'-',
+                                        {
+                                            xtype   : 'customButton',
+                                            text    : 'Datos extra',
+                                            itemId  : 'extrabutton',
+                                            disabled: true,
+                                            handler : function(btn){
+                                                let ts      = this.up('window');
+                                                    app     = Admin.getApplication();
+                                                    store   = Ext.getStore('ExtraInscripcionesStore'),
+                                                    record  = ts.down('#studentgrid').getSelection()[0];
+                                                xparam  = {
+                                                    pdbTable    : 'extra_inscripciones',
+                                                    where       : '{"id_inscripcion" : "'+record.get('id')+'"}'
+                                                },
+                                                app.setParamStore('ExtraInscripcionesStore',xparam,false);
+                                                ts.mask(AppLang.getSMsgLoading());
+                                                store.load({
+                                                    scope: this,
+                                                    callback: function(records, operation, success) {
+                                                        ts.unmask();
+                                                        if (success){
+                                                            win = Ext.create('Admin.view.academico.inscripciones.ExtraInscripciones');
+                                                            var
+                                                                form = win.down('form');
+                                                            if (records.length == 1) {
+                                                                form.loadRecord(records[0]);
+                                                            }
+                                                            win.setRecord(record);
+                                                            win.setAlwaysOnTop(true).show();
+                                                        };
+                                                    }
+                                                });
+                                            },
+                                            tooltip : 'Datos ediciones del estudiante',
+                                            iconCls : 'fas fa-id-card'
+                                        }, '-',
                                         {
                                             xtype       : 'customButton',
-                                            tooltip     : 'Familiares',
+                                            tooltip     : 'Familiares asignados al estudiante',
                                             iconCls     : 'x-fa fa-users',
+                                            text        : 'Agregar',
                                             itemId      : 'btnFamil',
                                             disabled  	: true,
-                                            handler     : 'onViewFamiliares'
+                                            handler     : 'onFamiliesStudent'
+                                        },
+                                        {
+                                            xtype       : 'customButton',
+                                            tooltip     : 'Crear Familiares',
+                                            text        : 'Crear',
+                                            iconCls     : 'x-fa fa-users',
+                                            handler     : 'onFamilies'
                                         },
                                         {
                                             xtype       : 'customButton',
@@ -195,8 +241,7 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                                     ]
                                 },
                                 {
-                                    xtype 		: 'pagination',
-                                    itemId		: 'pToolbar'
+                                    xtype 		: 'pagination'
                                 }
                             ]
                         }                        
@@ -210,7 +255,9 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                         {
                             xtype       : 'customgrid',
                             store       : 'HistorialStore',
+                            syncHeight  : false,
                             itemId      : 'gridMat',
+                            selModel    : 'rowmodel',
                             plugins		: [
                                 {
                                     ptype : 'gridfilters'
@@ -283,6 +330,7 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                                 {
                                     xtype   : 'customToolbar',
                                     items: [
+                                        '->',
                                         {
                                             xtype   : 'addButton',
                                             itemId  : 'btnNewMat',

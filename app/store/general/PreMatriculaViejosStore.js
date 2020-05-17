@@ -15,7 +15,7 @@ Ext.define('Admin.store.general.PreMatriculaViejosStore', {
         },
         api: {
             create  : '',
-            read    : 'c_academico/get_pre_matricula_viejos',
+            read    : 'academic/get_pre_matricula_viejos',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

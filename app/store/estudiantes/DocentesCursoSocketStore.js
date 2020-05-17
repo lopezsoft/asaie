@@ -11,6 +11,6 @@ Ext.define('Admin.store.estudiantes.DocentesCursoSocketStore', {
     pageSize	: 0,
     proxy: {
         storeId	: 'DocentesCursoSocketStore',
-        url     : 'c_estudiantes/get_docentes_curso'
+        url     : 'students/get_docentes_curso'
     }
 });

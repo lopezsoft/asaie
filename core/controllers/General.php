@@ -205,17 +205,7 @@ class General extends SME_Controller {
 	function get_tipo_discapacidad(){
 		echo $this->M_general->get_tipo_discapacidad();
 	}
-	
-	function get_resguardos(){
-		$query = $this->input->get_post('query');
-		echo $this->M_general->get_resguardos($query);
-	}
-	
-	function get_etnias(){
-		$query = $this->input->get_post('query');
-		echo $this->M_general->get_etnias($query);
-	}
-	
+		
 	function get_poblacion_victima_conflicto(){
 		echo $this->M_general->get_poblacion_victima_conflicto();
 	}

@@ -9,7 +9,6 @@ Ext.define('Admin.view.docentes.controller.ActiviadesController',{
             panel   = btn.up('panel'),
             record  = panel.getRecord(),
             view    = Admin.getApplication().getMainView();
-        console.log(panel.getActivityName() +': '+ record.get('grado') + ' - ' + record.get('grupo'));
         if(view){
             cont    = view.getController();
             cont.onRemove('studentsonlineactivities');
@@ -41,6 +40,13 @@ Ext.define('Admin.view.docentes.controller.ActiviadesController',{
             cont.setChangeCurrentView('activitiescourses',newView);
         }
     },
+
+    /**
+     * Cursos de las evaluaciones
+     */
+    onViewCourses : function(){
+        this.redirectTo('evaluationcourses', true);
+    },
     viewCourses : function (grid, rowIndex) {
         let
             record  = grid.getStore().getAt(rowIndex);
@@ -58,6 +64,31 @@ Ext.define('Admin.view.docentes.controller.ActiviadesController',{
             cont.setChangeCurrentView('evaluationcourses',newView);
         }
     },
+    /**
+     * Resultados de las evaluaciones
+     */
+    viewResults : function (btn) {
+        let
+            panel   = btn.up('panel'),
+            record  = panel.getRecord(),
+            view    = Admin.getApplication().getMainView();
+        if(view){
+            cont    = view.getController();
+            cont.onRemove('evaluationresult');
+            newView = Ext.create({
+                xtype           : 'evaluationresult',
+                routeId         : 'evaluationresult',
+                evaluationId    : panel.getEvaluationId(),
+                courseId        : record.get('course_id'),
+                evaluationName  : panel.getEvaluationName() +': '+ record.get('grado') + ' - ' + record.get('grupo'),
+                hideMode        : 'offsets'
+            });
+            cont.setChangeCurrentView('evaluationresult',newView);
+        }
+    },
+    /**
+     * Estudiantes de las evaluaciones
+     */
     viewStudents : function (btn) {
         let
             panel   = btn.up('panel'),

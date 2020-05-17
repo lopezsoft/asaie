@@ -55,7 +55,7 @@ Ext.define('Admin.view.academico.CuadroHonorView',{
                                 };
                             win.mask(AppLang.getSMsgLoading());
                             Ext.Ajax.request({
-                                url     : Global.getUrlBase() + 'c_academico/get_generate_cuadro_honor',
+                                url     : Global.getUrlBase() + 'academic/get_generate_cuadro_honor',
                                 params  : param,
                                 timeout : 0,
                                 success: function(response, opts) {

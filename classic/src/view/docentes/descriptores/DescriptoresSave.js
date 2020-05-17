@@ -135,7 +135,7 @@ Ext.define('Admin.view.docentes.DescriptoresSave',{
 					]
                 },
 				{
-					xtype		: 'radioGroup',
+					xtype		: 'customradiogroup',
 					itemId		: 'estado',
 					fieldLabel	: 'Estado',
 					defaults	: {

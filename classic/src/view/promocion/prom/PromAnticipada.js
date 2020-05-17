@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 11/02/2016.
- */
 Ext.define('Admin.view.promocion.PromAnticipada',{
     extend      : 'Admin.forms.CustomForm',
     controller  : 'Promocion',
@@ -17,6 +14,7 @@ Ext.define('Admin.view.promocion.PromAnticipada',{
         type: 'hbox',
         align: 'stretch'
     },
+    showSaveButton  : false,
     items   : [
         {
             xtype   : 'customcontainer',
@@ -201,10 +199,6 @@ Ext.define('Admin.view.promocion.PromAnticipada',{
                             iconCls : 'x-fa fa-eye',
                             text    : 'Ver promovidos',
                             handler : 'onPromovidos'
-                        },
-                        '-',
-                        {
-                            xtype: 'closebutton'
                         }
                     ]
                 },

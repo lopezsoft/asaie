@@ -29,7 +29,7 @@ Ext.define('Admin.view.promocion.CertificatesHeadersSave' ,{
                     name        : 'body'
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     name        : 'resolution'
                 },
                 {
@@ -41,7 +41,7 @@ Ext.define('Admin.view.promocion.CertificatesHeadersSave' ,{
                     height              : 120
                 },
                 {
-                    xtype       : 'textAreaField',
+                    xtype       : 'customtextarea',
                     labelAlign  : 'top',
                     fieldLabel  : 'Fecha y lugar de expedición',
                     name        : 'expedition'
@@ -62,7 +62,7 @@ Ext.define('Admin.view.promocion.CertificatesHeadersSave' ,{
                     name        : 'show_number'
                 },
                 {
-                    xtype		: 'radioGroup',
+                    xtype		: 'customradiogroup',
                     columns		: 2,
                     vertical	: true,
                     fieldLabel	: 'Tipo',

@@ -1,31 +1,14 @@
-/**
- * Created by LOPEZSOFT on 4/12/2015.
- */
 Ext.define('Admin.view.docentes.DesempenoView',{
-    extend : 'Admin.base.WindowCrud',
-    alias  	: 'widget.DesempenoView',
-
-    requires: [
-        'Admin.store.general.EscalaNacionalStore',
-        'Admin.toolbar.ToolbarSave'
-    ],
+    extend      : 'Admin.base.WindowCrud',
+    alias  	    : 'widget.desempenoview',
     controller 	: 'carga',
-    title	: 'Desempeños',
-    width	: 350,
-    height	: 400,
+    maxWidth	: 650,
+    store       : 'EscalaNacionalStore',
+    maxHeight	: 450,
     items 	: [
         {
-            xtype 		: 'grid',
-            loadmask 	: true,
-            autoLoad	: true,
+            xtype 		: 'customgrid',
             store		: 'EscalaNacionalStore',
-            border		: false,
-            columnLines : true,
-            plugins		: [
-                {
-                    ptype : 'gridfilters'
-                }
-            ],
             columns: [
                 {
                     xtype: 'rownumberer'
@@ -38,21 +21,35 @@ Ext.define('Admin.view.docentes.DesempenoView',{
                     filter		: 'list'
                 }
             ],
-            listeners: {
-                'selectionchange': function(grid, selected, eOpts) {
-                    this.down('#btnSave').setDisabled(!selected.length);
-                }
-            },
             dockedItems: [
                 {
                     xtype: 'toolbarSave'
                 },
                 {
-                    xtype 			: 'pagingtoolbar',
-                    store			: 'EscalaNacionalStore',
-                    dock			: 'bottom'
+                    xtype 			: 'pagination'
                 }
             ]
         }
-    ]
+    ],
+    onSave  : function(btn){
+        let
+            me 	    = btn.up('window'),
+            selectS = me.down('grid').getSelection()[0],
+            winNota = Ext.ComponentQuery.query('notasacademicasdocentes')[0],
+            select  = me.getRecords(),
+            btn1	= winNota.down('#btnSave'),
+            btn2	= winNota.down('#btnUndo');
+        Ext.each(select,function (rec) {
+			rec.set('id_escala',selectS.get('id'));
+			rec.set('nombre_escala',selectS.get('nombre_escala'));
+		});
+        if (btn1.isDisabled()) {
+            btn1.setDisabled(false);
+        }
+
+        if (btn2.isDisabled()) {
+            btn2.setDisabled(false);
+        }
+        me.close();
+    }
 });

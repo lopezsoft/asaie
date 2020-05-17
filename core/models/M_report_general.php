@@ -35,16 +35,7 @@ class M_report_general extends SME_Model {
 		$format 	= $f;
 				
 		$parm	= array(
-			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
+			'SQL_PARAM' 	=> $query
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -105,16 +96,7 @@ class M_report_general extends SME_Model {
 		$format 	= $f;
 				
 		$parm	= array(
-			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
+			'SQL_PARAM' 	=> $query
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -134,16 +116,7 @@ class M_report_general extends SME_Model {
 		//Extension de Salida
 		$format 	= $f;
 		$parm	= array(
-			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
+			'SQL_PARAM' 	=> $query
 		);
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
 		return $request;
@@ -162,16 +135,7 @@ class M_report_general extends SME_Model {
 		//Extension de Salida
 		$format 	= $f;
 		$parm	= array(
-			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
+			'SQL_PARAM' 	=> $query
 		);
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
 		return $request;
@@ -194,16 +158,7 @@ class M_report_general extends SME_Model {
 		//Extension de Salida
 		$format 	= $f;
 		$parm	= array(
-			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
+			'SQL_PARAM' 	=> $query
 		);
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
 		return $request;
@@ -225,15 +180,6 @@ class M_report_general extends SME_Model {
 		$format 	= $f;				
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir,
 			'R_PER'			=> $per
 		);	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);				
@@ -253,15 +199,6 @@ class M_report_general extends SME_Model {
 		$format 	= $format;				
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir,
 			'R_PER'			=> $per
 		);	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);				
@@ -284,15 +221,6 @@ class M_report_general extends SME_Model {
 				
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -321,15 +249,6 @@ class M_report_general extends SME_Model {
 				
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -353,15 +272,6 @@ class M_report_general extends SME_Model {
 				
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -384,16 +294,7 @@ class M_report_general extends SME_Model {
 		$format 	= $format;
 				
 		$parm	= array(
-			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
+			'SQL_PARAM' 	=> $query
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -443,15 +344,6 @@ class M_report_general extends SME_Model {
 				
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -536,16 +428,7 @@ class M_report_general extends SME_Model {
 		$escala	= $this->escala();		
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
 			'R_ESCALA'		=> $escala,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -568,16 +451,7 @@ class M_report_general extends SME_Model {
 		$escala	= $this->escala();
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
 			'R_ESCALA'		=> $escala,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
 		);
 	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
@@ -627,15 +501,6 @@ class M_report_general extends SME_Model {
 		$query	= $m_SQL;			
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir
 		);	
 		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm,$Grado);				
 		return $request;	
@@ -717,16 +582,7 @@ class M_report_general extends SME_Model {
 		
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
-			'R_TITLE'		=> $this->M_jreport->p_title,
-			'R_NIT'			=> $this->M_jreport->p_nit,
-			'R_DANE'		=> $this->M_jreport->p_dane,
-			'R_RESOL'		=> $this->M_jreport->p_resol,
-			'R_FOOTER'		=> $this->M_jreport->p_footer,
-			'R_IMG_LEFT'	=> $this->M_jreport->p_img_left,
-			'R_IMG_RIGHT'	=> $this->M_jreport->p_img_right,
-			'R_MARKETING'	=> $this->M_jreport->p_marketing,
 			'R_ESCALA'		=> $escala,
-			'SUBREPORT_DIR' => $this->M_jreport->subreport_dir,
 			'P_ALLPER'		=> $all,
 			'P_DESDE'		=> $desde,
 			'P_HASTA'		=> $hasta,

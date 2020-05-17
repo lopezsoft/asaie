@@ -5,7 +5,7 @@ Ext.define('Admin.view.academico.reportes.ReportesView',{
     extend      : 'Admin.forms.CustomForm',
     alias       : 'widget.reportes',
     xtype       : 'reportes',
-    title       : 'Reportes',
+    // title       : 'Reportes',
     controller  : 'ReportesAcademico',
     showSaveButton  : false,
     items: [
@@ -217,7 +217,7 @@ Ext.define('Admin.view.academico.reportes.ReportesView',{
                                 var
                                     me = Admin.getApplication();
                                     me.onStore('admin.DocentesDirGrupoStore');
-                                    win  = Ext.crete('Admin.view.academico.ListaDocentesView') ;
+                                    win  = Ext.create('Admin.view.academico.ListaDocentesView') ;
                                     win.show();
                             },
                             iconCls : 'x-fa fa-print'

@@ -7,8 +7,8 @@ Ext.define('Admin.store.inscripciones.ArchivosDigitalesStore',{
     pageSize: '60',
     proxy: {
         api: {
-            create  : 'c_academico/insert_archivos_digitales',
-            read    : 'c_academico/get_select_archivos_digitales',
+            create  : 'academic/insert_archivos_digitales',
+            read    : 'academic/get_select_archivos_digitales',
             update  : 'General/update_data',
             destroy : 'General/delete_data'
         }

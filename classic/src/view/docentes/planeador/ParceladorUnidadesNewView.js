@@ -9,7 +9,7 @@ Ext.define('Admin.view.docentes.ParceladorUnidadesNewView', {
     items: [
         {
             xtype           : 'customform',
-            defaultType     :'textAreaField',
+            defaultType     :'customtextarea',
             items   : [
                 {
                     fieldLabel  : 'Unidades / Ejes temáticos',

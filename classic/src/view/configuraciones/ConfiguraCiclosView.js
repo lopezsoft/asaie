@@ -21,7 +21,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraCiclosView',{
                     title   : 'Trabajar año  lectivo por:',
                     items   : [
                         {
-                            xtype   : 'radioGroup',
+                            xtype   : 'customradiogroup',
                             items   : [
                                 {
                                     boxLabel    : 'Áreas',
@@ -42,7 +42,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraCiclosView',{
                     title   : 'Pierden directamente con:',
                     items   : [
                         {
-                            xtype   : 'radioGroup',
+                            xtype   : 'customradiogroup',
                             vertical: false,
                             items   : [
                                 {
@@ -69,7 +69,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraCiclosView',{
                     title   : 'Luego de las estrategias de apoyo, pierden año lectivo los estudiantes que persistan en perdida de:',
                     items   : [
                         {
-                            xtype   : 'radioGroup',
+                            xtype   : 'customradiogroup',
                             items   : [
                                 {
                                     boxLabel    : '1 De las recuperaciones',

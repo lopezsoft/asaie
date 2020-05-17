@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT2 on 10/12/2016.
- */
 Ext.define('Admin.view.promocion.controller.PromocionController',{
     extend  : 'Admin.base.BaseController',
     alias   : 'controller.Promocion',
@@ -77,9 +74,9 @@ Ext.define('Admin.view.promocion.controller.PromocionController',{
 
         if(sel.length > 0){
             win.mask('Moviendo estudiantes...');
-            if (grado == cgrado && grupo == cgrupo && jorn == cjorn && sede == csede ){
+            if (grado <= cgrado){
                 win.unmask();
-                me.onAler('No se puede mover estudiantes al mismo, grado, grupo, sede y jornada.');
+                me.onAler('No se puede mover estudiantes al mismo, grado.');
             }else {
                 var
                     values = [];
@@ -148,32 +145,31 @@ Ext.define('Admin.view.promocion.controller.PromocionController',{
     },
 
     onMatricularAntiguos : function (btn) {
-        var win = btn.up('window'),
-            sel = btn.up('window').down('grid').getSelection(),
-            me  = this.app,
-            cCount  = 0,
+        var ts      = btn.up('form'),
+            sel     = btn.up('form').down('grid').getSelection(),
+            me      = Admin.getApplication(),
             data    = {},
-			gb		= globales,
+			gb		= Global,
             store   = Ext.getStore('ListaMatriculaStore'),
-            grado   = win.down('#comboGrados').selection.get('id'),
-            grupo   = win.down('#cbGrupos').selection.get('grupo'),
-            jorn    = win.down('#cbJornadas').selection.get('cod_jorn'),
-            sede    = win.down('#cbSedes').selection.get('ID');
+            grado   = ts.down('#comboGrados').selection.get('id'),
+            grupo   = ts.down('#cbGrupos').selection.get('grupo'),
+            jorn    = ts.down('#cbJornadas').selection.get('cod_jorn'),
+            sede    = ts.down('#cbSedes').selection.get('ID');
 
 		if(sel.length > 0){
-			me.onMsgWait('Matriculando estudiantes...');
+			ts.mask('Matriculando estudiantes...');
 			var
 				values = [],
 				param = {
 					pdbList: sel
 				};
-
-			for (cCount = 0; cCount < sel.length; cCount++) {
-				data = {
-					id_matric: sel[cCount].get('id_matric')
+            
+            sel.forEach(ele => {
+                data = {
+					id  : ele.get('id')
 				};
-				Ext.Array.push(values, data);
-			}
+				values.push(data);
+            });
 			param = {
 				pdbList : Ext.encode(values),
 				pdbGrado: grado,
@@ -181,20 +177,20 @@ Ext.define('Admin.view.promocion.controller.PromocionController',{
 				pdbJorn : jorn,
 				pdbSede : sede
 			};
-
+            
 			Ext.Ajax.request({
-				url: gb.SetUrls.UrlBase + 'General/get_matricular_antiguos',
+				url: gb.getUrlBase() + 'general/get_matricular_antiguos',
 				params: param,
 				success: function (response, opts) {
 					store.reload();
-					me.unmask();
+					ts.unmask();
 					me.showResult('Se han guardado los cambios.');
 				},
 				failure: function (response, opts) {
 					me.onError('Error en el servidor, codigo del estado ' + response.status);
 				},
 				callback    : function (r, e) {
-					me.unmask();
+					ts.unmask();
 				}
 			});
 		}else{
@@ -203,23 +199,7 @@ Ext.define('Admin.view.promocion.controller.PromocionController',{
     },
 
     onViewAntiguos : function (btn) {
-        var
-            me  = this.app;
-        Ext.require([
-            'Admin.view.promocion.AntiguosView'
-        ]);
-
-        Ext.onReady(function () {
-            me.onStore('promocion.ListaMatriculaStore');
-            me.onStore('general.SedesStore');
-            me.onStore('general.GradosStore');
-            me.onStore('general.GrupoStore');
-            me.onStore('general.JornadasStore');
-            me.onStore('general.MatricularAntiguosStore');
-
-            win = me.getWindow('Matricular estudiantes antiguos - '+Global.getYear(),'Admin.view.promocion.AntiguosView');
-            win.show();
-        });
+        this.redirectTo('enrollmentold', true);
     },
 
     /**

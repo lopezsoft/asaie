@@ -114,7 +114,7 @@ Ext.define('Admin.view.coordinacion.home.PanelContainerView',{
                     handler : function (btn) {
                         var
                             me  = Admin.getApplication(),
-                            url = globales.SetUrls.UrlBase+'c_academico/get_update_pass_est';
+                            url = globales.SetUrls.UrlBase+'academic/get_update_pass_est';
                         me.onMsgWait();
                         Ext.Ajax.request({
                             url: url,

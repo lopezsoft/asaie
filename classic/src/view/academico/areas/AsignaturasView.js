@@ -31,7 +31,7 @@ Ext.define('Admin.view.academico.AsignaturasView' ,{
                             name        : 'ordenar'
                         },
                         {
-                            xtype		: 'radioGroup',
+                            xtype		: 'customradiogroup',
                             columns		: 1,
                             vertical	: true,
                             fieldLabel	: 'Excluir de promoción final',
@@ -49,7 +49,7 @@ Ext.define('Admin.view.academico.AsignaturasView' ,{
                             ]
                         },
                         {
-                            xtype		: 'radioGroup',
+                            xtype		: 'customradiogroup',
                             columns		: 2,
                             vertical	: true,
                             fieldLabel	: 'Electiva',
@@ -67,7 +67,7 @@ Ext.define('Admin.view.academico.AsignaturasView' ,{
                             ]
                         },
                         {
-                            xtype		: 'radioGroup',
+                            xtype		: 'customradiogroup',
                             columns		: 2,
                             vertical	: true,
                             fieldLabel	: 'Estado',

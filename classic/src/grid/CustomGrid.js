@@ -17,11 +17,8 @@ Ext.define('Admin.grid.CustomGrid' ,{
 		'Admin.field.NumberField',
 		'Admin.field.HtmlEditor',
 		'Admin.tab.CustomTab',
-		'Admin.field.TextAreaField',
-		'Admin.field.CheckBoxField',
 		'Admin.field.CustomText',
 		'Admin.field.TimeField',
-		'Admin.group.RadioGroup',
 		'Admin.button.ContainerButton',
 		'Admin.button.ButtonPanel',
 		'Ext.form.field.Radio',
@@ -110,6 +107,9 @@ Ext.define('Admin.grid.CustomGrid' ,{
 
 			if (me.down('#noveltyButton')){
 				me.down('#noveltyButton').setDisabled(!selected.length);
+			}
+			if (me.down('#extrabutton')){
+				me.down('#extrabutton').setDisabled(!selected.length);
 			}
 
 			if (me.down('#btnViewQuestion')){
@@ -221,7 +221,7 @@ Ext.define('Admin.grid.CustomGrid' ,{
 
     syncSize: function () {
         var width = Ext.Element.getViewportWidth(),
-            height = Ext.Element.getViewportHeight() - 176;
+            height = Ext.Element.getViewportHeight() - 186;
 		if(this.getSyncHeight()){
 			this.setMaxHeight(height);
 		}

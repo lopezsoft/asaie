@@ -59,7 +59,7 @@ Ext.define('Admin.view.configuraciones.ConfiguraBoletinView',{
                                     title       : 'Logros e indicadores',
                                     items       : [
                                         {
-                                            xtype       : 'radioGroup',
+                                            xtype       : 'customradiogroup',
                                             vertical    : false,
                                             items       : [
                                                 {

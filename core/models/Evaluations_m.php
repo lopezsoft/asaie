@@ -5,7 +5,15 @@ class Evaluations_m extends SME_Model {
     public function __construct()
     {
         parent::__construct();
-    }
+	}
+	
+	function getEvaluationResult($evaluationId, $courseId){
+		$param = array(
+			$courseId,
+			$evaluationId
+		);
+		return $this->getExecute('sp_select_evaluation_result ( ?, ? )', $param);
+	}
 
 	function getStudentsByCourses($evaluationId, $courseId){
 		$param = array(

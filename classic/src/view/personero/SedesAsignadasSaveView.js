@@ -15,7 +15,7 @@ Ext.define('Admin.view.personero.SedesAsignadasSaveView',{
                     xtype   : 'CbSedes'
                 },
                 {
-                    xtype       : 'radioGroup',
+                    xtype       : 'customradiogroup',
                     fieldLabel  : 'Grados votantes',
                     defaults    : {
                         name    : 'grados_votantes'

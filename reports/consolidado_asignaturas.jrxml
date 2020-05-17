@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidado_asignaturas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="43" bottomMargin="20" isIgnorePagination="true" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="consolidado_asignaturas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="43" bottomMargin="20" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="105"/>
 	<property name="ireport.y" value="3"/>
@@ -887,7 +887,9 @@
 					<text><![CDATA[PROM]]></text>
 				</staticText>
 				<staticText>
-					<reportElement x="1" y="11" width="19" height="9" isRemoveLineWhenBlank="true" uuid="317b0ca9-6112-4925-8f1f-bc52d0fa12fe"/>
+					<reportElement x="1" y="11" width="19" height="9" isRemoveLineWhenBlank="true" uuid="317b0ca9-6112-4925-8f1f-bc52d0fa12fe">
+						<printWhenExpression><![CDATA[INTEGER_VALUE($F{periodo}) < 4]]></printWhenExpression>
+					</reportElement>
 					<textElement verticalAlignment="Middle">
 						<font size="6"/>
 					</textElement>

@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 11/02/2016.
- */
 Ext.define('Admin.view.academico.MoverEstudiantesForm',{
     extend      : 'Admin.form.FormBase',
     alias       : 'widget.moverestudiantes',

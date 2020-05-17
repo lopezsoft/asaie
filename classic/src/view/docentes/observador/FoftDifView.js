@@ -9,7 +9,7 @@ Ext.define('Admin.view.docentes.observador.FoftDifView' ,{
 			xtype	: 'customform',
 			items	: [
 				{
-					xtype 		: 'textAreaField',
+					xtype 		: 'customtextarea',
 					name		: 'descripcion',
 					fieldLabel	: 'Descripción de la fortaleza o dificultad:',
 					height		: 200,

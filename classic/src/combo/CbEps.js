@@ -6,7 +6,11 @@ Ext.define('Admin.combo.CbEps',{
     requires: [
         'Admin.store.general.EPSStore'
     ],
-    alias	: 'widget.CbEps',
+    initComponent: function(){
+        Admin.getApplication().onStore('general.EPSStore');
+        this.callParent(arguments);
+    },
+    alias	    : 'widget.CbEps',
     fieldLabel	: 'EPS Afiliado (a)',
     name		: 'id_eps',
     displayField: 'DES_EPS',

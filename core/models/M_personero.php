@@ -397,7 +397,7 @@ class M_personero extends SME_Model {
 		}
 		$tbl	= $this->db->get();	
 
-		return $this->get_request_select($query->result_array(),$tbl->row('total'));
+		return $this->getJsonResponse($query->result_array(),$tbl->row('total'));
 	}
 	
 	public function get_select_candidatos($type) {

@@ -13,7 +13,7 @@ Ext.define('Admin.view.docentes.SugerenciaSave',{
             xtype 	: 'customform',
             items : [
                 {
-                    xtype 	    : 'textAreaField',
+                    xtype 	    : 'customtextarea',
                     name 	    : 'sugerencia',
                     allowBlank	: false,
                     labelAlign	: 'top',
@@ -24,7 +24,7 @@ Ext.define('Admin.view.docentes.SugerenciaSave',{
                     labelAlign	: 'top'
                 },
                 {
-                    xtype       : 'radioGroup',
+                    xtype       : 'customradiogroup',
                     fieldLabel  : 'Tipo',
                     columns     : 2,
                     defaults: {

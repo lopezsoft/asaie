@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ficha_matricula" printOrder="Horizontal" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="40" bottomMargin="20" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="88"/>
@@ -197,44 +197,23 @@
 				<staticText>
 					<reportElement positionType="Float" x="72" y="68" width="428" height="17" isRemoveLineWhenBlank="true" uuid="e252fe0f-eab8-47a7-97ff-7aa4f51d4b1c"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="12" isBold="true"/>
+						<font fontName="Arial" size="12" isBold="true"/>
 					</textElement>
 					<text><![CDATA[FICHA DE MATRICULA]]></text>
 				</staticText>
-				<textField isStretchWithOverflow="true" pattern="">
-					<reportElement positionType="Float" mode="Transparent" x="74" y="41" width="424" height="10" isRemoveLineWhenBlank="true" uuid="d459e1bc-659f-4deb-afe7-a7a1aac81b84"/>
-					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="6" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{R_RESOL}]]></textFieldExpression>
-				</textField>
 				<textField pattern="EEEEE dd MMMMM yyyy">
 					<reportElement positionType="Float" x="74" y="51" width="424" height="10" isRemoveLineWhenBlank="true" uuid="5e471478-f487-4d32-8e1d-ffcbb42bfd1b"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="DejaVu Serif" size="8" isBold="false"/>
+						<font fontName="Arial" size="8" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 				</textField>
 				<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-					<reportElement x="74" y="5" width="424" height="16" isRemoveLineWhenBlank="true" uuid="e4d7208d-1cc0-440d-a5b2-08e0e909ffed"/>
-					<textElement textAlignment="Center" verticalAlignment="Top">
-						<font fontName="DejaVu Serif" size="12" isBold="false"/>
+					<reportElement x="74" y="5" width="424" height="46" isRemoveLineWhenBlank="true" uuid="e4d7208d-1cc0-440d-a5b2-08e0e909ffed"/>
+					<textElement textAlignment="Center" verticalAlignment="Top" markup="html">
+						<font fontName="Arial" size="12" isBold="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$P{R_TITLE}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement positionType="Float" x="74" y="21" width="424" height="10" isRemoveLineWhenBlank="true" uuid="a3d36d25-2379-4228-9e53-1ea93f7f7a25"/>
-					<textElement textAlignment="Center" verticalAlignment="Top">
-						<font fontName="DejaVu Serif" size="8" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{R_DANE}]]></textFieldExpression>
-				</textField>
-				<textField>
-					<reportElement positionType="Float" x="74" y="31" width="424" height="10" isRemoveLineWhenBlank="true" uuid="2042711c-b855-45da-833d-f7e2817cf1f8"/>
-					<textElement textAlignment="Center" verticalAlignment="Top">
-						<font fontName="DejaVu Serif" size="8" isBold="false"/>
-					</textElement>
-					<textFieldExpression><![CDATA[$P{R_NIT}]]></textFieldExpression>
 				</textField>
 				<image>
 					<reportElement x="500" y="5" width="72" height="72" isRemoveLineWhenBlank="true" uuid="055bb3e5-f3a2-4788-ab4c-77b839c36ef7"/>
@@ -478,7 +457,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="362" y="43" width="94" height="12" uuid="447ba99b-7349-4d4b-8da2-5feeed9deb1c"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Fecha de matricula:]]></text>
 			</staticText>
@@ -499,7 +478,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="19" y="43" width="28" height="12" uuid="9c71b275-ab06-446a-bf4d-b9b9ac29ba5d"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sexo:]]></text>
 			</staticText>
@@ -513,7 +492,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="67" y="43" width="40" height="12" uuid="5a90e43e-8698-4555-9894-c6a83d9b07a1"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Estrato:]]></text>
 			</staticText>
@@ -527,7 +506,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="120" y="43" width="37" height="12" uuid="57f25dc9-a539-4d9a-93d2-72348d5e20ce"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Sisben:]]></text>
 			</staticText>
@@ -541,7 +520,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="169" y="43" width="61" height="12" uuid="38e33fdb-d299-42b2-94cc-865879988a18"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tipo sangre:]]></text>
 			</staticText>
@@ -555,7 +534,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="247" y="43" width="29" height="12" uuid="2f56b4c5-28e8-493c-b092-9849c8169136"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Zona:]]></text>
 			</staticText>
@@ -616,7 +595,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="18" y="57" width="98" height="12" uuid="7a933feb-9cf1-4ca2-906b-8529498a2c6f"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Número documento:]]></text>
 			</staticText>
@@ -630,7 +609,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="229" y="57" width="80" height="12" uuid="e7f684cf-af4e-485a-8750-f43ffe21be66"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Tipo documento:]]></text>
 			</staticText>
@@ -644,7 +623,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="18" y="71" width="102" height="12" uuid="86bf7778-b0e5-4c65-8a36-5274873af28c"/>
 				<textElement verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Lugar de expedición:]]></text>
 			</staticText>
@@ -678,7 +657,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="18" y="185" width="535" height="26" uuid="3eab45de-ab87-42ce-9592-3ecd8df9a2f9"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Aceptamos todas la normas y reglamentos establecidos en el PEI y el manual de convivencia del plantel educativo.]]></text>
 			</staticText>
@@ -709,7 +688,7 @@
 			<staticText>
 				<reportElement positionType="Float" x="90" y="404" width="132" height="14" uuid="2af3411e-75f1-484d-b3c2-198a59b7fc87"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Firma acudiente o padre]]></text>
 			</staticText>
@@ -753,7 +732,7 @@
 			<staticText>
 				<reportElement x="26" y="247" width="142" height="14" uuid="447157c5-4ef3-4b94-a044-c6c6d1ac60b2"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="9" isBold="true"/>
+					<font fontName="Arial" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Firma acudiente o padre]]></text>
 			</staticText>
@@ -766,7 +745,7 @@
 			<staticText>
 				<reportElement x="405" y="247" width="121" height="14" uuid="b3bbb04d-9fa8-4be3-9e0a-d9a3a2f281c3"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" isBold="true"/>
+					<font fontName="Arial" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Firma estudiante]]></text>
 			</staticText>

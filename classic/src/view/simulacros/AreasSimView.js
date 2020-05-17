@@ -20,7 +20,7 @@ Ext.define('Admin.view.simulacros.AreasSimView' ,{
 							name		: 'abrev'
                         },
                         {
-                            xtype		: 'radioGroup',
+                            xtype		: 'customradiogroup',
                             columns		: 1,
                             vertical	: true,
                             fieldLabel	: 'Estado',

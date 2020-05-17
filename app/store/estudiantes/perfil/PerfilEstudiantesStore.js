@@ -11,7 +11,7 @@ Ext.define('Admin.store.estudiantes.perfil.PerfilEstudiantesStore',{
     proxy   : {
         api: {
             create  : 'xx/cx',
-            read    : 'c_estudiantes/get_select_perfil',
+            read    : 'students/get_select_perfil',
             update  : 'General/update_data',
             destroy : 'xx/cb'
         },

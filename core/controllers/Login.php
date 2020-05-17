@@ -9,6 +9,11 @@ class Login extends SME_Controller
 		parent::__construct();
 	  	$this->load->model('M_login');
 	}
+
+	public function getCurrentUser()
+	{
+		echo $this->M_login->getCurrentUser();
+	}
 	
 	public function get_login_user () {						
 		$request	= $this->M_login->get_login_user();
@@ -26,7 +31,8 @@ class Login extends SME_Controller
 		$user	= $this->input->post_get('user');
 		$pass	= $this->input->post_get('pass');
 		$inst	= $this->input->post_get('inst');
-	 	$request = $this->M_login->log_in($user,$pass,$year,$inst);		
+		$type	= $this->input->post_get('type');
+	 	$request = $this->M_login->log_in($user,$pass,$year,$inst,$type);		
 		echo $request;
 	}
 	

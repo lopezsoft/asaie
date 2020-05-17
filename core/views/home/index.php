@@ -69,6 +69,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
     </script>
 	<!-- The line below must be kept intact for Sencha Cmd to build your application -->
     <script id="microloader" type="text/javascript" src="bootstrap.js"></script>
+    <script src="<?php echo base_url();?>assets/js/hash.min.js"></script>
 	</head>
 <body>
 	<audio id="notif_eval">

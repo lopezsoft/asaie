@@ -17,7 +17,7 @@ Ext.define('Admin.view.personero.CandidaturaView',{
                     fieldLabel  : 'Nombre de la candidatura'
                 },
                 {
-                    xtype		: 'radioGroup',
+                    xtype		: 'customradiogroup',
                     columns		: 1,
                     vertical	: true,
                     fieldLabel	: 'Estado',
