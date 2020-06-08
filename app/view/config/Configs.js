@@ -19,11 +19,11 @@ Ext.define('Admin.view.config.Configs',{
 		avatarUnknoun: "/assets/img/avatars/unknown.png",
 		configReport: [],
 		userData	: [],
-		// hostSocket	: 'http://localhost:3001',
-		hostSocket	: 'https://ns3138775.ip-51-77-67.eu:3002',
 		socket		: null,
+		hostSocket	: 'https://ns3138775.ip-51-77-67.eu:3002',
 		urlBase 	: "https://schools.asaie.co/",
 		urlLocation : "https://schools.asaie.co/",
+		// hostSocket	: 'http://localhost:3001',
 		// urlBase 	: "http://asaie/",
 		// urlLocation : "http://asaie/",
 		idSchool    : 0,
@@ -39,6 +39,10 @@ Ext.define('Admin.view.config.Configs',{
 		this.initConfig(this.config,config);
 	},
 
+	isActive	: function(){
+		membership  = this.getData().membership;
+		return (membership.state == 1) ? true : false;
+	},
 	getCfg	: function () {
 		var
 			data = this.getData();

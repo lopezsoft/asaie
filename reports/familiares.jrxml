@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.9.0.final using JasperReports Library version 6.9.0-cb8f9004be492ccc537180b49c026951f4220bf3  -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="familiares" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="736" leftMargin="28" rightMargin="28" topMargin="43" bottomMargin="20" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="35"/>
@@ -123,13 +123,6 @@
 				<reportElement x="0" y="1" width="72" height="72" uuid="050c12c3-77ad-4902-8576-a0ff82eaa249"/>
 				<imageExpression><![CDATA[$P{R_IMG_LEFT}]]></imageExpression>
 			</image>
-			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" isPrintRepeatedValues="false" mode="Transparent" x="74" y="38" width="588" height="10" isRemoveLineWhenBlank="true" uuid="d459e1bc-659f-4deb-afe7-a7a1aac81b84"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="6" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_RESOL}.trim()]]></textFieldExpression>
-			</textField>
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="48" width="588" height="10" isRemoveLineWhenBlank="true" uuid="5e471478-f487-4d32-8e1d-ffcbb42bfd1b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
@@ -142,26 +135,12 @@
 				<imageExpression><![CDATA[$P{R_IMG_RIGHT}]]></imageExpression>
 			</image>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement isPrintRepeatedValues="false" x="74" y="2" width="588" height="16" uuid="e4d7208d-1cc0-440d-a5b2-08e0e909ffed"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Serif" size="10" isBold="false"/>
+				<reportElement isPrintRepeatedValues="false" x="74" y="2" width="588" height="46" uuid="e4d7208d-1cc0-440d-a5b2-08e0e909ffed"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="html">
+					<font fontName="Arial" size="10" isBold="false"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_TITLE}.trim()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="18" width="588" height="10" isRemoveLineWhenBlank="true" uuid="a3d36d25-2379-4228-9e53-1ea93f7f7a25"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Serif" size="7" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_DANE}.trim()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="28" width="588" height="10" isRemoveLineWhenBlank="true" uuid="2042711c-b855-45da-833d-f7e2817cf1f8"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Serif" size="7" isBold="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_NIT}.trim()]]></textFieldExpression>
 			</textField>
 			<textField pattern="h.mm.ss a">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="58" width="588" height="10" isRemoveLineWhenBlank="true" uuid="4ca50a72-ce42-4ad4-ae2f-d90aae91e172"/>
@@ -181,7 +160,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="10" isBold="false"/>
+					<font fontName="Arial" size="10" isBold="false"/>
 				</textElement>
 				<text><![CDATA[FAMILIARES]]></text>
 			</staticText>
@@ -197,7 +176,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true" isItalic="true"/>
+					<font fontName="Arial" size="8" isBold="true" isItalic="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA["CURSO: "+$F{grado}.trim()+" - "+$F{id_group}]]></textFieldExpression>
 			</textField>
@@ -214,7 +193,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ACUDIENTE]]></text>
 			</staticText>
@@ -226,7 +205,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7" isBold="true"/>
+					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[Nº DOCUMENTO]]></text>
 			</staticText>
@@ -238,7 +217,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DIRECCIÓN]]></text>
 			</staticText>
@@ -250,7 +229,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CELULAR]]></text>
 			</staticText>
@@ -262,7 +241,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[ESTUDIANTE]]></text>
 			</staticText>
@@ -275,7 +254,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FIRMA]]></text>
 			</staticText>
@@ -292,7 +271,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{acudiente}]]></textFieldExpression>
 			</textField>
@@ -304,7 +283,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{doc_familie}]]></textFieldExpression>
 			</textField>
@@ -316,7 +295,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{direccion}]]></textFieldExpression>
 			</textField>
@@ -328,7 +307,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{mobile}]]></textFieldExpression>
 			</textField>
@@ -340,7 +319,7 @@
 					<pen lineWidth="0.75"/>
 				</box>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{estudiante}]]></textFieldExpression>
 			</textField>
@@ -352,7 +331,7 @@
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="DejaVu Sans" size="7" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$V{COLUMN_COUNT}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="630" y="0" width="106" height="12" uuid="edb78c35-3f8e-4726-8507-bd1416ee3bb9">
@@ -383,21 +362,21 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="16" y="1" width="694" height="21" isRemoveLineWhenBlank="true" uuid="60f4683a-0284-4fea-9cb7-bb6a102fcce2"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="8" isBold="false" isItalic="false"/>
+					<font fontName="Arial" size="8" isBold="false" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_FOOTER}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement positionType="Float" x="714" y="1" width="21" height="10" uuid="184a72c7-f142-4496-b933-89d1fe3009b0"/>
 				<textElement>
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="16" y="22" width="694" height="8" isRemoveLineWhenBlank="true" forecolor="#052E85" uuid="7829f300-5387-4522-b2ae-d6bf773009d8"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<font fontName="Arial" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_MARKETING}]]></textFieldExpression>
 			</textField>

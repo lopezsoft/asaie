@@ -42,7 +42,16 @@ class M_login extends SME_Model {
 			$this->db->from($db.'.users');
 			$this->db->where('id', $this->user_id);
 			$get_user	= $this->db->get();
-						
+			
+			$school_data= $this->db->get($db.'.establecimiento',1);
+			$reports_data= $this->db->get($db.'.encabezado_reportes',1);
+
+			
+			$this->db->select("nameschool, DATE_FORMAT(lockdate,'%d-%m-%Y') lockdate, state");
+			$this->db->where('database_name', $db);
+			$data_mem	= $this->db->get('schools', 1);
+			$data_mem	= $data_mem->row();
+					
 			$config 	= NULL;			
 			$user_d		= NULL;
 			
@@ -66,7 +75,10 @@ class M_login extends SME_Model {
 					'grupo_grados'	=> $grupo_grados->result(),
 					'year'			=> $year,
 					'db_name'		=> $db,
-					'user_type'		=> $this->session->userdata('user_type')
+					'school_data'	=> $school_data->result(),
+					'reports_data'	=> $reports_data->result(),
+					'user_type'		=> $this->session->userdata('user_type'),
+					'membership'	=> $data_mem
 				);
 			}else{
 				$request	= array(
@@ -129,7 +141,7 @@ class M_login extends SME_Model {
 			if($sql->num_rows() == 0){
 				$result	= FALSE;
 			}else{
-				$result	= ($sql->row('state') > 0);
+				$result	= ($sql->row('active') > 0);
 			}
 			
 			return $result;
@@ -167,7 +179,15 @@ class M_login extends SME_Model {
 					$dir_grupo	= $this->db->get($db.'.dir_grupo');
 
 					$config_bol	= $this->db->get($db.'.configboletin');
-				
+
+					$school_data= $this->db->get($db.'.establecimiento',1);
+					$reports_data= $this->db->get($db.'.encabezado_reportes',1);
+
+					$this->db->select("nameschool, DATE_FORMAT(lockdate,'%d-%m-%Y') lockdate, state");
+					$this->db->where('database_name', $db);
+					$data_mem	= $this->db->get('schools', 1);
+					$data_mem	= $data_mem->row();
+					
 					$request	= array(
 						'user'			=> $user,
 						'request'		=> 1,
@@ -181,7 +201,10 @@ class M_login extends SME_Model {
 						'year'			=> $year,
 						'db_name'		=> $db,
 						'user_parent'	=> $user_parent,
-						'user_type'		=> $this->session->userdata('user_type')
+						'school_data'	=> $school_data->result(),
+						'reports_data'	=> $reports_data->result(),
+						'user_type'		=> $this->session->userdata('user_type'),
+						'membership'	=> $data_mem
 					);
 					break;
 				case '5':  // Usuario Estudiante
@@ -214,7 +237,15 @@ class M_login extends SME_Model {
 					$this->db->where('a.year', $this->get_year());
 					$this->db->limit(1);
 					$enrollement	= $this->db->get();
-				
+					
+					$school_data= $this->db->get($db.'.establecimiento',1);
+					$reports_data= $this->db->get($db.'.encabezado_reportes',1);
+
+					$this->db->select("nameschool, DATE_FORMAT(lockdate,'%d-%m-%Y') lockdate, state");
+					$this->db->where('database_name', $db);
+					$data_mem	= $this->db->get('schools', 1);
+					$data_mem	= $data_mem->row();
+
 					$request	= array(
 						'user'			=> $user,
 						'request'		=> 1,
@@ -226,7 +257,10 @@ class M_login extends SME_Model {
 						'year'			=> $year,
 						'db_name'		=> $db,
 						'user_parent'	=> $user_parent,
-						'user_type'		=> $this->session->userdata('user_type')
+						'school_data'	=> $school_data->result(),
+						'reports_data'	=> $reports_data->result(),
+						'user_type'		=> $this->session->userdata('user_type'),
+						'membership'	=> $data_mem
 					);
 					break;
 				default :

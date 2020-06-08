@@ -8,7 +8,148 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
         me = this;
         me.setConfigVar();
     },
+    onDownloadExcelStudents : function(btn){
+        let me  = Admin.getApplication(),
+            app = this,
+            ts  = btn.up('window');
+        ts.mask('Descargando archivo...');
+        Ext.Ajax.request({
+            url     : Global.getUrlBase() + 'excel_manager/download_excel_students',
+            success : function (response, opts) {
+                ts.unmask();
+                var obj = Ext.decode(response.responseText);
+                if(obj.success  == true){
+                    app.onOpenUrl(obj.pathFile);
+                }else{
+                    me.showResult('No se pudo descargar el archivo','error');
+                }
+            },
+            failure: function (response, opts) {
+                me.showResult('Error en el servidor, no se pudo descargar el archivo','error');
+            },
+            callback    : function (r, e) {
+                ts.unmask();
+            }
+        });
+    },
+    onLoadExcelStudents : function(btn){        
+         Ext.create({
+            xtype           : 'VideoView',
+            alwaysOnTop     : true,
+            maxWidth        : 600,
+            maxHeight       : 230,
+            items: [
+                {
+                    xtype       : 'form',
+                    title       : 'Subir plantilla de inscripciones y matriculas',
+                    bodyPadding : 10,
+                    frame       : true,
+                    items: [{
+                        xtype       : 'FileField',
+                        buttonOnly  : false,
+                        labelWidth  : 50,
+                        fieldLabel  : 'Archivo'
+                    }],
+                    buttons: [{
+                        text    : 'Imprtar',
+                        ui      : 'soft-green',
+                        iconCls : 'x-fa fa-cloud-upload',
+                        handler: function () {
+                            let form    = this.up('form').getForm(),
+                                win     = this.up('window'),
+                                app     = Admin.getApplication();
 
+                            Ext.define('Ext.ux.data.Html5Connection', {
+                                override: 'Ext.data.Connection',
+                                overrideAccept: true,
+                                isHtml5Supported: function () {
+                                    return typeof FileReader != "undefined";
+                                },
+                                isFormUpload: function (options) {
+                                    return !this.isHtml5Supported() && this.callParent(arguments);
+                                },
+                                setOptions: function (options, scope) {
+                                    var opts = this.callParent(arguments);
+                                    if (this.isHtml5Supported() && options.isUpload && options.form) {
+                                        opts.data = new FormData(options.form);
+                                    }
+                                    return opts;
+                                },
+                                createRequest: function (options, requestOptions) {
+                                    var request = this.callParent(arguments);
+                                    if (this.isHtml5Supported() && options.isUpload && options.progress) {
+
+                                        if (!options.headers) options.headers = {};
+                                        options.headers['Content-Type'] = null;
+                                    }
+
+                                    return request;
+                                }
+                            });
+                            Ext.define('Ext.ux.data.Html5Request', {
+                                override: 'Ext.data.request.Ajax',
+                                openRequest: function (options, requestOptions, async, username, password) {
+                                    var me = this;
+                                    var xhr = this.callParent(arguments);
+                                    if (options.isUpload && options.progress) {
+                                        xhr.upload.onprogress = options.progress;
+                                    }
+                                    return xhr;
+                                },
+                                setupHeaders: function (xhr, options, data, params) {
+                                    var acceptHeader = "Accept";
+                                    if (this.overrideAccept && options.isUpload) {
+                                        if (!options.headers) options.headers = {};
+                                        options.headers[acceptHeader] = "text/html";
+                                    }
+                                    return this.callParent(arguments);
+                                }
+                            });
+                            Ext.define('Ext.ux.form.action.Action', {
+                                override: 'Ext.form.action.Action',
+                                createCallback: function () {
+                                    var me = this;
+                                    var callback = this.callParent();
+                                    callback.progress = function (e) {
+                                        var prog = e.loaded / e.total;
+                                        Ext.callback(me.progress, me.scope || me, [me, prog, e]);
+                                    };
+                                    return callback;
+                                }
+                            });
+
+                            if (form.isValid()) {
+                                win.mask('Realizando petición');
+                                form.submit({
+                                    url     : Global.getUrlBase()   + 'excel_manager/load_excel_students',
+                                    waitMsg : 'Cargando plantilla..',
+                                    success: function (fp, o) {
+                                        var obj = Ext.decode(o.response.responseText);
+                                        win.unmask();
+                                        if (obj.success == true) {
+                                            Ext.getStore('InscripcionesStore').reload();
+                                            app.showResult('La plantilla se ha importado correctamente.');
+                                            win.close();
+                                        } else {
+                                            app.showResult('La plantilla no se ha importado.','error');
+                                        }
+                                    },
+                                     //progress is [0..1], and event is the underlying HTML 5 progress event.
+                                    progress: function (action, progress, event) {
+                                        Ext.Msg.updateProgress(progress)
+                                    },
+                                    failure: function (f, e) {
+                                        win.unmask();
+                                        app.showResult('La plantilla no se pudo importar, ocurrio un error','error');
+                                    }
+                                });
+                            }
+                        }
+                    }]
+                }
+            ]
+        }).show();
+    },
     onNovelty : function (btn) {
         var 
             me      = Admin.getApplication(),

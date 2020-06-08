@@ -39,7 +39,7 @@ class M_general extends SME_Model {
 				$result		= $this->getError();
 			}
 		}else{
-			$result		= $this->getTable('jornadas',1,30,null);
+			$result		= $this->getTable('jornadas',0,30,null);
 		}
 		return $result;				
 	}

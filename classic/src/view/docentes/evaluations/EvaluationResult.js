@@ -14,14 +14,20 @@ Ext.define('Admin.view.docentes.EvaluationResult',{
         if(!me.getEvaluationId() > 0){
             me.getController().redirectTo('evaluaciones', true);
         }else{
-            let zstore  = Ext.create('Admin.store.base.StoreUrl',{
+            let zstore  = Ext.create('Admin.store.base.StoreApi',{
                 model		: 'Admin.model.docentes.CargaModel',
                 proxy: {
                     type	: 'ajax',
-                    url     : 'evaluations/getEvaluationResult',
+                    api: {
+                        create  : '#master/insertData',
+                        read    : 'evaluations/getEvaluationResult',
+                        update  : 'master/updateData',
+                        destroy : 'master/deleteData'
+                    },
                     extraParams : {
                         id      : me.getEvaluationId(),
                         courseId: me.getCourseId(),
+                        pdbTable: 'te_evaluation_result',
                         type    : 2
                     }
                 },
@@ -176,10 +182,13 @@ Ext.define('Admin.view.docentes.EvaluationResult',{
                         {
                             xtype   : 'toolbarcrud',
                             items 	: [
-                                '->',
+                                '->'
+                                ,'-',
                                 {
-                                    xtype 	: 'closebutton',
-                                    handler : ''
+                                    xtype	: 'deletebutton'
+                                },'-',
+                                {
+                                    xtype 	: 'closebutton'
                                 }
                             ]
                         }
@@ -190,6 +199,5 @@ Ext.define('Admin.view.docentes.EvaluationResult',{
         me.callParent(arguments);
         me.setTitle('Resultados: ' + me.getEvaluationName());
     },
-    showSaveButton  : false,
-    showCloseButton : false
+    showSaveButton  : false
 });

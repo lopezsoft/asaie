@@ -41,7 +41,7 @@ Ext.define('Admin.view.general.controller.ReportesController',{
     onDownLoadReportXls: function (btn, url, param) {
 
         var me  	= this,
-            cUrl	= Global.getUrlBase()+'c_excel_manager/download_report_consolidado',
+            cUrl	= Global.getUrlBase()+'excel_manager/download_report_consolidado',
             vMask;
 
         vMask = btn.up('window');

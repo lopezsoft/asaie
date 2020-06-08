@@ -143,7 +143,7 @@ Ext.define('Admin.view.configuraciones.ColumnasNotasCompetenciasView',{
 						beforeedit :function ( editor , e ) {
 							var
 								grid = e.grid;
-							grid.down('#btnUndoAs').setDisabled(false);
+							grid.down('#undoButton').setDisabled(false);
 							grid.down('#saveButton').setDisabled(false);
 						}
 					},
@@ -229,7 +229,7 @@ Ext.define('Admin.view.configuraciones.ColumnasNotasCompetenciasView',{
 											storeS	= Ext.getStore('ColumnasNotasCompetenciasStore');
 										storeS.sync();
 										btn.setDisabled(true);
-										btn.up('window').down('#btnUndoAs').setDisabled(true);
+										btn.up('window').down('#undoButton').setDisabled(true);
 										storeS.reload();
 									}
 								},'-',

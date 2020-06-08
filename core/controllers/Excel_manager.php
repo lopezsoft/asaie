@@ -1,18 +1,29 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-class C_excel_manager extends SME_Controller {
+class Excel_manager extends SME_Controller {
 	function __construct() {
 		parent ::__construct();
-		$this->load->model('M_excel_manager');
+		$this->load->model('Excel_manager_m');
 		$this->load->model('M_notas');
 	}	
+
+	public function load_excel_students()
+	{
+		$file	= $_FILES['foto'];
+		echo $this->Excel_manager_m->load_excel_students($file);
+	}
+
+	public function download_excel_students()
+	{
+		echo $this->Excel_manager_m->get_download_excel_students();
+	}
 	
 	public function consolidado_sin_notas(){
-		echo $this->M_excel_manager->consolidado_sin_notas();
+		echo $this->Excel_manager_m->consolidado_sin_notas();
 	}
 	
 	public function consolidado_matricula(){
-		echo $this->M_excel_manager->consolidado_matricula();
+		echo $this->Excel_manager_m->consolidado_matricula();
 	}
 	
 	public function download_report_consolidado() {
@@ -27,9 +38,9 @@ class C_excel_manager extends SME_Controller {
 		$sede	= $this->input->post('pdbIdSede');
 		$format	= $this->input->post('pFormat');	
 		if ($type == '1') { // Asignaturas
-			echo $this->M_excel_manager->download_report_consolidado_as($per,$all,$c_gdo,$gpo,$jorn,$sede);
+			echo $this->Excel_manager_m->download_report_consolidado_as($per,$all,$c_gdo,$gpo,$jorn,$sede);
 		}else{			
-			echo $this->M_excel_manager->download_report_consolidado_ar($per,$all,$c_gdo,$gpo,$jorn,$sede);
+			echo $this->Excel_manager_m->download_report_consolidado_ar($per,$all,$c_gdo,$gpo,$jorn,$sede);
 		}
 				
 	}
@@ -43,13 +54,13 @@ class C_excel_manager extends SME_Controller {
 		$jorn	= $this->input->get_post('pdbJornada');
 		$sede	= $this->input->get_post('pdbSede');
 		$curso	= $this->input->get_post('pdbCurso');
-		echo $this->M_excel_manager->upload_plantilla($asig,$grado,$grupo,$per,$jorn,$sede,$curso,$file);
+		echo $this->Excel_manager_m->upload_plantilla($asig,$grado,$grupo,$per,$jorn,$sede,$curso,$file);
 		$this->M_notas->insert_log_notas($grado,$curso,$jorn,$sede,$grupo,$per,$asig);
 	}
 	
 	public function delete_file(){
 		$path = $this->input->get_post('pathFile');
-		echo $this->M_excel_manager->delete_file_exl($path);
+		echo $this->Excel_manager_m->delete_file_exl($path);
 	}
 	
 	public function exportar_notas_asignatura(){
@@ -60,6 +71,6 @@ class C_excel_manager extends SME_Controller {
 		$jorn	= $this->input->get_post('pdbJornada');
 		$sede	= $this->input->get_post('pdbSede');
 		$curso	= $this->input->get_post('pdbCurso');
-		echo $this->M_excel_manager->exportar_notas_asignatura($asig,$grado,$grupo,$per,$jorn,$sede,$curso);
+		echo $this->Excel_manager_m->exportar_notas_asignatura($asig,$grado,$grupo,$per,$jorn,$sede,$curso);
 	}
 }

@@ -237,6 +237,20 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                                         {
                                             xtype       : 'btnWebcam',
                                             handler		: 'onViewWebcam'
+                                        },
+                                        {
+                                            xtype   : 'customButton',
+                                            ui      : 'soft-green',
+                                            iconCls : 'x-fa fa-cloud-download',
+                                            tooltip : 'Exportar plantilla excel para importar lista de estudiantes',
+                                            handler : 'onDownloadExcelStudents'
+                                        },
+                                        {
+                                            xtype   : 'customButton',
+                                            ui      : 'soft-green',
+                                            iconCls : 'x-fa fa-cloud-upload',
+                                            tooltip : 'Importar listados de estudiantes a inscribir y matricular',
+                                            handler : 'onLoadExcelStudents'
                                         }
                                     ]
                                 },

@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
       
-class M_excel_manager extends SME_Model {
+class Excel_manager_m extends SME_Model {
 	var $objXls,
 	 	$fileXls,
 	 	$fileExport;
@@ -13,6 +13,184 @@ class M_excel_manager extends SME_Model {
 		$this->fileXls	= $this->directory_path.'assets/plantillas/plantilla notas.xlsx';
 		$this->fileExport	= "uploads/Archivo_salida.xlsx";
 		$this->load->model('M_jreport');
+	}
+
+	public function load_excel_students($file){
+		$path		= $this->get_excel_user_folders($this->get_user_id());
+		$palntila	= $this->upload_file($file,$path);
+		$year		= $this->get_year();
+		$db			= $this->get_db_name();
+
+		$palntila	= json_decode($palntila);
+
+		if ($palntila->success == TRUE){
+			$doc			= $palntila->foto;
+			$this->fileXls 	= $this->directory_path.$doc;
+			$this->objXls	= $this->objXls->load_xls($this->fileXls);
+			$this->objXls->setActiveSheetIndex(3);
+
+			// Número de filas
+			$rows_xls	= $this->objXls->setActiveSheetIndex(3)->getHighestRow();
+			if($rows_xls > 2){
+				try {
+					//iterando el contenido de las celdas
+					$objWorksheet = $this->objXls->getActiveSheet();
+					for ($i=3; $i <= $rows_xls; $i++) { 
+						// Inscripción
+						$zona		= $objWorksheet->getCell('A'.$i)->getValue();	
+						$tipo_doc	= $objWorksheet->getCell('B'.$i)->getValue();
+						$sexo		= $objWorksheet->getCell('C'.$i)->getValue();
+						$pais		= $objWorksheet->getCell('D'.$i)->getValue();
+						$documento	= $objWorksheet->getCell('E'.$i)->getValue();
+						$ciud_naci	= $objWorksheet->getCell('F'.$i)->getValue();
+						$ciud_resi	= $objWorksheet->getCell('G'.$i)->getValue();
+						$ciud_exp	= $objWorksheet->getCell('H'.$i)->getValue();
+						$apellido1	= $objWorksheet->getCell('I'.$i)->getValue();
+						$apellido2	= $objWorksheet->getCell('J'.$i)->getValue();
+						$nombre1	= $objWorksheet->getCell('K'.$i)->getValue();
+						$nombre2	= $objWorksheet->getCell('L'.$i)->getValue();
+						$tipo_sangr	= $objWorksheet->getCell('M'.$i)->getValue();
+						$objWorksheet->getStyle('N'.$i)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
+						$fec_naci	= $objWorksheet->getCell('N'.$i)->getFormattedValue();
+						$edad		= $objWorksheet->getCell('O'.$i)->getValue();
+						$estrato	= $objWorksheet->getCell('P'.$i)->getValue();
+						$direccion	= $objWorksheet->getCell('Q'.$i)->getValue();
+						$localidad	= $objWorksheet->getCell('R'.$i)->getValue();
+						$telefono	= $objWorksheet->getCell('S'.$i)->getValue();
+						$movil		= $objWorksheet->getCell('T'.$i)->getValue();
+						$ips		= $objWorksheet->getCell('U'.$i)->getValue();
+						$email		= $objWorksheet->getCell('V'.$i)->getValue();
+						
+						$data	= array(
+							'id_zona'			=> ($zona) 			? $zona 		: 0,
+							'id_documento'		=> ($tipo_doc) 		? $tipo_doc 	: 99, 
+							'id_sexo'			=> ($sexo) 			? $sexo 		: 0, 
+							'id_country'		=> ($pais) 			? $pais 		: 45, 
+							'nro_documento'		=> ($documento) 	? $documento 	: rand(5,10), 
+							'lug_nacimiento'	=> ($ciud_naci) 	? $ciud_naci 	: 1128, 
+							'lug_residencia'	=> ($ciud_resi) 	? $ciud_resi 	: 1128,
+							'lug_expedicion'	=> ($ciud_exp) 		? $ciud_exp		: 1128,
+							'apellido1'			=> ($apellido1) 	? $apellido1 	: '',
+							'apellido2'			=> ($apellido2) 	? $apellido2 	: '', 
+							'nombre1'			=> ($nombre1) 		? $nombre1 		: '',
+							'nombre2'			=> ($nombre2) 		? $nombre2 		: '',
+							'tipo_sangre'		=> ($tipo_sangr) 	? $tipo_sangr 	: 'O+', 
+							'fecha_nacimiento'	=> ($fec_naci) 		? $fec_naci 	: date('Y-m-d'),
+							'edad'				=> ($edad) 			? $edad 		: 0,
+							'estrato'			=> ($estrato) 		? $estrato 		: 1, 
+							'direccion'			=> ($direccion) 	? $direccion 	: '',
+							'localidad'			=> ($localidad) 	? $localidad 	: '',
+							'telefono'			=> ($telefono) 		? $telefono 	: '', 
+							'movil'				=> ($movil) 		? $movil 		: '',
+							'ips'				=> ($ips) 			? $ips 			: '', 
+							'email'				=> ($email) 		? $email 		: 'email@email.com'
+						);
+
+						$this->db->where('nro_documento', $documento);
+						$student	= $this->db->get($db.'.inscripciones', 1);
+						$student	= $student->row();
+						$studentId	= 0;
+						if($student){
+							$studentId	= $student->id;
+							$this->db->where('id', $student->id);
+							$this->db->limit(1);
+							$this->db->update($db.'.inscripciones', $data);
+						}else{
+							$this->db->insert($db.'.inscripciones', $data);
+							$studentId	= $this->getInsertId();
+						}
+
+						// Matricula
+						$sede		= $objWorksheet->getCell('W'.$i)->getValue();
+						$jornada	= $objWorksheet->getCell('X'.$i)->getValue();
+						$grado		= $objWorksheet->getCell('Y'.$i)->getValue();
+						$grupo		= $objWorksheet->getCell('Z'.$i)->getValue();
+						$year		= $objWorksheet->getCell('AC'.$i)->getValue();
+
+						if($sede > 0 && $jornada > 0  && $grado > 0  && strlen($grupo) > 0 && $year > 0 ){
+							$ins_origen	= $objWorksheet->getCell('AA'.$i)->getValue() ? $objWorksheet->getCell('AA'.$i)->getValue() : 'No aplica';
+							$dir_origen	= $objWorksheet->getCell('AB'.$i)->getValue() ? $objWorksheet->getCell('AB'.$i)->getValue() : 'No aplica';
+							$objWorksheet->getStyle('AD'.$i)->getNumberFormat()->setFormatCode(PHPExcel_Style_NumberFormat::FORMAT_DATE_YYYYMMDD2);
+							$fecha		= $objWorksheet->getCell('AD'.$i)->getFormattedValue();
+							$query	= "INSERT IGNORE INTO ".$db.".student_enrollment (id_headquarters, id_study_day, id_student, id_grade, ".
+							"id_state,id_group, inst_address, inst_origin, `date`, `year`) VALUES (".$sede.",".$jornada.",".$studentId.",".$grado.
+							",2,'".$grupo."','".$dir_origen."','".$ins_origen."','".$fecha."',".$year.")";
+							$this->db->query($query);
+						}
+
+					}
+					
+					if($this->trans_status()){
+						$request = array(
+							'success'       => TRUE
+						);		
+						/**
+						* Respuesta en formato Json
+						*/
+						$this->trans_commit();
+						$result = json_encode($request);
+					}else{
+						$this->trans_rollback();
+					}
+				} catch (\Throwable $th) {
+					$this->trans_rollback();
+					$result	= $this->error_success();
+				}
+			}else{
+				$result	= $this->error_success();
+			}
+		}else{
+			$result	= $this->error_success();
+		}
+		return $result;
+	}
+
+	public function get_download_excel_students() {
+		$this->fileXls	= $this->directory_path.'assets/plantillas/plantilla matriculas ASAIE.xlsx';
+		$date	= date('Y-m-d h-m-s');
+		$dir	= SCHOOL_DIRECTORY.PATH_DELIM.$this->get_school_folder().PATH_DELIM.
+		UP_FOLDER.PATH_DELIM.XLS_FILE_DIRECTORY.PATH_DELIM;
+		$this->fileExport	= ($dir."Plantilla Inscripciones y matriculas ASAIE ".$date.".xlsx");
+		$db	= $this->get_db_name();	
+		$ie	= $this->db->get($db.'.establecimiento');
+		$ie	= $ie->row();
+
+		$head	= $this->db->get($db.'.sedes');
+
+		if ($ie && $head->num_rows() > 0){
+			$this->objXls	= $this->objXls->load_xls($this->fileXls);
+			$this->objXls->setActiveSheetIndex(1);
+			$objPorp	= $this->objXls->getProperties();
+			$objPorp->setCreator("LOPEZSOFT S.A.S");
+			$objPorp->setLastModifiedBy("LOPEZSOFT S.A.S");
+			$objPorp->setTitle("Plantilla Inscripciones y matriculas");
+			$objPorp->setSubject("Plantilla Inscripciones y matriculas");
+			$objPorp->setDescription("Hoja de excel para realizar la importación de Inscripciones y matriculas.");
+			$objPorp->setCategory("ASAIE ÉXODO - SISTEMA ACADÉMICO Y ADMINISTRATIVO");
+
+			$this->objXls->getActiveSheet()->setCellValue('A1',$ie->NOMBRE_IE);
+
+			$count	= 3;
+			foreach($head->result_array() as $field){			
+				$count ++;
+				$this->objXls->getActiveSheet()->setCellValue('A'.$count,$field['ID']);
+				$this->objXls->getActiveSheet()->setCellValue('B'.$count,$field['NOMBRE_SEDE']);
+			}	
+			//Guardamos el archivo en formato Excel 2007
+			$objWriter = PHPExcel_IOFactory::createWriter($this->objXls,'Excel2007');
+			$objWriter->save($this->fileExport);
+			$request = array(
+				'success'       => true,
+				'pathFile'		=> utf8_encode($this->fileExport)
+			);		
+			/**
+			* Respuesta en formato Json
+			*/
+			$result = json_encode($request);
+		}else{
+			$result	= $this->error_success();
+		}
+		return $result;
 	}
 	
 	public function consolidado_sin_notas() {
@@ -35,7 +213,7 @@ class M_excel_manager extends SME_Model {
 			$objPorp->setSubject("Consolidado de estudiantes sin notas");
 			$objPorp->setDescription("Hoja de excel con el consolidado los estudiantes sin 
 			notas en cada periodo.");
-			$objPorp->setCategory("ASAIE - SISTEMA ACADÉMICO Y ADMINISTRATIVO");
+			$objPorp->setCategory("ASAIE ÉXODO - SISTEMA ACADÉMICO Y ADMINISTRATIVO");
 			$count	= 1;
 			foreach($m_SQL->result_array()as $field){			
 				$count ++;
@@ -92,7 +270,7 @@ class M_excel_manager extends SME_Model {
 			$objPorp->setSubject("Consolidado de matricula");
 			$objPorp->setDescription("Hoja de excel con el consolidado de la matricula completa del 
 			establecimiento educativo.");
-			$objPorp->setCategory("ASAIE - SISTEMA ACADÉMICO Y ADMINISTRATIVO");
+			$objPorp->setCategory("ASAIE ÉXODO - SISTEMA ACADÉMICO Y ADMINISTRATIVO");
 			$count	= 1;
 			foreach($m_SQL->result_array()as $field){			
 				$count ++;
@@ -185,7 +363,7 @@ class M_excel_manager extends SME_Model {
 			$objPorp->setTitle("Plantilla de consolidado por asignaturas");
 			$objPorp->setSubject("Plantilla de consolidado");
 			$objPorp->setDescription("Plantilla con el consolidado de las notas académicas de los estudiantes.");
-			$objPorp->setCategory("ASAIE -  SISTEMA ACADÉMICO Y ADMINISTRATIVO");
+			$objPorp->setCategory("ASAIE ÉXODO -  SISTEMA ACADÉMICO Y ADMINISTRATIVO");
 			$valCol	= TRUE;
 			$lisCol	='DEFGHIJKLMNOPQRSTUVWXYZ';
 			$countCell	= 4;
@@ -337,7 +515,7 @@ class M_excel_manager extends SME_Model {
 			$objPorp->setTitle("Plantilla de consolidado por áreas");
 			$objPorp->setSubject("Plantilla de consolidado");
 			$objPorp->setDescription("Plantilla con el consolidado de las notas académicas de los estudiantes.");
-			$objPorp->setCategory("ASAIE -  SISTEMA ACADÉMICO Y ADMINISTRATIVO");
+			$objPorp->setCategory("ASAIE ÉXODO -  SISTEMA ACADÉMICO Y ADMINISTRATIVO");
 			$valCol	= TRUE;
 			$lisCol	='DEFGHIJKLMNOPQRSTUVW';
 			$countCell	= 4;
@@ -445,15 +623,15 @@ class M_excel_manager extends SME_Model {
 	}
 	
 	public function upload_plantilla($asig,$grado,$id_group,$per,$jorn,$sede,$curso,$file){
-		$this->folders_docentes($this->doc_docente);
+		$this->folders_teachers($this->get_teacher_id());
 		$control	= $this->control_date($per,$grado);
-		$palntila	= $control ? $this->upload_file($file,$this->dirPathDocsXlsUpDocentes) : FALSE;
+		$palntila	= json_decode($this->upload_file($file,$this->teaching_excel_files_directory_path));
 		$year		= $this->get_year();
 		$id			= $this->get_id_school();
-		if ($palntila){
-			$palntila	= json_decode($palntila);
-			$doc		= $palntila->foto;
-			$this->fileXls = $this->directory_path.$doc;
+		$db			= $this->get_db_name();
+		if ($palntila->success){
+			$doc			= $palntila->foto;
+			$this->fileXls 	= $this->directory_path.$doc;
 			$this->objXls	= $this->objXls->load_xls($this->fileXls);
 			$this->objXls->setActiveSheetIndex(0);
 			//iterando el contenido de las celdas
@@ -467,17 +645,16 @@ class M_excel_manager extends SME_Model {
 			$year		= $this->objXls->getActiveSheet()->getCell('G8')->getValue();
 			$id_jorn	= $this->objXls->getActiveSheet()->getCell('C8')->getValue();
 			$id_sede	= $this->objXls->getActiveSheet()->getCell('C9')->getValue();
-			$id_group		= $this->objXls->getActiveSheet()->getCell('O4')->getValue();
+			$id_group	= $this->objXls->getActiveSheet()->getCell('O4')->getValue();
 			$id_curso	= $this->objXls->getActiveSheet()->getCell('G10')->getValue();
 			$query_comp		= "SELECT tc.id_pk, tc.id, tc.competencia, tc.porcentaje, tc.calificable, tc.`year`
-							FROM competencias AS tc
-							LEFT JOIN grados_agrupados AS t1 ON tc.id_grado_agrupado = t1.id
-							LEFT JOIN aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
-							WHERE tc.`year` = ".$year." AND tc.id_inst=".$id
-							." AND tc.calificable = 1  AND t2.id_grado =".$grado;
+							FROM ".$db.".competencias AS tc
+							LEFT JOIN ".$db.".grados_agrupados AS t1 ON tc.id_grado_agrupado = t1.id
+							LEFT JOIN ".$db.".aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
+							WHERE tc.`year` = ".$year." AND tc.calificable = 1  AND t2.id_grado =".$grado;
 			$query_comp		= $this->db->query($query_comp);
 			if (($id_curso == $curso) AND ($periodo == $per) AND $query_comp){
-				$table	= $this->tabla_notas($grado);
+				$table	= $db.".".$this->tabla_notas($grado);
 				$count	= 3;
 				$this->trans_start();
 				$this->objXls->setActiveSheetIndex(1);
@@ -487,10 +664,8 @@ class M_excel_manager extends SME_Model {
 					$id_matric = $this->objXls->getActiveSheet()->getCell('B'.$count)->getValue();
 					$id_matric ? $id_matric : 0;
 					if ($id_matric > 0){
-						$sql	= 'SELECT id FROM '.$table." WHERE id_inst = ? AND id_curso = ? AND ".
-								 "id_matric = ? AND periodo = ? AND year = ? LIMIT 1";
+						$sql	= 'SELECT id FROM '.$table." WHERE id_curso = ? AND id_matric = ? AND periodo = ? AND year = ? LIMIT 1";
 						$param	= array(
-							$id,
 							$curso,
 							$id_matric,
 							$periodo,
@@ -508,10 +683,10 @@ class M_excel_manager extends SME_Model {
 									t.tipo, tc.competencia,
 									ROW_NUMBER() OVER (PARTITION BY tipo ORDER BY t.id_competencia, t.tipo, t
 									.numero_column) AS row_num
-									FROM columnas_notas_competencias t
-									LEFT JOIN competencias AS tc ON t.id_competencia = tc.id_pk
-									LEFT JOIN grados_agrupados AS t1 ON tc.id_grado_agrupado = t1.id
-									LEFT JOIN aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
+									FROM ".$db.".columnas_notas_competencias t
+									LEFT JOIN ".$db.".competencias AS tc ON t.id_competencia = tc.id_pk
+									LEFT JOIN ".$db.".grados_agrupados AS t1 ON tc.id_grado_agrupado = t1.id
+									LEFT JOIN ".$db.".aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
 									WHERE tc.`year` = ".$year." AND tc.id_pk =".$field['id_pk']." AND t2.id_grado = ".$grado."
 									ORDER BY t.id_competencia, t.tipo, t.numero_column;";
 									$query	= $this->db->query($query);
@@ -559,10 +734,10 @@ class M_excel_manager extends SME_Model {
 									t.tipo, tc.competencia,
 									ROW_NUMBER() OVER (PARTITION BY tipo ORDER BY t.id_competencia, t.tipo, t
 									.numero_column) AS row_num
-									FROM columnas_notas_competencias t
-									LEFT JOIN competencias AS tc ON t.id_competencia = tc.id_pk
-									LEFT JOIN grados_agrupados AS t1 ON tc.id_grado_agrupado = t1.id
-									LEFT JOIN aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
+									FROM ".$db.".columnas_notas_competencias t
+									LEFT JOIN ".$db.".competencias AS tc ON t.id_competencia = tc.id_pk
+									LEFT JOIN ".$db.".grados_agrupados AS t1 ON tc.id_grado_agrupado = t1.id
+									LEFT JOIN ".$db.".aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
 									WHERE tc.`year` = ".$year." AND tc.id_pk =".$field['id_pk']." AND t2.id_grado = ".$grado."
 									ORDER BY t.id_competencia, t.tipo, t.numero_column;";
 									$query	= $this->db->query($query);
@@ -597,9 +772,8 @@ class M_excel_manager extends SME_Model {
 											 						getOldCalculatedValue();
 								$final		= $final ? $final : 0;
 								$id_escala	= $this->get_desempeños_id($final,$grado);
-								$sqlCol		= $sqlCol."final,id_matric,year,id_curso,id_inst,periodo,id_escala";	
-								$sqlSet		= $sqlSet."'".$final."','".$id_matric."','".$year."','".$curso.
-								"','".$id."','".$periodo."','".$id_escala."'";
+								$sqlCol		= $sqlCol."final,id_matric,year,id_curso,periodo,id_escala";	
+								$sqlSet		= $sqlSet."'".$final."','".$id_matric."','".$year."','".$curso."','".$periodo."','".$id_escala."'";
 								$sqlUp		= 'INSERT IGNORE INTO '.$table.'('.$sqlCol.' VALUES ('.$sqlSet.')';
 								$this->db->query($sqlUp);
 							}
@@ -612,7 +786,7 @@ class M_excel_manager extends SME_Model {
 				if ($this->trans_status()) {
 					$estado = 1;
 				}else{
-					$result	= $this->get_error();
+					$result	= $this->error_success();
 					return $result;
 				}						
 			}else{
@@ -621,11 +795,6 @@ class M_excel_manager extends SME_Model {
 			$request = array(
 				'success'       => TRUE,
 				'year'			=> $this->get_year(),
-				'fecha'			=> date('Y-m-d'),
-				'id_user'		=> $this->id_usuario,
-				'id_inst'		=> $this->get_id_school(),
-				'year'			=> $this->get_year(),
-				'user_type'		=> $this->session->userdata('user_type'),
 				'estado'		=> $estado
 			);		
 			/**
@@ -639,7 +808,7 @@ class M_excel_manager extends SME_Model {
 	}
 	
 	public function delete_file_exl($path){
-		$this->folders_docentes($this->doc_docente);
+		$this->folders_teachers($this->doc_docente);
 		return $this->delete_file($this->directory_path.$path);
 	}
 	
@@ -701,7 +870,7 @@ class M_excel_manager extends SME_Model {
 			$objPorp->setTitle("Plantilla de calificaciones");
 			$objPorp->setSubject("Plantilla de calificaciones sin internet");
 			$objPorp->setDescription("Plantilla para el registro de notas de los docentes.");
-			$objPorp->setCategory("ASAIE - SISTEMA ACADÉMICO Y ADMINISTRATIVO");
+			$objPorp->setCategory("ASAIE ÉXODO - SISTEMA ACADÉMICO Y ADMINISTRATIVO");
 			
 			//Encabezado  
 			$this->fileExport = $this->teaching_excel_files_directory_path.'/'.

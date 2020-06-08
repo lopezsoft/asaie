@@ -123,6 +123,25 @@
         border-radius: 20px;
     }
 }
+
+.sencha-dash-dash-headerbar-blue {
+    background-color : $base-color;
+    padding:2px 15px 0px 5px;
+    position:fixed;
+    width:100%;
+    z-index:10;
+    border:none;
+    .header-right-profile-image {
+        border-radius: 20px;
+    }
+    .name-text {
+        color: #fff;
+        font-weight: bold;
+        font-size: 14px;
+    }
+}
+
+
 .top-english-button{
     .x-btn-icon-el{
         width:21px;
@@ -433,7 +452,6 @@
 
 
 //----- Format Panel ------
-
 
 .panel-body-ligh {
     background: $exec-light-background !important;
@@ -1893,4 +1911,43 @@ $ended  : #F1485B;
     .x-btn-icon-el-wizard-soft-green-small {
         color: $color;
     }
+}
+
+
+// Mermebship 
+.membership-icon{
+	.fas {
+		height: 32px;
+		width: 32px;
+		border-radius: 38px;
+		color: #fff;
+		font-size: 24px;
+		line-height: 15px;
+		margin: 15px 0;
+		background-color: #458fd2;
+		padding: 8px 8px 2px 7px;
+	}
+}
+.membership-text-active {
+	color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #0a0;
+    border-radius: 20px;
+	border: 2px solid #ffffff1f;
+    padding: 4px 10px 4px 10px;
+    height: 28px;
+    text-transform: uppercase;
+}
+
+.membership-text-inactive {
+	color: #fff;
+    font-size: 12px;
+    font-weight: bold;
+    background-color: #ff0000;
+    border-radius: 20px;
+    border: 2px solid #ffffff1f;
+    padding: 4px 10px 4px 10px;
+    height: 28px;
+    text-transform: uppercase;
 }

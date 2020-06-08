@@ -376,6 +376,12 @@ class SME_Model extends CI_Model {
 		}
 		return $this->id_est;
 	}
+
+	function get_excel_user_folders($id){
+		$this->folders_users($id);
+		$path	= SCHOOL_DIRECTORY.PATH_DELIM.$this->school_folder.PATH_DELIM.UP_FOLDER.PATH_DELIM.USER_DOCUMENTS_DIR.PATH_DELIM.$id.PATH_DELIM.XLS_FILE_DIRECTORY;
+		return $path;
+	}
 	
 	function folders_users($id){
 		$this->update_properties();
@@ -390,6 +396,13 @@ class SME_Model extends CI_Model {
 		if (!is_dir($dir2)){
 			mkdir($dir2, 0777, true);
 		}
+
+		// Crea el directorio para los archivos excel subidos por el usuario
+		$dir45	= $dir.$id.PATH_DELIM.XLS_FILE_DIRECTORY;
+		if (!is_dir($dir45)){
+			mkdir($dir45, 0777, true);
+		}
+
 		// Crea el directorio para los documentos del usuario
 		$dir3	= $dir.$id.PATH_DELIM.DOCUMENTS_DIR_NAME;
 		if (!is_dir($dir3)){

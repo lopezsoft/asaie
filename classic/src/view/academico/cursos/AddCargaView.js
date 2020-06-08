@@ -102,10 +102,32 @@ Ext.define('Admin.view.academico.AddCargaView',{
                             xtype: 'fieldcontainer',
                             items: [
                                 {
-                                    xtype: 'sedesJorn'
+                                    xtype: 'CbSedes',
+                                    listeners: {
+                                        select: function (cb, r) {
+                                            var
+                                                me = Admin.getApplication(),                
+                                                param = {
+                                                    pdbTable    : 'jornadas',
+                                                    pdbSede     : r.id
+                                                };
+                                            me.setParamStore('JornadasStore', param, true);
+                    
+                                        }
+                                    }
+                                },
+                                {
+                                    xtype       : 'CbJornadas',
+                                    reference   : 'comboJornadas',
+                                    bind: {
+                                        visible: '{comboSedes.value}'
+                                    }
                                 },
                                 {
                                     xtype       : 'CbGrupo',
+                                    bind: {
+                                        visible: '{comboJornadas.value}'
+                                    },
                                     labelWidth  : 180,
                                     labelAlign  : 'left'
                                 }

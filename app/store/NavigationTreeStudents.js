@@ -24,11 +24,13 @@ Ext.define('Admin.store.NavigationTreeStudents', {
                     routeId     : 'studentnotes',
                     viewType    : 'studentnotes'
                 },
-                // {
-                //     text        : 'Nivelaciones',
-                //     iconCls     : 'x-fa fa-thumbs-up',
-                //     leaf        : true
-                // },
+                {
+                    text        : 'Informes',
+                    iconCls     : 'x-fa fa-newspaper-o nav-tree-change-new',
+                    viewType    : 'studentreportscontainer',
+                    routeId     : 'reports',
+                    leaf        : true
+                },
                 // {
                 //     text        : 'Seguimiento académico',
                 //     iconCls     : 'x-fa fa-eye',

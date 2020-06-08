@@ -3992,3 +3992,108 @@ ALTER TABLE `promoted_header`
 /******************** mAYO 14 ****************************/
 ALTER TABLE `users`
 	CHANGE COLUMN `image` `image` VARCHAR(250) NULL DEFAULT NULL COLLATE 'utf8_general_ci' AFTER `date`;
+
+
+
+/**************************** MAYO 21 **************************/
+ALTER TABLE `te_evaluation_courses`
+	ADD UNIQUE INDEX `evaluation_id_course_id` (`evaluation_id`, `course_id`);
+
+
+/**************************** MAYO 23 **************************/
+ALTER TABLE `cursos`
+	DROP INDEX `id_sede_id_grado_id_asig_id_docente_id_jorn_grupo_year`,
+	ADD UNIQUE INDEX `id_sede_id_grado_id_asig_id_docente_id_jorn_grupo_year` (`id_sede`, `id_grado`, `id_asig`, `id_jorn`, `grupo`, `year`) USING BTREE;
+
+
+
+/*********************************** AJUSTES **********************************/
+
+INSERT INTO users (user_id, user_type, username, password, active)
+	SELECT id_docente, 4, documento, SHA1(documento),1 FROM docentes a
+	WHERE NOT EXISTS (		
+		SELECT * FROM users b WHERE b.user_type = 4 AND b.user_id = a.id_docente
+	);
+
+
+INSERT IGNORE INTO student_enrollment  (id_student, id, id_headquarters, id_study_day, id_grade, id_group, year, inst_origin, inst_address) 
+SELECT c.id id_current, d.id_matric, d.id_sede, d.id_jorn, d.id_grado, d.grupo, d.`año`, d.ins_proced, d.dir_inst
+FROM inscripciones_copy a
+LEFT JOIN inscripciones AS c ON c.nro_documento = a.nro_doc_id
+LEFT JOIN matriculas AS d ON d.cod_est = a.id
+WHERE c.nro_documento = a.nro_doc_id AND d.cod_est = a.id AND NOT EXISTS(
+	SELECT * FROM inscripciones b WHERE b.id = a.id
+) ORDER BY c.id, d.`año`;
+
+INSERT INTO matcurso
+(id_grado, id_asig, ih, `year`, porciento, proc1, proc2, proc3, proc4, estado)
+SELECT id_grado, id_asig, ih, 2020, porciento, proc1, proc2, proc3, proc4, 1 
+FROM matcurso a WHERE a.year = 2019 AND a.estado = 1;
+
+INSERT INTO aux_docentes
+(id_docente, `year`)
+SELECT a.id_docente, 2020 FROM docentes a
+WHERE NOT EXISTS(
+	SELECT * FROM aux_docentes b WHERE b.year = 2020 AND b.id_docente = a.id_docente
+);
+
+
+INSERT INTO obs_observador_mod_3_copy
+SELECT * FROM obs_observador_mod_3;
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_LOCAL_SQL_MODE, '') */;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+TRUNCATE obs_observador_mod_3;
+
+ALTER TABLE `obs_observador_mod_3`
+	ADD CONSTRAINT `FK_obs_observador_mod_3_student_enrollment` FOREIGN KEY (`id_matric`) REFERENCES `student_enrollment` (`id`) ON UPDATE CASCADE;
+
+INSERT INTO obs_observador_mod_3
+SELECT a.* FROM obs_observador_mod_3_copy a 
+WHERE EXISTS(
+	SELECT * FROM student_enrollment b WHERE b.id = a.id_matric
+);
+
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=1;
+
+
+/*!40101 SET SQL_MODE=IFNULL(@OLD_LOCAL_SQL_MODE, '') */;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+
+ALTER TABLE `users`
+	DROP COLUMN `id`;
+
+ALTER TABLE `users`
+	ADD COLUMN `id` BIGINT(20) NOT NULL AUTO_INCREMENT FIRST,
+	ADD PRIMARY KEY (`id`);
+
+	
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=1;	
+
+
+INSERT IGNORE INTO `inscripciones` (`id`, `id_zona`, `id_documento`, `id_sexo`, `nro_documento`, `lug_nacimiento`, `lug_residencia`, 
+ `lug_expedicion`, `apellido1`, `apellido2`, `nombre1`, `nombre2`, 
+ `tipo_sangre`, `fecha_ingreso`, `fecha_nacimiento`, `edad`, `estrato`, `direccion`,
+`telefono`, `ips`, `email`)  
+SELECT `id`, `id_zona`, `cod_doc`, 2, 
+  `nro_doc_id`, `mun_lug_nac`, `mun_lug_res`, `mun_lug_exp`, `apellido1`, `apellido2`, `nombre1`, 
+  `nombre2`, `tipo_sangre`, `fecha_ingreso`, `fecha_nacimiento`, `edad`, `estrato`, `direccion`, 
+  `telefono`, `IPS`,  `e_mail` FROM  `inscripciones_copy`;
+  
+
+INSERT IGNORE INTO student_enrollment  (id_student, id, id_headquarters, id_study_day, id_grade, id_group, year, inst_origin, inst_address) 
+SELECT a.id, d.id_matric, d.id_sede, d.id_jorn, d.id_grado, d.grupo, d.`año`, d.ins_proced, d.dir_inst
+FROM inscripciones a
+LEFT JOIN matriculas AS d ON d.cod_est = a.id
+WHERE d.cod_est = a.id AND NOT EXISTS(
+	SELECT * FROM student_enrollment b WHERE b.id_student = d.id_matric
+) ORDER BY a.id, d.`año`;
+
+
+	
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;	
+
+DELETE FROM inscripciones WHERE id = 221;
+DELETE FROM student_enrollment WHERE id_student = 221 ;
+	
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=1;	
