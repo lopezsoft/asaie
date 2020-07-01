@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT on 19/03/2016.
- */
 var store   = Ext.create('Ext.data.Store', {
     fields  : [
         { name : 'id'},
@@ -10,27 +7,28 @@ var store   = Ext.create('Ext.data.Store', {
         {id: '1',    nombre: 'BOLETIN POR ÁREAS'},
         {id: '2',    nombre: 'BOLETIN POR ASIGNATURAS'},
         {id: '3',    nombre: 'BOLETIN POR COMPETENCIAS'},
-        {id: '4',    nombre: 'MOD - PROY TRANSVERSALES'},
+        // {id: '4',    nombre: 'MOD - PROY TRANSVERSALES'},
         {id: '5',    nombre: 'BOLETIN POR ÁREAS MODELO Nº 2'},
-        {id: '6',    nombre: 'BOLETIN POR ASIGNATURAS  MODELO Nº 2'}
-       /* {id: '7',    nombre: 'BOLETIN POR ÁREAS CON ESTADÍISTICAS'},
-        {id: '8',    nombre: 'BOLETIN POR ASIGNATURAS CON ESTADÍISTICAS'}*/
+        // {id: '6',    nombre: 'BOLETIN POR ASIGNATURAS  MODELO Nº 2'},
+       // {id: '7',    nombre: 'BOLETIN POR ÁREAS CON ESTADÍISTICAS'},
+       // {id: '8',    nombre: 'BOLETIN POR ASIGNATURAS CON ESTADÍISTICAS'}
+       // {id: '9',    nombre: 'BOLETIN POR ÁREAS (SAMAC)'},
+        {id: '10',    nombre: 'PRE-INFORME'}
     ]
 });
 
-Ext.define('Admin.view.estudiantes.BoletinEstView',{
-    extend  : 'Admin.base.CustomWindow',
-    alias   : 'widget.BoletinEstView',
-    title   : 'estudiantes',
-    itemId  : 'BoletinEstView',
-    requires    : [
-        'Admin.combo.CbPeriodos'
-    ],
-    height      : 250,
-    width       : 480,
+Ext.define('Admin.view.estudiantes.StudentNewsLetter',{
+    extend      : 'Admin.base.CustomWindow',
+    alias       : 'widget.studentnewsletter',
+    title       : 'estudiantes',
+    itemId      : 'studentnewsletter',
+    controller  : 'estudiantes',
+    maxHeight      : 300,
+    maxWidth       : 480,
     items   : [
         {
-            xtype   : 'customform',
+            xtype           : 'customform',
+            showSaveButton  : false,
             defaults: {
                 labelWidth  : 120
             },
@@ -73,8 +71,7 @@ Ext.define('Admin.view.estudiantes.BoletinEstView',{
                         }
                     ]
                 }
-            ],
-            dockedItems : []
+            ]
         }
     ],
     buttons : [

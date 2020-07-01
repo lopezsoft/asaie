@@ -5,6 +5,42 @@ class Academic_m extends SME_Model {
 		parent::__construct();
 	}
 
+	function getStudentAccess($querySearch, $start, $limit){
+		$db     = $this->get_db_name();
+		$year	= $this->get_year();
+		$query	= "INSERT INTO ".$db.".student_access (enrollment_id) 
+			SELECT a.id FROM ".$db.".student_enrollment AS a 
+			WHERE NOT EXISTS (
+				SELECT * FROM ".$db.".student_access AS b WHERE b.enrollment_id = a.id
+			);";
+		$this->db->query($query);
+		
+		$queryCount			= "SELECT COUNT(a.id) total
+			FROM ".$db.".student_access AS a
+			LEFT JOIN ".$db.".student_enrollment AS b ON a.id = b.id
+			LEFT JOIN ".$db.".inscripciones AS c ON b.id_student = c.id 
+			WHERE b.year = ? ";
+		$queryStatemente	= "SELECT a.*, 
+			CONCAT(TRIM(c.apellido1),' ',TRIM(c.apellido2),' ',TRIM(c.nombre1),' ',TRIM(c.nombre2)) AS nombres,
+			c.nro_documento
+			FROM ".$db.".student_access AS a
+			LEFT JOIN ".$db.".student_enrollment AS b ON a.id = b.id
+			LEFT JOIN ".$db.".inscripciones AS c ON b.id_student = c.id
+			WHERE b.year = ? ";
+		$fieldsSearch		= [
+			'c.apellido1',
+			'c.apellido2',
+			'c.nombre1',
+			'c.nombre2',
+			'c.nro_documento'
+		];
+		$where	= [
+			$year
+		];
+		$order	= 'nombres';
+		echo $this->getQuery($queryCount, $queryStatemente, $start, $limit, $querySearch, $fieldsSearch, $where, $order);
+	}
+
 	function insert_aux_asignaturas($id,$list){
 		$lista	= json_decode($list);			
 		$extra = array(

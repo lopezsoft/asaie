@@ -23,11 +23,13 @@ Ext.define('Admin.view.promocion.AntiguosView',{
     layout: {
         type    : 'hbox',
         align   : 'stretch'
-    },
+	},
+	scrollable			: true,
     items   : [
         {
-            xtype   : 'panel',
-            ui      : 'panel-white',
+            xtype   		: 'panel',
+			ui      		: 'panel-white',
+			scrollable		: true,
             flex    : 3,
             margin  : 2,
             items   : [
@@ -172,11 +174,12 @@ Ext.define('Admin.view.promocion.AntiguosView',{
             margin  : '0 0 0 0',
             flex    : 4,
             // title   : 'CONSULTA',
-            autoLoad    : false,
-            plugins: [
+            autoLoad : false,
+            syncHeight : false,
+            plugins: [					
                 {
                     ptype: 'rowexpander',
-                    rowBodyTpl: new Ext.XTemplate(
+                    rowBodyTpl: new Ext.XTemplate(												
                         '<p><b>Apellidos y Nombres:</b> {nombres}</p>'
                     )
                 }

@@ -31,6 +31,7 @@ class SME_Model extends CI_Model {
 	protected $user_images_path		= NULL;
 	protected $teacher_directory_path = NULL;
 	protected $route_directory_teaching_material = NULL;
+	protected $live_classes_directory_path = NULL;
 	protected $path_directory_digital_documents_teacher = NULL;
 	protected $teaching_excel_files_directory_path 		= NULL;
 	protected $student_image_path 						= NULL;
@@ -376,6 +377,12 @@ class SME_Model extends CI_Model {
 		}
 		return $this->id_est;
 	}
+
+	function get_excel_user_folders($id){
+		$this->folders_users($id);
+		$path	= SCHOOL_DIRECTORY.PATH_DELIM.$this->school_folder.PATH_DELIM.UP_FOLDER.PATH_DELIM.USER_DOCUMENTS_DIR.PATH_DELIM.$id.PATH_DELIM.XLS_FILE_DIRECTORY;
+		return $path;
+	}
 	
 	function folders_users($id){
 		$this->update_properties();
@@ -390,6 +397,13 @@ class SME_Model extends CI_Model {
 		if (!is_dir($dir2)){
 			mkdir($dir2, 0777, true);
 		}
+
+		// Crea el directorio para los archivos excel subidos por el usuario
+		$dir45	= $dir.$id.PATH_DELIM.XLS_FILE_DIRECTORY;
+		if (!is_dir($dir45)){
+			mkdir($dir45, 0777, true);
+		}
+
 		// Crea el directorio para los documentos del usuario
 		$dir3	= $dir.$id.PATH_DELIM.DOCUMENTS_DIR_NAME;
 		if (!is_dir($dir3)){
@@ -632,6 +646,11 @@ class SME_Model extends CI_Model {
 		if (!is_dir($dir.$doc.$docs.$dirDocsXls.PATH_DELIM.$dirDocsXlsUp)){
 			mkdir($dir.$doc.$docs.$dirDocsXls.PATH_DELIM.$dirDocsXlsUp, 0777, true);
 		}	
+		if (!is_dir($dir.$doc.$docs.LIVE_CLASSES)){
+			mkdir($dir.$doc.$docs.LIVE_CLASSES, 0777, true);
+		}	
+
+
 
 		/** */
 		$dir2		= SCHOOL_DIRECTORY.PATH_DELIM.$this->get_school_folder().PATH_DELIM.UP_FOLDER.PATH_DELIM.TEACHERS_DIRECTORY.PATH_DELIM;
@@ -648,8 +667,13 @@ class SME_Model extends CI_Model {
 		if (is_dir($dir.$doc.$docs.$dirDocsXls)){
 			$this->teaching_excel_files_directory_path = $dir2.$doc.$docs.$dirDocsXls;
 		}
+
 		if (is_dir($dir.$doc.$docs.$dirDocsXls.PATH_DELIM.$dirDocsXlsUp)){
 			$this->path_directory_excel_files_teacher_uploads = $dir2.$doc.$docs.$dirDocsXls.PATH_DELIM.$dirDocsXlsUp;
+		}
+		
+		if (is_dir($dir.$doc.$docs.LIVE_CLASSES.PATH_DELIM)){
+			$this->live_classes_directory_path = $dir2.$doc.$docs.LIVE_CLASSES.PATH_DELIM;
 		}
 		
 	}
@@ -1360,7 +1384,7 @@ class SME_Model extends CI_Model {
      * @param string $where
      * @return void
      */
-    function getTable($table, $offset, $limit, $query, $where = [], $order = [])
+    function getTable($table, $offset, $limit, $query, $where = [], $order = [], $all = '')
     {
 		try {
 			$db		= $this->get_db_name();
@@ -1401,6 +1425,9 @@ class SME_Model extends CI_Model {
 						foreach ($order as $key => $value) {
 							$this->db->order_by($key, $value);
 						}
+					}
+					if(strlen($all) > 0){
+						$this->db->select($all);
 					}
 					$this->db->like($name,$query);
 					$this->db->limit($limit, $offset);            
@@ -1443,6 +1470,9 @@ class SME_Model extends CI_Model {
 					foreach ($order as $key => $value) {
 						$this->db->order_by($key, $value);
 					}
+				}
+				if(strlen($all) > 0){
+					$this->db->select($all);
 				}
 				$this->db->limit($limit, $offset);            
 				$result  	= $this->db->get($table);

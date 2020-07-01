@@ -12,14 +12,14 @@ Ext.define('Admin.view.academico.controller.ReportesAcademicoController',{
     },
 
     onCarne : function (btn) {
-        Admin.getApplication().onAler('En desarrollo');
+        Ext.create('Admin.view.general.GenerarCarnets').show();
     },
 
     onEstSinNotas : function (btn) {
         var
             me  = this,
             ts  = btn.up('window') || btn.up('form'),
-            xUrl = Global.getUrlBase() + 'c_excel_manager/consolidado_sin_notas';
+            xUrl = Global.getUrlBase() + 'excel_manager/consolidado_sin_notas';
         ts.mask(AppLang.getSGenerating());
         try {
             Ext.Ajax.request({
@@ -45,7 +45,7 @@ Ext.define('Admin.view.academico.controller.ReportesAcademicoController',{
         var
             me      = this,
             ts      = btn.up('window') || btn.up('form'),
-            xUrl    = Global.getUrlBase()+'c_excel_manager/consolidado_matricula';
+            xUrl    = Global.getUrlBase()+'excel_manager/consolidado_matricula';
         try {
             ts.mask(AppLang.getSGenerating());
             Ext.Ajax.request({

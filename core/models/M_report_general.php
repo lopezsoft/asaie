@@ -6,6 +6,42 @@ class M_report_general extends SME_Model {
 		$this->load->model('M_jreport');
 	}
 	
+	function carnets($format, $type, $ckAll, $ckRes, $id){
+		$db	= $this->get_db_name();
+		$ye		= $this->get_year();
+		$date	= date('Y-m-d h-m-s');
+		//Reporte a Procesar : Este nombre es del reporte creado en JasReport
+		$report	= ($type == 1) ? 'carnets' : 'carnets_docentes';
+		
+		if($ckRes > 0){
+			$report	= ($type == 1) ? 'carnets' : 'carnets_docentes_respaldo';
+		}
+		$where	= "";
+		if($ckAll > 0){
+			$where	= " AND a.id_docente=".$id;
+		}
+		$query	= "SELECT a.documento, 
+		CONCAT(TRIM(a.nombre1),' ',TRIM(a.nombre2),' ',TRIM(a.apellido1),' ',TRIM(a.apellido2)) docente,
+		a.tipo_sangre, if(LENGTH(a.image) > 15, a.image, 'assets/img/avatars/unknown_carnets.png') image , a.movil, a.email,
+		CAST(b.year AS CHAR) year, c.abrev, d.url, d.name, d.school, d.info, d.header , d.qr
+		FROM docentes a
+		LEFT JOIN aux_docentes AS b ON b.id_docente = a.id_docente 
+		LEFT JOIN documentos AS c ON a.id_documento = c.id
+		LEFT JOIN carnets AS d ON d.active = 1
+		WHERE b.year = ".$ye." AND a.estado = 1".$where." ORDER BY docente";
+		
+		// Nombre dado al informe de salida
+		$report_export	= 'Carnets escolares '.$date;
+				
+		$parm	= array(
+			'SQL_PARAM' 	=> $query
+		);
+	
+		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
+				
+		return $request;
+	}
+
 	function get_pre_matricula_nuevos($f){
 		
 		$id		= $this->get_id_school();

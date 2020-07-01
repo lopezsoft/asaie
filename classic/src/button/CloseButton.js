@@ -17,6 +17,6 @@ Ext.define('Admin.button.CloseButton',{
     },
     tooltip	    : 'Cerrar y volver a la ventana anterior',
     text        : 'Volver',
-    ui          : 'header-red',
+	ui          : 'header-red',
     iconAlign	: 'left'
 });

@@ -3,7 +3,12 @@ Ext.define('Admin.view.docentes.controller.ActiviadesController',{
     alias: 'controller.actividades',
     init    : function() {
         this.setConfigVar();
+	},
+	
+	onLiveClasses : function (btn) {
+        this.redirectTo('teacherliveclasses', true);
     },
+
     viewActivitiesStudents : function (btn) {
         let
             panel   = btn.up('panel'),

@@ -31,7 +31,7 @@ class m_recuperaciones extends SME_Model {
 		
 		if($this->control_date_nivelacion($periodo,$grado)){
 			$table	= $this->tabla_notas($grado);		
-			$request = $this->get_update_primary($table,$fieldslist);
+			$request = $this->updateData($table,json_decode($fieldslist));
 		}else{
 			$request	= $this->control_date_msg();
 		}									

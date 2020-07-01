@@ -3,14 +3,17 @@ Ext.define('Admin.view.docentes.NotasAcademicasDocentes', {
     alias: 'widget.notasacademicasdocentes',
     xtype: 'notasacademicasdocentes',
     initComponent: function() {
-        this.callParent(arguments);
-        this.setTitle('Registro de notas - ' + Global.getYear());
+		let me  	= this,
+			height = Ext.Element.getViewportHeight();
+        me.callParent(arguments);
+		me.setTitle('Registro de notas - ' + Global.getYear());
+		me.setMaxHeight(height - 148);
     },
     cls: 'shadow email-compose',
     controller: 'carga',
     defaultFocus: 'CbCarga',
     bodyPadding: 0,
-    layout: 'anchor',
+    layout: 'fit',
     defaults: {
         anchor: '100%'
     },

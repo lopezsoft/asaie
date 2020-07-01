@@ -20,7 +20,7 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
             win = btn.up('form'),
             rc	= win.down('#CbCarga').getSelection(),
             rp	= win.down('#periodo').getSelection(),
-            cUrl= Global.getUrlBase() + 'c_excel_manager/exportar_notas_asignatura';
+            cUrl= Global.getUrlBase() + 'excel_manager/exportar_notas_asignatura';
         extra	= {
             pdbIdAsig	: rc.get('id_asig'),
             pdbGrado	: rc.get('id_grado'),
@@ -49,73 +49,76 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
         var win 	= btn.up('form'),
             me		= this,
             glo     = Global,
-            addLind = glo.getConfigReport().permi_ind,
+            addLind = glo.getData().config_bol[0].permi_ind,
             rerult  = false,
             msg     = '';
         me.onStopTimer(btn);
-        if (!Ext.isEmpty(glo.getIndicatorsRecord()) && !Ext.isEmpty(glo.getRecordAchievements())) {
+        if(addLind == '5'){
             rerult = true;
-        }else if(!Ext.isEmpty(glo.getIndicatorsRecord()) && Ext.isEmpty(glo.getRecordAchievements())){
-            switch (addLind) {
-                case   '1' :
-                    rerult  = true;
-                    break;
-                case   '2' :
-                    rerult  = false;
-                    msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
-                    break;
-                case   '3' :
-                    rerult  = true;
-                    break;
-                case   '4' :
-                    rerult  = false;
-                    msg     = 'Le falta digitar los DESEMPEÑOS - LOGROS para poder generar los desempeños.';
-                    break;
-                default :
-                    rerult  = true;
-                    break;
+        }else{
+            if (glo.getIndicatorsRecord().length > 0 && glo.getRecordAchievements().length > 0) {
+                rerult = true;
+            }else if(glo.getIndicatorsRecord().length > 0 && !glo.getRecordAchievements().length > 0){
+                switch (addLind) {
+                    case   '1' :
+                        rerult  = true;
+                        break;
+                    case   '2' :
+                        rerult  = false;
+                        msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
+                        break;
+                    case   '3' :
+                        rerult  = true;
+                        break;
+                    case   '4' :
+                        rerult  = false;
+                        msg     = 'Le falta digitar los DESEMPEÑOS - LOGROS para poder generar los desempeños.';
+                        break;
+                    default :
+                        rerult  = true;
+                        break;
+                }
+            }else if(!glo.getIndicatorsRecord().length > 0 && glo.getRecordAchievements().length > 0){
+                switch (addLind) {
+                    case   '1' :
+                        rerult  = true;
+                        break;
+                    case   '2' :
+                        rerult  = false;
+                        msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
+                        break;
+                    case   '3' :
+                        rerult  = false;
+                        msg     = 'Le falta digitar los indicadores de DESEMPEÑO para poder generar los desempeños.';
+                        break;
+                    case   '4' :
+                        rerult  = true;
+                        break;
+                    default :
+                        rerult  = true;
+                        break;
+                }
+            }else {
+                switch (addLind) {
+                    case   '1' :
+                        rerult  = true;
+                        break;
+                    case   '5' :
+                        rerult  = true;
+                        break;
+                    default :
+                        rerult  = false;
+                        msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
+                        break;
+                }
             }
-        }else if(Ext.isEmpty(glo.getIndicatorsRecord()) && !Ext.isEmpty(glo.getRecordAchievements())){
-            switch (addLind) {
-                case   '1' :
-                    rerult  = true;
-                    break;
-                case   '2' :
-                    rerult  = false;
-                    msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
-                    break;
-                case   '3' :
-                    rerult  = false;
-                    msg     = 'Le falta digitar los indicadores de DESEMPEÑO para poder generar los desempeños.';
-                    break;
-                case   '4' :
-                    rerult  = true;
-                    break;
-                default :
-                    rerult  = true;
-                    break;
-            }
-        }else {
-            switch (addLind) {
-                case   '1' :
-                    rerult  = true;
-                    break;
-                case   '5' :
-                    rerult  = true;
-                    break;
-                default :
-                    rerult  = false;
-                    msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
-                    break;
-            }
-        }
+        };
 
         var
             winM = btn.up('form'),
             rc	= winM.down('#CbCarga').getSelection(),
             rp	= winM.down('#periodo').getSelection(),
             btnSearch = winM.down('#btnSearch'),
-            gb  = Global;
             extra	= {
                 pdbAsig		: rc.get('id_asig'),
                 pdbGrado	: rc.get('id_grado'),
@@ -129,10 +132,10 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
             Ext.require('Admin.view.docs.VideoView');
             Ext.onReady(function () {
                 win = Ext.create({
-                    xtype: 'VideoView',
-                    alwaysOnTop: false,
-                    width: 600,
-                    height: 230,
+                    xtype       : 'VideoView',
+                    alwaysOnTop : false,
+                    maxWidth    : 600,
+                    maxHeight   : 230,
                     items: [
                         {
                             xtype: 'form',
@@ -140,23 +143,83 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
                             bodyPadding: 10,
                             frame: true,
                             items: [{
-                                xtype: 'FileField',
-                                buttonOnly: false,
-                                labelWidth: 50,
-                                fieldLabel: 'Archivo'
+                                xtype       : 'FileField',
+                                buttonOnly  : false,
+                                labelWidth  : 50,
+                                fieldLabel  : 'Archivo'
                             }],
                             buttons: [{
-                                text: 'Imprtar',
-                                ui: 'soft-green',
-                                iconCls: 'x-fa fa-cloud-upload',
-                                handler: function () {
+                                text    : 'Imprtar',
+                                ui      : 'soft-green',
+                                iconCls : 'x-fa fa-cloud-upload',
+                                handler : function () {
                                     var form = this.up('form').getForm(),
                                         app = Admin.getApplication();
+
+                                    Ext.define('Ext.ux.data.Html5Connection', {
+                                        override: 'Ext.data.Connection',
+                                        overrideAccept: true,
+                                        isHtml5Supported: function () {
+                                            return typeof FileReader != "undefined";
+                                        },
+                                        isFormUpload: function (options) {
+                                            return !this.isHtml5Supported() && this.callParent(arguments);
+                                        },
+                                        setOptions: function (options, scope) {
+                                            var opts = this.callParent(arguments);
+                                            if (this.isHtml5Supported() && options.isUpload && options.form) {
+                                                opts.data = new FormData(options.form);
+                                            }
+                                            return opts;
+                                        },
+                                        createRequest: function (options, requestOptions) {
+                                            var request = this.callParent(arguments);
+                                            if (this.isHtml5Supported() && options.isUpload && options.progress) {
+        
+                                                if (!options.headers) options.headers = {};
+                                                options.headers['Content-Type'] = null;
+                                            }
+        
+                                            return request;
+                                        }
+                                    });
+                                    Ext.define('Ext.ux.data.Html5Request', {
+                                        override: 'Ext.data.request.Ajax',
+                                        openRequest: function (options, requestOptions, async, username, password) {
+                                            var me = this;
+                                            var xhr = this.callParent(arguments);
+                                            if (options.isUpload && options.progress) {
+                                                xhr.upload.onprogress = options.progress;
+                                            }
+                                            return xhr;
+                                        },
+                                        setupHeaders: function (xhr, options, data, params) {
+                                            var acceptHeader = "Accept";
+                                            if (this.overrideAccept && options.isUpload) {
+                                                if (!options.headers) options.headers = {};
+                                                options.headers[acceptHeader] = "text/html";
+                                            }
+                                            return this.callParent(arguments);
+                                        }
+                                    });
+                                    Ext.define('Ext.ux.form.action.Action', {
+                                        override: 'Ext.form.action.Action',
+                                        createCallback: function () {
+                                            var me = this;
+                                            var callback = this.callParent();
+                                            callback.progress = function (e) {
+                                                var prog = e.loaded / e.total;
+                                                Ext.callback(me.progress, me.scope || me, [me, prog, e]);
+                                            };
+                                            return callback;
+                                        }
+                                    });
+            
                                     if (form.isValid()) {
                                         form.submit({
-                                            url: Global.getUrlBase()   + 'c_excel_manager/upload_plantilla',
-                                            params: extra,
-                                            waitMsg: 'Cargando plantilla..',
+                                            url     : Global.getUrlBase()   + 'excel_manager/upload_plantilla',
+                                            params  : extra,
+                                            waitMsg : 'Cargando plantilla..',
                                             success: function (fp, o) {
                                                 var obj = Ext.decode(o.response.responseText);
                                                 if (obj.estado == 1) {

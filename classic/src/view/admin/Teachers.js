@@ -88,7 +88,13 @@ Ext.define('Admin.view.admin.Teachers',{
             {
                 xtype   : 'toolbarCrud',
                 items   : [
-                    '->',
+					'->',
+					{
+						xtype       : 'btnWebcam',
+						iconCls		: 'far fa-images',
+						tooltip		: 'Imaganes del docente',
+						handler		: 'onViewWebcam'
+					},'-',
                     {
                         xtype       : 'customButton',
                         tooltip     : AppLang.getSToolTipDigitalDocuments(),

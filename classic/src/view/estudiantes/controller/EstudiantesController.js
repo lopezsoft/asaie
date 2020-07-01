@@ -402,36 +402,27 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
     },
 
     onConstancias : function (btn) {
-        var me   = this.app,
-            win  = null,
-            gb  = Global;
-        me.onMsgWait();
-        Ext.require([
-            'Admin.view.estudiantes.ConstanciasEstView'
-        ]);
-
-        Ext.onReady(function () {
-            me.onMsgClose();
-            win     = me.getWindow('Constancia de estudio - '+gb.year,'Admin.view.estudiantes.ConstanciasEstView');
-            win. show();
-        });
+        Admin.getApplication().showResult('No tiene acceso','error');
+        return false;
+        Ext.create('Admin.view.estudiantes.StudentConstancy',{
+            title    : 'Constancia de estudio: ' + Global.getYear()
+        }).show();
     },
 
     onBoletin : function (btn) {
-        var me   = this.app,
-            win  = null,
-             gb  = Global;
-        me.onMsgWait();
-        Ext.require([
-            'Admin.view.estudiantes.BoletinEstView'
-        ]);
-
-        Ext.onReady(function () {
-            me.onStore('general.PeriodosStore');
-            me.onMsgClose();
-            win     = me.getWindow('Boletines - '+gb.year,'Admin.view.estudiantes.BoletinEstView');
-            win. show();
-        });
+        Admin.getApplication().showResult('No tiene acceso','error');
+        return false;
+        var me   = Admin.getApplication();
+        extraParams = {
+			pdbTable 	: 'periodos_academicos',
+			pdbGrado	: Global.getData().enrollment[0].id_grade,
+			pdbType		: 0
+		}
+        me.onStore('general.PeriodosStore');
+        me.setParamStore('PeriodosStore',extraParams,false);
+        Ext.create('Admin.view.estudiantes.StudentNewsLetter',{
+            title   : 'Boletín académico: ' + Global.getYear()
+        }).show();
     },
 
     onViewPerfil   : function () {
@@ -844,24 +835,25 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
      * @param btn
      */
     onSetReport: function(btn){
+        Admin.getApplication().showResult('No tiene acceso','error');
+        return false;
         var
             win     = btn.up('window'),
-            gb      = Global.dbConfig,
-            grid    = win.down('grid'),
+            enroll  = Global.getData().enrollment[0],
             name    = win.getItemId();
         switch (name){
-            case 'ConstanciasEstView' :
+            case 'studentconstancy' :
                 var
                     url     = 'reports/report_constancias',
                     rbVal   = win.down('form').getValues(),
                     param   = {
-                        pdbGrado    : gb.cod_grado,
-                        pdbGrupo    : gb.grupo,
-                        pdbJorn     : gb.id_jorn,
-                        pdbMatric   : gb.id_matric,
-                        pdbSede     : gb.id_sede,
+                        pdbGrado    : enroll.id_grade,
+                        pdbGrupo    : enroll.id_group,
+                        pdbJorn     : enroll.id_study_day,
+                        pdbMatric   : enroll.id,
+                        pdbSede     : enroll.id_headquarters,
                         pdbType     : rbVal.modelo,
-                        pdbEstudian : gb.nombre1+ ' '+gb.apellido1
+                        pdbEstudian : enroll.estudiante
                     };
                 break;
             default :
@@ -869,14 +861,14 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
                     url     = 'reports/report_boletin',
                     values  = win.down('form').getValues(),
                     param   = {
-                        pdbCodGrado : gb.cod_grado,
-                        pdbIdJorn   : gb.id_jorn,
-                        pdbGrupo    : gb.grupo,
+                        pdbCodGrado : enroll.id_grade,
+                        pdbIdJorn   : enroll.id_study_day,
+                        pdbGrupo    : enroll.id_group,
                         pHojaReport : values.hoja,
                         pTypeReport : values.id_report,
-                        pdbIdSede   : gb.id_sede,
+                        pdbIdSede   : enroll.id_headquarters,
                         pdbPeriodo  : values.periodo,
-                        pdbMatric   : gb.id_matric
+                        pdbMatric   : enroll.id
                     };
 
                 break;

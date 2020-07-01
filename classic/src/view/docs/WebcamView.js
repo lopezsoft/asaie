@@ -310,8 +310,6 @@ Ext.define('Admin.view.docs.WebcamView',{
              window.webkitURL || 
              window.mozURL || 
              window.msURL;
-        console.log(window.URL);
-        console.log(navigator);
         navigator.getMedia(
             {
               video: true,

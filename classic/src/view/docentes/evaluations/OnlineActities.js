@@ -133,7 +133,7 @@ Ext.define('Admin.view.docentes.OnlineActities',{
                     text    : 'Disponible desde',
                     columns : [
                         {
-                            xtype           : 'datecolumn',
+                            // xtype           : 'datecolumn',
                             text 		    : 'Fecha',
                             width 		    : 95,
                             dataIndex	    : 'fecha'
@@ -149,7 +149,7 @@ Ext.define('Admin.view.docentes.OnlineActities',{
                     text    : 'Disponible hasta',
                     columns : [
                         {
-                            xtype           : 'datecolumn',
+                            // xtype           : 'datecolumn',
                             text 		    : 'Fecha',
                             width 		    : 95,
                             dataIndex	    : 'fecha_cierre'

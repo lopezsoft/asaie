@@ -124,8 +124,21 @@ Ext.define('Admin.view.main.MainController', {
         Ext.onReady(function(){
             me.unmask();
             localStorage.setItem('oldRoute', (localStorage.getItem('currentRoute')) ? localStorage.getItem('currentRoute') : 'dashboard');
-            localStorage.setItem('currentRoute',id);
-            me.setCurrentView(id);
+			localStorage.setItem('currentRoute',id);
+			if(id === 'dashboard'){
+				me.setCurrentView(id);
+			}else if(Global.isActive()){
+				me.setCurrentView(id);
+			}else{
+				Swal.fire({
+					position	: 'top-end',
+					icon		: 'warning',
+					title		: 'Cuenta suspendida',
+					text		: 'Sistema temporalmente fuera de servicio.',
+					showConfirmButton: false,
+					timer: 10000
+				});
+			}
         })
     },
 

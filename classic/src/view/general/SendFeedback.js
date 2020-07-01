@@ -48,7 +48,7 @@ Ext.define('Admin.view.general.SendFeedback',{
                             me      = this.up('window'),
                             app     = Admin.getApplication();
                         if(Ext.isEmpty(values.comment) || values.comment.length <= 30){
-                            app.showResult('Debe digitar el comentario');
+                            app.showResult('Debe digitar el comentario','error');
                             return;
                         }
                         Ext.define('Ext.ux.data.Html5Connection', {

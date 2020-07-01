@@ -23,7 +23,8 @@ Ext.define('Admin.view.promocion.CertificadoFinal',{
                     title   : 'Búsqueda de estudiantes',
                     defaults : {
                         labelWidth	: 65
-                    },
+					},
+					scrollable	: true,
                     items   : [
                         {
                             xtype   : 'sedesJorn',
@@ -108,11 +109,12 @@ Ext.define('Admin.view.promocion.CertificadoFinal',{
             ]
         },
         {
-            xtype   : 'customgrid',
-            store   : 'MatriculadosStore',
-            flex    : 4,
-            title   : 'CONSULTA',
-            autoLoad    : false,
+            xtype   	: 'customgrid',
+            store   	: 'MatriculadosStore',
+            flex    	: 4,
+            title   	: 'CONSULTA',
+			autoLoad    : false,
+			syncHeight  : false,
             plugins: [
                 {
                     ptype: 'rowexpander',

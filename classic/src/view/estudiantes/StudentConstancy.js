@@ -1,17 +1,15 @@
-/**
- * Created by LOPEZSOFT on 19/03/2016.
- */
-
-Ext.define('Admin.view.estudiantes.ConstanciasEstView',{
-    extend  : 'Admin.base.CustomWindow',
-    alias   : 'widget.ConstanciasEstView',
-    title   : 'estudiantes',
-    itemId  : 'ConstanciasEstView',
-    height      : 200,
-    width       : 480,
+Ext.define('Admin.view.estudiantes.StudentConstancy',{
+    extend      : 'Admin.base.CustomWindow',
+    alias       : 'widget.studentconstancy',
+    title       : 'estudiantes',
+    itemId      : 'studentconstancy',
+    controller  : 'estudiantes',
+    maxHeight      : 300,
+    maxWidth       : 480,
     items   : [
         {
-            xtype   : 'customform',
+            xtype           : 'customform',
+            showSaveButton  : false,
             defaults: {
                 labelWidth  : 120
             },
@@ -38,7 +36,6 @@ Ext.define('Admin.view.estudiantes.ConstanciasEstView',{
                     ]
                 }
             ],
-            dockedItems : []
         }
     ],
     buttons : [

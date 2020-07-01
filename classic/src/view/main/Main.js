@@ -27,7 +27,10 @@ Ext.define('Admin.view.main.Main', {
         let 
             me          = this,
             treeStore   = 'NavigationTreeMain',
-            nameApp     = AppLang.getSMainMenu();
+            nameApp     = AppLang.getSMainMenu()
+            reports     = Global.getData().reports_data[0],
+            membership  = Global.getData().membership,
+            schoolData  = Global.getData().school_data[0];
         switch (parseInt(Global.getData().user_type)) {
             case 4: // Docentes
                 treeStore   = 'NavigationTree';
@@ -40,11 +43,39 @@ Ext.define('Admin.view.main.Main', {
             break;
         }
         me.items = [
-            // {
-            //     xtype   : 'toolbar',
-            //     cls     : 'sencha-dash-dash-headerbar shadow',
-            //     height  : 64
-            // },
+            {
+                xtype   : 'toolbar',
+                cls     : 'sencha-dash-dash-headerbar-blue',
+                height  : 64,
+                items   : [
+					{
+						xtype       : 'tbtext',
+						cls			: 'membership-icon',
+						html		: '<i class="fas fa-award"></i>'
+					},
+					{
+						xtype       : 'label',
+						cls			: (membership.state == 1) ? 'membership-text-active' : 'membership-text-inactive', 
+						text 		: (membership.state == 1) ? 'cuenta activa hasta: ' + membership.lockdate : 'cuenta inactiva'
+					},
+                    '->',
+                    {
+                        xtype   : 'tbtext',
+                        cls     : 'name-text',
+                        text    : (membership.nameschool) ? membership.nameschool : 'Escuela Demo'
+                    },
+                    {
+                        xtype   : 'image',
+                        cls     : 'header-right-profile-image',
+                        height  : 32,
+                        width   : 32,
+                        alt     : 'Logo institucional',
+                        src     : (Ext.isEmpty(reports.logo)) ? Global.getAvatarUnknoun() : reports.logo,
+                        imgCls  : 'avatar-background',
+                        tooltip : 'Logo institucional'
+                    }
+                ]
+            },
             {
                 xtype   : 'toolbar',
                 cls     : 'sencha-dash-dash-headerbar shadow',
@@ -283,7 +314,7 @@ Ext.define('Admin.view.main.Main', {
                 xtype       : 'maincontainerwrap',
                 id          : 'main-view-detail-wrap',
                 reference   : 'mainContainerWrap',
-                flex: 1,
+                flex        : 1,
                 items: [
                     {
                         xtype           : 'treelist',
@@ -319,12 +350,13 @@ Ext.define('Admin.view.main.Main', {
         switch (parseInt(Global.getData().user_type)) {
             case 5: // Estudiantes
                 socket      = Global.getSocket();
+                enrroll     = (Global.getData().enrollment[0]) ? Global.getData().enrollment[0].id : 0;     
                 socket.emit('querySelect',{
                     dataName    : Global.getDbName(),
                     fields      : 'COUNT(evaluation_id) total ',
                     table       : 'te_shared_evaluation',
                     where       : 'enrollment_id = ? AND eread = ? ',
-                    values      : [Global.getData().enrollment[0].id,0]
+                    values      : [enrroll,0]
                 },(error, d)=>{
                     if (d) {
                         if (d.length > 0) {
@@ -347,7 +379,7 @@ Ext.define('Admin.view.main.Main', {
                     fields      : 'COUNT(activity_id) total ',
                     table       : 'ta_shared_online_activities',
                     where       : 'enrollment_id = ? AND leido = ? ',
-                    values      : [Global.getData().enrollment[0].id,0]
+                    values      : [enrroll,0]
                 },(error, d)=>{
                     if (d) {
                         if (d.length > 0) {
