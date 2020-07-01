@@ -412,7 +412,9 @@
         $color: $color-soft-red,
         $glyph-color: $color-soft-red,
         $background-color: transparent,
-        $border-width: 0
+		// $border-width: 1,
+		$border-color		: transparent,
+		$border-color-over	: $color-soft-red
 );
 
 @include extjs-button-small-ui(
@@ -420,7 +422,9 @@
         $color: $exec-blue-color,
         $glyph-color: $exec-blue-color,
         $background-color: transparent,
-        $border-width: 0
+		// $border-width: 0,
+		$border-color		: transparent,
+		$border-color-over	: $exec-blue-color
 );
 
 @include extjs-button-small-ui(
@@ -428,7 +432,9 @@
         $color: $color-soft-green,
         $glyph-color: $color-soft-green,
         $background-color: transparent,
-        $border-width: 0
+		// $border-width: 0
+		$border-color		: transparent,
+		$border-color-over	: $color-soft-green
 );
 
 @include extjs-button-small-ui(

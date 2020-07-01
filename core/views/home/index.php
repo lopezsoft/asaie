@@ -24,6 +24,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 		<script src="<?php echo base_url()?>assets/js/toastr.min.js"></script>
 		<script src="<?php echo base_url()?>assets/js/sweetalert2.min.js"></script>
+		<script src='https://meet.asaie.co/external_api.js'></script>
 		<script type="text/javascript">
             // toastr.info('Are you the 6 fingered man?');
         var Ext = Ext || {}; // Ext namespace won't be defined yet...

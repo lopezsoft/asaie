@@ -4,7 +4,8 @@ Ext.define('Admin.view.docentes.EvaluacionesSave',{
     xtype  	        : 'evaluacionessave',
     defaultFocus    : 'customtext',
     controller      : 'actividades',
-    store		    : 'EvaluacionesStore',
+	store		    : 'EvaluacionesStore',
+	reloadStore		: true,
     items 	: [
         {
             xtype       : 'customform',

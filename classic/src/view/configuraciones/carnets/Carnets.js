@@ -46,6 +46,18 @@ Ext.define('Admin.view.configuraciones.Carnets',{
 								win.down('form').loadRecord(rec);
 								win.show();
 							}
+						},
+						header: {
+							iconCls: 'x-fa fa-pencil',
+							tooltip: 'Información del encabezado',
+							handler: function (grid, rowIndex) {
+								var rec = grid.getStore().getAt(rowIndex);
+								grid.setSelection(rec);
+								var 
+									win	= Ext.create('Admin.view.configuraciones.CarnetsHeader');
+								win.down('form').loadRecord(rec);
+								win.show();
+							}
 						}
 					},
                     columns : [
@@ -75,6 +87,13 @@ Ext.define('Admin.view.configuraciones.Carnets',{
 							xtype			: 'actioncolumn',
 							width			: 25,
 							items			: ['@info']
+						},
+						{
+							menuDisabled	: true,
+							sortable		: false,
+							xtype			: 'actioncolumn',
+							width			: 25,
+							items			: ['@header']
 						},
 						{
 							dataIndex   : 'url',

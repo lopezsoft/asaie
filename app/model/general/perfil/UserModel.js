@@ -17,6 +17,7 @@ Ext.define('Admin.model.general.perfil.UserModel',{
         { name: 'image'},
         { name: 'mime'},
         { name: 'phone'},
-        { name: 'state'}
+        { name: 'state'},
+        { name: 'active', type : 'bool'}
     ]
 });

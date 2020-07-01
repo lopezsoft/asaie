@@ -235,7 +235,9 @@ Ext.define('Admin.view.academico.inscripciones.InscripcionesView',{
                                             handler     : 'onViewArchivos'
                                         },
                                         {
-                                            xtype       : 'btnWebcam',
+											xtype       : 'btnWebcam',
+											iconCls		: 'far fa-images',
+											tooltip		: 'Imaganes del estudiante',
                                             handler		: 'onViewWebcam'
                                         },
                                         {

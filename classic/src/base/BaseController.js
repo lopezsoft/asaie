@@ -365,14 +365,13 @@ Ext.define('Admin.base.BaseController', {
             if (xFormat == 'pdf') {
                 var
                     cHtml = '<object><embed  width="100%" height="100%" src="'+xUrl+'"></object>';
-                var win	= Ext.create('Admin.view.docs.IframeView',{
+                Ext.create('Admin.view.docs.IframeView',{
                     title 	: 'Vista previa del enlace',
                     html  	: cHtml,
                     width   : 700,
                     height  : 550,
                     maximized   : true
-                });
-                win.show();
+                }).show();
             }else{
                 me.onOpenUrl(xUrl);
             }
@@ -384,7 +383,7 @@ Ext.define('Admin.base.BaseController', {
      * @param xFormat (string)  : Formato tipo MIME del archivo o documento
      */
     onViewDocument : function (xUrl, xFormat) {
-        this.onOpenUrl(xUrl);
+        this.getIframe(xUrl, xFormat);
     },
     /**
      * Funcion para ver un enlace en un Iframe dentro del aplicativo
@@ -393,14 +392,13 @@ Ext.define('Admin.base.BaseController', {
     onViewUrl : function (xUrl) {
         var
             cHtml = '<object><embed  width="100%" height="100%" src="'+xUrl+'"></object>';
-        var win	= Ext.create('Admin.view.docs.IframeView',{
+        Ext.create('Admin.view.docs.IframeView',{
             title 	: 'Vista previa del enlace',
             html  	: cHtml,
             width   : 700,
             height  : 550
-        });
-        win.show();
-        this.onOpenUrl(xUrl);
+        }).show();
+		this.onOpenUrl(xUrl);
     },
 
     /**

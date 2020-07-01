@@ -699,7 +699,7 @@
 		</groupFooter>
 	</group>
 	<group name="area" preventOrphanFooter="true">
-		<groupExpression><![CDATA[$F{id_area}]]></groupExpression>
+		<groupExpression><![CDATA[$F{id_asig}]]></groupExpression>
 		<groupHeader>
 			<band height="12" splitType="Immediate">
 				<property name="com.jaspersoft.studio.unit.height" value="pixel"/>

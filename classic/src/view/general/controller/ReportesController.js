@@ -1,41 +1,54 @@
-/**
- * Created by LOPEZSOFT on 21/05/2016.
- */
 Ext.define('Admin.view.general.controller.ReportesController',{
     extend  : 'Admin.base.BaseController',
     alias   : 'controller.ReportesGeneral',
 
     init: function() {
         me  = this;
-
         me.setConfigVar();
-
-        me.control({
-
-        });
     },
     /**
      * Funcion para setear los datos que se enviar al servidor para lamar el reporte.
      * @param btn
      */
     onSetReport: function(btn){
-        var url     = 'reports/report_consolidado',
-            win     = btn.up('window'),
-            values  = win.down('form').getValues(),
-            param   = {
-                pdbCodGrado : values.id_grado,
-                pdbIdJorn   : values.cod_jorn,
-                pdbGrupo    : values.grupo,
-                pHojaReport : values.hoja,
-                pTypeReport : values.id_report,
-                pdbIdSede   : values.id_sede,
-                pdbPeriodo  : values.periodo,
-                pdbAllPer   : values.allper
-            };
-        this.onGenReport(btn,url,param);
-        if (btn.itemId == 'btnXls'){
-            this.onDownLoadReportXls(btn,url,param);
-        }
+		let xtype	= btn.up('window').xtype || btn.up('form').xtype;
+
+		switch (xtype) {
+			case 'generarcarnets':
+				var url     = 'reports/carnets_esc',
+					ts      = btn.up('window'),
+					tab		= ts.down('customtab').getActiveTab(),
+					param	= {};
+				param.ckAll		= ts.down('#ckAll').getValue() ? 1 : 0;
+				param.ckRes		= ts.down('#ckRes').getValue() ? 1 : 0;
+				param.pdbId		= tab.down('grid').getSelection()[0].id;
+				if(tab.title == 'Docentes'){
+					param.pdbType	= 2;
+				}else{
+					param.pdbType	= 1;
+				}
+				this.onGenReport(btn,url,param);
+				break;
+			default:
+				var url     = 'reports/report_consolidado',
+					win     = btn.up('window'),
+					values  = win.down('form').getValues(),
+					param   = {
+						pdbCodGrado : values.id_grado,
+						pdbIdJorn   : values.cod_jorn,
+						pdbGrupo    : values.grupo,
+						pHojaReport : values.hoja,
+						pTypeReport : values.id_report,
+						pdbIdSede   : values.id_sede,
+						pdbPeriodo  : values.periodo,
+						pdbAllPer   : values.allper
+					};
+				this.onGenReport(btn,url,param);
+				if (btn.itemId == 'btnXls'){
+					this.onDownLoadReportXls(btn,url,param);
+				}
+				break;
+		}
     },
 
     onDownLoadReportXls: function (btn, url, param) {

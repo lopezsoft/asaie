@@ -7,6 +7,14 @@ class Academic extends SME_Controller {
 		$this->check_session_redirect();
 	}
 
+	public function getStudentAccess()
+	{
+		$query	= $this->input->get_post('query');
+		$start	= $this->input->get_post('start');
+		$limit	= $this->input->get_post('limit');
+		echo $this->Academic_m->getStudentAccess($query, $start, $limit);
+	}
+
 	function get_select_asignaturas_year(){
 		echo $this->Academic_m->select_asignaturas_year(0);
 	}

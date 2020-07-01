@@ -1,6 +1,3 @@
-/**
- * Created by LOPEZSOFT2 on 31/03/2017.
- */
 Ext.define('Admin.view.academico.DocentesChangeView',{
     extend  : 'Admin.base.WindowCrud',
     controller  : 'academico',
@@ -12,8 +9,8 @@ Ext.define('Admin.view.academico.DocentesChangeView',{
 		this.callParent(arguments);
 		this.setTitle(AppLang.getSTitleViewTeachers() + ' - ' + Global.getYear());
 	},
-    height	    : 550,
-	record		: null,
+	height	    : 550,
+	store		: 'DocentesDirGrupoStore',
     items       : [
         {
 			xtype       : 'customgrid',
@@ -32,7 +29,6 @@ Ext.define('Admin.view.academico.DocentesChangeView',{
 					independent		: true
 				}
 			],
-			iconCls     : '',
 			selModel	: 'rowmodel',
 			store   	: 'DocentesDirGrupoStore',
 			columns: [
@@ -56,5 +52,17 @@ Ext.define('Admin.view.academico.DocentesChangeView',{
 				}
 			]
         }
-    ]
+	],
+	saveData	: function(storeName,reload){
+		let me		= this,
+			record	= me.getRecord(),
+			rec		= me.down('grid').getSelection()[0];
+
+		docente	= {
+			id_docente	: rec.id,
+			docente		: rec.get('nombres')
+		}
+		record.set(docente);
+		me.close();
+	}
 });

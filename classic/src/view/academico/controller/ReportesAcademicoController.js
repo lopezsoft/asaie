@@ -12,7 +12,7 @@ Ext.define('Admin.view.academico.controller.ReportesAcademicoController',{
     },
 
     onCarne : function (btn) {
-        Admin.getApplication().onAler('En desarrollo');
+        Ext.create('Admin.view.general.GenerarCarnets').show();
     },
 
     onEstSinNotas : function (btn) {

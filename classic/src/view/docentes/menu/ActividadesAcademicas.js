@@ -33,8 +33,9 @@ Ext.define('Admin.view.docentes.menu.ActividadesAcademicas',{
             items   : [
                 {
                     xtype   : 'buttonPanel',
-                    text    : 'Cursos virtuales',
-                    iconCls : 'fas fa-signal'
+					text    : 'Clases en vivo',
+					handler : 'onLiveClasses',
+                    iconCls : 'fas fa-video'
                 }
             ]
         },

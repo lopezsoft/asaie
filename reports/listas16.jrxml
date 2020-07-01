@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.3.1.final using JasperReports Library version 6.3.1  -->
-<!-- 2017-06-28T10:17:59 -->
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="listas16" pageWidth="792" pageHeight="612" orientation="Landscape" whenNoDataType="NoDataSection" columnWidth="736" leftMargin="28" rightMargin="28" topMargin="43" bottomMargin="20" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="35"/>
@@ -61,19 +60,12 @@
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="false">
-				<reportElement isPrintRepeatedValues="false" x="0" y="2" width="736" height="16" uuid="e4d7208d-1cc0-440d-a5b2-08e0e909ffed"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Serif" size="12" isBold="true"/>
+				<reportElement isPrintRepeatedValues="false" x="0" y="2" width="736" height="26" uuid="e4d7208d-1cc0-440d-a5b2-08e0e909ffed"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="html">
+					<font fontName="Arial" size="12" isBold="true"/>
 					<paragraph lineSpacing="Single"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_TITLE}.trim()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="0" y="18" width="736" height="10" isRemoveLineWhenBlank="true" uuid="a3d36d25-2379-4228-9e53-1ea93f7f7a25"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="DejaVu Serif" size="7" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_DANE}.trim()]]></textFieldExpression>
 			</textField>
 			<textField pattern="h.mm.ss a">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="0" y="38" width="736" height="10" isRemoveLineWhenBlank="true" uuid="4ca50a72-ce42-4ad4-ae2f-d90aae91e172"/>
@@ -147,7 +139,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="false"/>
+					<font fontName="Arial" size="8" isBold="false"/>
 				</textElement>
 				<text><![CDATA[APELLIDOS Y NOMBRES]]></text>
 			</staticText>
@@ -431,217 +423,217 @@
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="337" y="12" width="15" height="12" uuid="7084005d-ec4a-40a6-94db-ac17a7f7736e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[9]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="542" y="12" width="15" height="12" uuid="bf9a9893-8ed8-4d53-832c-5577054bb8a7"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[22]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="559" y="12" width="15" height="12" uuid="0eb26d69-7f96-4fee-bce8-ab5a77341cf6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[23]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="575" y="12" width="15" height="12" uuid="05285fb5-8f42-4461-85a3-89ea44dced03"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[24]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="590" y="12" width="15" height="12" uuid="e1c7bf53-8e83-4b74-87ae-9ad8b7961f8a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[25]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="606" y="12" width="15" height="12" uuid="d5a0efba-9213-48f7-aa67-33bee517476c"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[26]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="621" y="12" width="15" height="12" uuid="7811d213-7977-4b82-81f3-43fa8ab911a8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[27]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="431" y="12" width="15" height="12" uuid="9c65442c-532e-4f00-910b-86d0d0aad421"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[15]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="448" y="12" width="15" height="12" uuid="8234bd4a-9a2a-44fe-a9ae-3a46921ee8ad"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[16]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="464" y="12" width="15" height="12" uuid="5321b68e-d7e7-4e17-96e6-8a9efd660e92"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[17]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="479" y="12" width="15" height="12" uuid="be5e90dd-67e4-41e8-9160-fdb8aca9b624"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[18]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="495" y="12" width="15" height="12" uuid="23bc746d-92f7-4862-b258-3c9691946d7a"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[19]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="510" y="12" width="15" height="12" uuid="adf0b762-4919-49d8-ac5d-870708b65f58"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[20]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="526" y="12" width="15" height="12" uuid="e3301050-ebc8-432f-8eb1-a87749535147"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[21]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="637" y="12" width="15" height="12" uuid="87d8c436-fa8b-4190-8c01-0a669d158e3b"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[28]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="320" y="12" width="15" height="12" uuid="e6cab1a5-1519-4ea2-a3da-4ea7ca9e18de"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[8]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="353" y="12" width="15" height="12" uuid="438a44c4-7dbc-4072-8818-70dd661cd0bb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[10]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="368" y="12" width="15" height="12" uuid="de38c55a-fce3-44b2-9a5e-844c2a5309e4"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[11]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="384" y="12" width="15" height="12" uuid="e616eb33-fe91-441c-8c34-b18ea7908b97"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[12]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="399" y="12" width="15" height="12" uuid="d8eed169-90cf-4792-a7fb-abe9e43713e5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[13]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="415" y="12" width="15" height="12" uuid="1a1f1706-1c13-4272-b667-c8ec3159cf16"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[14]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="209" y="12" width="15" height="12" uuid="54eccbfe-a76f-42dd-9c26-a38c08f4873d"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[1]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="226" y="12" width="15" height="12" uuid="16caebde-e774-49c3-880d-f5cc1e8f72b8"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[2]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="242" y="12" width="15" height="12" uuid="6d3448bb-ed74-48d2-bae0-626465c30c89"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[3]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="257" y="12" width="15" height="12" uuid="36c50b1d-64d1-47b2-97d3-646f9041b1ad"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[4]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="273" y="12" width="15" height="12" uuid="5ee1f5f3-310b-4a48-b589-d1c22cfa6775"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[5]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="288" y="12" width="15" height="12" uuid="dd5acf86-74b3-44a7-89c5-63604882b7bb"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[6]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="304" y="12" width="15" height="12" uuid="1ba0b56d-8ed2-49d6-88ce-565c343bf46e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[7]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="653" y="12" width="15" height="12" uuid="ae63fbe4-8f5e-4d70-bb74-c12ab6cc36c5"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[29]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="668" y="12" width="15" height="12" uuid="110e625c-6500-415e-8e70-7b5702bb3251"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[30]]></text>
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" stretchType="ContainerHeight" mode="Transparent" x="684" y="12" width="15" height="12" uuid="4ff82966-d90a-44d8-801d-951ea898db6e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<text><![CDATA[31]]></text>
 			</staticText>
@@ -668,7 +660,7 @@
 					<property name="com.jaspersoft.studio.unit.height" value="pixel"/>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8" isBold="true"/>
+					<font fontName="Arial" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CONTROL DE ASISTENCIAS]]></text>
 			</staticText>
@@ -691,7 +683,7 @@
 				</reportElement>
 				<box leftPadding="2" rightPadding="2"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{nombres}]]></textFieldExpression>
 			</textField>
@@ -702,7 +694,7 @@
 				</reportElement>
 				<box leftPadding="1" rightPadding="1"/>
 				<textElement textAlignment="Right">
-					<font fontName="DejaVu Serif" size="8"/>
+					<font fontName="Arial" size="8"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{REPORT_COUNT}]]></textFieldExpression>
 			</textField>
@@ -1015,14 +1007,14 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="16" y="1" width="694" height="21" isRemoveLineWhenBlank="true" uuid="60f4683a-0284-4fea-9cb7-bb6a102fcce2"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="8" isBold="true" isItalic="false"/>
+					<font fontName="Arial" size="8" isBold="true" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_FOOTER}]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
 				<reportElement positionType="Float" x="16" y="22" width="694" height="8" isRemoveLineWhenBlank="true" forecolor="#052E85" uuid="7829f300-5387-4522-b2ae-d6bf773009d8"/>
 				<textElement textAlignment="Center">
-					<font fontName="DejaVu Serif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<font fontName="Arial" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_MARKETING}]]></textFieldExpression>
 			</textField>

@@ -39,7 +39,15 @@ Ext.define('Admin.grid.CustomGrid' ,{
 		'Admin.grid.Search',
 		'Admin.grid.CustomRowNumberer',
 		'Admin.grid.CheckboxModel'
-    ],
+	],
+	initComponent: function(){
+		let	me	= this,
+			form= me.up('form');
+		if(form && me.getSyncHeight()){
+			form.setLayout('fit');
+		}
+		me.callParent(arguments);
+	},
 	viewConfig: {
 		enableTextSelection	: true,
 		markDirty			: true
@@ -104,10 +112,18 @@ Ext.define('Admin.grid.CustomGrid' ,{
 		'selectionchange': function(grid, selected, eOpts) {
 			var me	= this;
 
+			if (me.down('#printbutton2')){
+				me.down('#printbutton2').setDisabled(!selected.length);
+			}
+			
+			if (me.down('#buttonstarting')){
+				me.down('#buttonstarting').setDisabled(!selected.length);
+			}
 
 			if (me.down('#noveltyButton')){
 				me.down('#noveltyButton').setDisabled(!selected.length);
 			}
+			
 			if (me.down('#extrabutton')){
 				me.down('#extrabutton').setDisabled(!selected.length);
 			}
@@ -220,10 +236,16 @@ Ext.define('Admin.grid.CustomGrid' ,{
     },
 
     syncSize: function () {
-        var width = Ext.Element.getViewportWidth(),
-            height = Ext.Element.getViewportHeight() - 186;
-		if(this.getSyncHeight()){
-			this.setMaxHeight(height);
+		let me  	= this,
+			form	= me.up('form'),
+			win		= me.up('window'),
+			height = Ext.Element.getViewportHeight();
+		if(form || win) {
+			// height	= form.getHeight();
+			// console.log(height);
+			// this.setMaxHeight(height - 148);
+		}else{
+			this.setMaxHeight(height - 148);
 		}
     }
 });

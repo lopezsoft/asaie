@@ -9,6 +9,16 @@ class Reports extends SME_Controller {
 		$this->load->model('M_promocion_report');
 		$this->load->model('M_consolidados');
 	}
+
+	public function carnets_esc()
+	{
+		$format	= $this->input->post('pFormat');
+		$type	= $this->input->post('pdbType');
+		$id		= $this->input->post('pdbId');
+		$ckAll	= $this->input->post('ckAll');
+		$ckRes	= $this->input->post('ckRes');
+		echo $this->M_report_general->carnets($format, $type, $ckAll, $ckRes, $id);
+	}
 	
 	public function report_historial_academico(){
 		$f 		= $this->input->get_post('pFormat');

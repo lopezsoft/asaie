@@ -4,7 +4,7 @@ Ext.define('Admin.field.TimeField',{
     fieldLabel  : 'Hora',
     minValue    : '06:00 AM',
     maxValue    : '11:59 PM',
-    increment   : 1,
+    increment   : 5,
     selectOnFocus  : true,
     labelWidth	: 180,
     labelAlign	: 'top',

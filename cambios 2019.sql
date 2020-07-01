@@ -4007,6 +4007,26 @@ ALTER TABLE `cursos`
 
 
 
+/************************** JUNIO 25 *******************************************/
+
+CREATE TABLE `student_access` (
+	`id` BIGINT(20) NOT NULL AUTO_INCREMENT,
+	`enrollment_id` INT(30) NOT NULL,
+	`notes` TINYINT(1) NOT NULL DEFAULT '1' COMMENT 'Notas',
+	`newsletters` TINYINT(1) NOT NULL DEFAULT '1' COMMENT 'Boletines',
+	`certificates` TINYINT(1) NOT NULL DEFAULT '1',
+	`evaluations` TINYINT(1) NOT NULL DEFAULT '1',
+	`activities` TINYINT(1) NOT NULL DEFAULT '1',
+	`live_classes` TINYINT(1) NOT NULL DEFAULT '1',
+	`leveling` TINYINT(1) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`id`) USING BTREE,
+	INDEX `enrollment_id` (`enrollment_id`) USING BTREE
+)
+COMMENT='Control de acceso a los informes para los estudiantes.'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+
 /*********************************** AJUSTES **********************************/
 
 INSERT INTO users (user_id, user_type, username, password, active)

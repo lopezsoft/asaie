@@ -15,7 +15,8 @@ Ext.define('Admin.view.academico.MoverEstudiantesForm',{
     showSaveButton : false,
     items   : [
         {
-            xtype   : 'container',
+			xtype   : 'container',
+			scrollable			: true,
             flex    : 3,
             margin  : 2,
             items   : [
@@ -130,7 +131,7 @@ Ext.define('Admin.view.academico.MoverEstudiantesForm',{
                             },
                             handler     : 'onMover'
                         }
-                    ]
+                    ]	
                 }
             ]
         },
@@ -138,7 +139,8 @@ Ext.define('Admin.view.academico.MoverEstudiantesForm',{
             xtype   : 'customgrid',
             store   : 'MatriculadosStore',
             margin  : '0 1 0 0',
-            flex    : 4,
+			flex    : 4,
+			syncHeight	: false,
             title   : 'CONSULTA',
             autoLoad    : false,
             plugins: [

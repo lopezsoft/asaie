@@ -821,26 +821,23 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
 			rec 	= view.down('grid').getSelection()[0],
             store   = view.down('grid').getStore();
         me.onStore('docs.ImageBrowserStore');
-        var win = Ext.create({
-            xtype           : 'webcamwiew',
-            title           : 'Captura de imagen por Webcam',
+        Ext.create({
+            xtype           : 'FilesView',
+            title           : 'Imagenes del estudiante',
             pathReadFile    : 'academic/read_images',
-            pathUploadFile  : 'academic/upload_foto_webcam',
+            pathUploadFile  : 'academic/upload_foto',
             titlePanelLoad  : 'Capturar',
             titlePanelView  : 'Mis imágenes',
             textButtonApply : 'Aceptar',
             extraParams     : {
                 pdbCodEst   : rec.get('id')
             }
-        });
-        win.show();
-        win.on('afterselect',function (me, select) {
+        }).show().on('afterselect',function (me, select) {
             rec.set('foto',select.data.path_set);
-        });
-        win.on('apply',function (me) {
-            store.sync();
-        });
-        win.on('cancel',function (me) {
+        }).on('apply',function (me) {
+			store.sync();
+			this.close();
+        }).on('cancel',function (me) {
             store.rejectChanges();
         });
 	},

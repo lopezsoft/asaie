@@ -8,6 +8,17 @@ class M_login extends SME_Model {
 			parent::__construct();
 		}
 
+		function getUsers($type, $query, $limit, $start){
+			$select	= "id,user_type,names, last_name,username,email,image,mime,active";
+			$where	= [
+				'user_type'	=> $type
+			];
+			$order	= [
+				'last_name,names'	=> 'ASC'
+			];
+			return $this->getTable('users', $start, $limit, $query, $where, $order, $select);
+		}
+
 		function getCurrentUser(){
 			$sess   = $this->session;
 			$db		= $sess->userdata('db_name');

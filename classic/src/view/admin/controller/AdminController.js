@@ -8,7 +8,34 @@ Ext.define('Admin.view.admin.controller.AdminController',{
     init: function () {
         me = this;
         me.setConfigVar();
-    },
+	},
+	
+	onViewWebcam	: function (btn) {
+		var me  	= Admin.getApplication(),
+            view    = btn.up('window') || btn.up('form'),
+			rec 	= view.down('grid').getSelection()[0],
+            store   = view.down('grid').getStore();
+        me.onStore('docs.ImageBrowserStore');
+        Ext.create({
+            xtype           : 'FilesView',
+            title           : 'Imagenes del docente',
+            pathReadFile    : 'c_docentes/read_images',
+            pathUploadFile  : 'c_docentes/upload_foto',
+            titlePanelLoad  : 'Capturar',
+            titlePanelView  : 'Mis imágenes',
+            textButtonApply : 'Aceptar',
+            extraParams     : {
+                pdbCodEst   : rec.get('id')
+            }
+        }).show().on('afterselect',function (me, select) {
+            rec.set('image',select.data.path_set);
+        }).on('apply',function (me) {
+			store.sync();
+			this.close();
+        }).on('cancel',function (me) {
+            store.rejectChanges();
+        });
+	},
     
     onCreateDirGrupo : function (btn) {
         var me = this.app;

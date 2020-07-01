@@ -85,9 +85,10 @@ Ext.define('Admin.Application', {
                     Global.setData(result.data);
                     Global.setYear(result.data.year);
                     Global.setDbName(result.data.db_name);
-                    Global.setDbConfig(result.data.config);
+					Global.setDbConfig(result.data.config);
+					Global.setUserData(result.data.user_data[0]);
                     me.setMainView('Admin.view.main.Main');
-                    mainView = me.getMainView();
+					mainView = me.getMainView();
                     mainView.getController().redirectTo('dashboard', true);
                     toastr.options = {
                         "closeButton": false,

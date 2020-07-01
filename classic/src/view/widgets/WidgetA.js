@@ -34,7 +34,6 @@ Ext.define('Admin.view.widgets.WidgetA', {
         app.onStore('general.GrupoStore');
         app.onStore('general.JornadasStore');
         app.onStore('general.CountryStore');
-
         me.items    =  [
             {
                 xtype   : 'image',
@@ -62,19 +61,19 @@ Ext.define('Admin.view.widgets.WidgetA', {
                     {
                         xtype   : 'label',
                         cls     : 'widget-name-text',
-                        html    : enroll.estudiante
+                        html    : (enroll) ? enroll.estudiante : ''
                     },
                     {
                         xtype   : 'label',
-                        html    : 'SEDE: ' + enroll.sede
+                        html    : 'SEDE: ' + ((enroll) ? enroll.sede : '')
                     },
                     {
                         xtype   : 'label',
-                        html    : 'CURSO: ' + enroll.grado + ' - ' + enroll.id_group
+                        html    : 'CURSO: ' + ((enroll) ? enroll.grado + ' - ' + enroll.id_group : '')
                     },
                     {
                         xtype   : 'label',
-                        html    : 'JORNADA: ' + enroll.jornada
+                        html    : 'JORNADA: ' + ((enroll) ? enroll.jornada : '')
                     },
                     {
                         xtype   : 'toolbar',

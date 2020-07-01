@@ -101,6 +101,7 @@ define('USER_DOCUMENTS_DIR','usuarios');
 define('TEACHERS_DIRECTORY','docentes');
 define('XLS_FILE_DIRECTORY','excel');
 define('UPLOADED_DIRECTORY','upload');
+define('LIVE_CLASSES','liveclasses');
 define('MATERIAL_DIRECTORY','material');
 define('RESOURCE_FOLDER','resources');
 define('FOLDER_COMMENTS_ACTIVITIES','activities');

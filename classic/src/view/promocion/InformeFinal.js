@@ -14,12 +14,13 @@ Ext.define('Admin.view.promocion.InformeFinal',{
     },
     items       : [
         {
-            xtype   : 'fieldset',
-            title   : 'Búsqueda de estudiantes',
-            width   : 455,
+            xtype   		: 'fieldset',
+            title   		: 'Búsqueda de estudiantes',
+			width   		: 455,
             defaults : {
                 labelWidth	: 65
-            },
+			},
+			scrollable	: true,
             margin  : 4,
             items   : [
                 {
@@ -86,11 +87,12 @@ Ext.define('Admin.view.promocion.InformeFinal',{
             ]
         },
         {
-            xtype   : 'customgrid',
-            store   : 'MatriculadosStore',
-            margin  : '0 1 0 0',
-            flex    : 4,
-            title   : 'CONSULTA',
+            xtype   	: 'customgrid',
+            store   	: 'MatriculadosStore',
+            margin  	: '0 1 0 0',
+			flex    	: 4,
+			syncHeight  : false,
+            title   	: 'CONSULTA',
             autoLoad    : false,
             plugins: [
                 {

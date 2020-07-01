@@ -13,7 +13,6 @@ Ext.define('Admin.field.NumberField',{
 	allowBlank 	: false,
 	alias		: 'widget.customnumberfield',
 	selectOnFocus  : true,
-	formatter	: 'usMoney',
 	tooltip 	: '',
 	emptyText 	: 'Digite los datos',
 	labelWidth	: 180,

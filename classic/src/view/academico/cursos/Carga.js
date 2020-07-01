@@ -368,16 +368,15 @@ Ext.define('Admin.view.academico.Carga',{
 											btn1	= win.down('#btnUndoCarga'),
 											btn2	= win.down('#btnSaveCarga');
                                         me.onStore('admin.DocentesDirGrupoStore');
-                                        var
-                                            win2	= Ext.create('Admin.view.academico.DocentesChangeView');
                                         if (btn1.isDisabled()) {
                                             btn1.setDisabled(false);
                                         }
                                         if (btn2.isDisabled()) {
                                             btn2.setDisabled(false);
-                                        }
-                                        win2.record	= rec;
-                                        win2.show();
+										}
+										Ext.create('Admin.view.academico.DocentesChangeView',{
+											record	: rec
+										}).show();
 									}
 								},
 								grado : {
@@ -499,13 +498,13 @@ Ext.define('Admin.view.academico.Carga',{
                                     width: 300,
                                     filter: 'list'
                                 },
-								{
-									menuDisabled	: true,
-									sortable		: false,
-									xtype			: 'actioncolumn',
-									width			: 30,
-									items			: ['@asignatura']
-								},
+								// {
+								// 	menuDisabled	: true,
+								// 	sortable		: false,
+								// 	xtype			: 'actioncolumn',
+								// 	width			: 30,
+								// 	items			: ['@asignatura']
+								// },
                                 {
                                     text: 'Docentes',
                                     dataIndex: 'docente',

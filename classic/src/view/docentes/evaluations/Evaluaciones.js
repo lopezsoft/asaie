@@ -150,7 +150,7 @@ Ext.define('Admin.view.docentes.Evaluaciones',{
                     text    : 'Disponible desde',
                     columns : [
                         {
-                            xtype       : 'datecolumn',
+                            // xtype       : 'datecolumn',
                             text 		: 'Fecha',
                             width 		: 100,
                             dataIndex	: 'fecha'
@@ -166,7 +166,7 @@ Ext.define('Admin.view.docentes.Evaluaciones',{
                     text    : 'Disponible hasta',
                     columns : [
                         {
-                            xtype       : 'datecolumn',
+                            // xtype       : 'datecolumn',
                             text 		: 'Fecha',
                             width 		: 100,
                             dataIndex	: 'fecha_cierre'

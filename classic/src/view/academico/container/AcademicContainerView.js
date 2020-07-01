@@ -151,24 +151,9 @@ Ext.define('Admin.view.academico.container.AcademicContainerView',{
                     xtype   : 'buttonPanel',
                     text    : 'Acceso Estudiantes',
                     iconCls : 'x-fa fa-key',
-                    tooltip : 'Permite generar o reestablecer los datos de acceso al personal estudiantíl.',
-                    handler : function (btn) {
-                        var
-                            me  = Admin.getApplication(),
-                            ts  = btn.up('container').up('container'),
-                            url = Global.getUrlBase()+'academic/get_update_pass_est';
-                        ts.mask();
-                        Ext.Ajax.request({
-                            url: url,
-                            success: function(response, opts) {
-                                me.showResult('Se ha realizado el proceso correntamente');
-                            },
-                            failure: function(response, opts) {
-                                me.showResult('No se ha realizado el proceso correntamente');
-                            },callback : function(){
-                                ts.unmask();
-                            }
-                        });
+                    tooltip : 'Permite restringir el acceso al personal estudiantíl.',
+                    handler : function () {
+						Ext.create('Admin.view.academico.inscripciones.StudentAccess').show();
                     }
                 }
             ]
@@ -189,7 +174,7 @@ Ext.define('Admin.view.academico.container.AcademicContainerView',{
             items: [
                 {
                     xtype   : 'buttonPanel',
-                    text    : 'Mayúsculas  Logros Indicadores',
+                    text    : 'Mayúsculas Logros Indicadores',
                     handler : 'onMayus',
                     iconCls : 'x-fa fa-text-width'
                 }

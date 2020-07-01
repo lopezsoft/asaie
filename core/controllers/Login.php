@@ -10,6 +10,15 @@ class Login extends SME_Controller
 	  	$this->load->model('M_login');
 	}
 
+	public function getUsers()
+	{
+		$type	= $this->input->get_post('type');
+		$query	= $this->input->get_post('query');
+		$start	= $this->input->get_post('start');
+		$limit	= $this->input->get_post('limit');
+		echo  $this->M_login->getUsers($type, $query, $limit, $start);
+	}
+
 	public function getCurrentUser()
 	{
 		echo $this->M_login->getCurrentUser();

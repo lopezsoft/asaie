@@ -228,5 +228,36 @@ Ext.define('Admin.forms.CustomForm',{
             xStore.rejectChanges();
             xStore.reload();
         }
+	},
+	
+	afterRender: function () {
+        var me = this;
+
+        me.callParent(arguments);
+
+        me.syncSize();
+
+        // Since we want to always be a %age of the modalViewort, we have to watch for
+        // resize events.
+        Ext.on(me.resizeListeners = {
+            resize: me.onViewportResize,
+            scope: me,
+            buffer: 50
+        });
+	},
+
+	onViewportResize: function () {
+        this.syncSize();
+    },
+
+    syncSize: function () {
+		let me  	= this,
+			win		= me.down('window'),
+			height = Ext.Element.getViewportHeight();
+		if(win) {
+			// TODO: Pendiente
+		}else{
+			this.setMaxHeight(height - 148);
+		}
     }
 });
