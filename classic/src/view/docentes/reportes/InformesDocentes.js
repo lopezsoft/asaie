@@ -12,6 +12,16 @@ Ext.define('Admin.view.docentes.reportes.InformesDocentes',{
             layout      : 'responsivecolumn',
             defaultType : 'containerButton',
             items   : [
+				{
+					items   : [
+						{
+							xtype   : 'buttonPanel',
+							text    : 'Informe final de evaluación',
+							iconCls : 'x-fa fa-book',
+							handler : 'onLibroFinal'
+						}
+					]
+				},
                 {
                     items   : [
                         {

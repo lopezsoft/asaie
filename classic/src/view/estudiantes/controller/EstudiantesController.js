@@ -4,6 +4,41 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
     init: function() {
         me  = this;
         me.setConfigVar();
+	},
+
+	onLibroFinal : function (btn) {
+        this.redirectTo('informefinal', true);
+	},
+	
+	onConnectToLiveClass: function (grid, rowIndex) {
+		let
+			record  = grid.getStore().getAt(rowIndex),
+			app		= Admin.getApplication();
+		if((record.get('active_class') == 0)){
+			app.showResult('La clase no se encuentra activa.','error');
+			return false;
+		}
+		if((record.get('transmiting_class') == 0)){
+			app.showResult('No se ha iniciado la transmisión de la clase.','error');
+			return false;
+		}
+		Ext.create('Admin.view.docs.LiveBroadcast',{
+			subject			: record.get('class_description'),
+			weather			: record.get('class_time'),
+			email			: Global.getUserData().email,
+			displayName		: Global.getUserData().names + ' ' + Global.getUserData().last_name,
+			attached		: record.get('url_file'),
+			test			: false,
+			store			: 'StudentsLiveClassesStore',
+			roomName		: record.get('class_name'),
+			isHost			: false,
+			isStudent		: true,
+			record			: record
+		}).show();
+	},
+
+	onLiveClasses (){
+        this.redirectTo('studentsliveclasses',true);
     },
     onStudentsEvaluations (){
         this.redirectTo('studentsevaluations',true);
@@ -198,12 +233,13 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
                     hora_inicio = db.hora_inicio.toString(),
                     hoyS        = Ext.Date.format(dts, 'Y-m-d'),
                     contunue= false;
-                if (hoy == hoyS){
-                    if (!rec.get('estado')){
-                        app.onError('La fecha se ha vencido.');
-                    }else {
-                        contunue    = true;
-                    }
+                // if (hoy == hoyS){
+                    // if (!rec.get('estado')){
+                    //     app.onError('La fecha se ha vencido.');
+                    // }else {
+                    //     contunue    = true;
+					// }
+					contunue    = true;
                     if (contunue){
                         xsocket = Global.getSocket();
                         xsocket.emit('querySelect',{
@@ -278,9 +314,9 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
                             }
                         });
                     }
-                }else{
-                    app.onError('La fecha de su computador está mal configurada.')
-                }
+                // }else{
+                //     app.onError('La fecha de su computador está mal configurada.')
+                // }
             }
         });
         if (!rec.get('eread')) {
@@ -402,27 +438,69 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
     },
 
     onConstancias : function (btn) {
-        Admin.getApplication().showResult('No tiene acceso','error');
-        return false;
-        Ext.create('Admin.view.estudiantes.StudentConstancy',{
-            title    : 'Constancia de estudio: ' + Global.getYear()
-        }).show();
+		let enroll	= Global.getData().enrollment;
+		if(enroll){
+			let socket	= Global.getSocket();
+			socket.emit('querySelect',{
+				dataName    : Global.getDbName(),
+				fields      : "*",
+				table       : 'student_access',
+				where       : 'enrollment_id = ? AND certificates = ? ',
+				values      : [enroll[0].id,1]
+			},(err, res)=>{
+				if(err){
+					Admin.getApplication().showResult('No tiene acceso','error');
+					socket.close();
+					return false;
+				}
+				if (res.length > 0){
+					Ext.create('Admin.view.estudiantes.StudentConstancy',{
+						title    : 'Constancia de estudio: ' + Global.getYear()
+					}).show();
+				}else{
+					Admin.getApplication().showResult('No tiene acceso','error');
+				}
+				socket.close();
+			});
+		}
     },
 
     onBoletin : function (btn) {
-        Admin.getApplication().showResult('No tiene acceso','error');
-        return false;
-        var me   = Admin.getApplication();
-        extraParams = {
-			pdbTable 	: 'periodos_academicos',
-			pdbGrado	: Global.getData().enrollment[0].id_grade,
-			pdbType		: 0
+		let enroll	= Global.getData().enrollment;
+		let me   	= Admin.getApplication();
+		if(enroll){
+			let socket	= Global.getSocket();
+			socket.emit('querySelect',{
+				dataName    : Global.getDbName(),
+				fields      : "*",
+				table       : 'student_access',
+				where       : 'enrollment_id = ? AND newsletters = ? ',
+				values      : [enroll[0].id,1]
+			},(err, res)=>{
+				if(err){
+					Admin.getApplication().showResult('No tiene acceso','error');
+					socket.close();
+					return false;
+				}
+				if (res.length > 0){
+					extraParams = {
+						pdbTable 	: 'periodos_academicos',
+						pdbGrado	: Global.getData().enrollment[0].id_grade,
+						pdbType		: 0
+					}
+					me.onStore('general.PeriodosStore');
+					me.setParamStore('PeriodosStore',extraParams,false);
+					Ext.create('Admin.view.estudiantes.StudentNewsLetter',{
+						title   : 'Boletín académico: ' + Global.getYear()
+					}).show();
+				}else{
+					Admin.getApplication().showResult('No tiene acceso','error');
+				}
+				socket.close();
+			});
+		}else{
+			Admin.getApplication().showResult('No tiene acceso','error');
 		}
-        me.onStore('general.PeriodosStore');
-        me.setParamStore('PeriodosStore',extraParams,false);
-        Ext.create('Admin.view.estudiantes.StudentNewsLetter',{
-            title   : 'Boletín académico: ' + Global.getYear()
-        }).show();
     },
 
     onViewPerfil   : function () {
@@ -484,206 +562,227 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
             form	= win.down('form'),
             grid	= null,
             gb      = Global,
-            socket  = gb.getSocket();
             me		= this,
-            columns = [];
-        socket.emit('querySelect',{
-            dataName    : gb.getDbName(),
-            fields      : "a.*, CONCAT('n',b.numero_column) col_name, b.tipo",
-            table       : 'competencias a LEFT JOIN columnas_notas_competencias AS b ON b.id_competencia = a.id_pk',
-            where       : 'a.year = ? AND a.calificable = ?  AND b.tipo = ? ',
-            values      : [gb.getYear(),1, 'PORC']
-        },(err, res)=>{
-            if(err){
-                app.showResult('Error en el servidor','error');
-            }else{
-                columns = [
-                    {
-                        xtype       : 'customrownumberer'
-                    },
-                    {
-                        text        : 'Asignaturas',
-                        dataIndex   : 'asignatura',
-                        width       : 300,
-                        menuDisabled: true,
-                        sortable    : true
-                    },
-                    {
-                        text        : 'Prom',
-                        dataIndex   : 'prom',
-                        menuDisabled: true,
-                        width       : 60
-                    },
-                    {
-                        text        : 'P',
-                        dataIndex   : 'periodo',
-                        tooltip     : 'periodo',
-                        menuDisabled: true,
-                        width       : 40
-                    }
-                ];
-                res.forEach(ele => {
-                    let data    = {
-                        text        : ele.competencia + ' ' + ele.porcentaje + ' %',
-                        tooltip     : ele.competencia + ' ' + ele.porcentaje + ' %',
-                        menuDisabled: true,
-                        defaults    : {
-                            width               : 77,
-                            align               : 'right',
-                            menuDisabled        : true,
-                            cellWrap            : true,
-                            headerWrap          : true,
-                            variableRowHeight   : true,
-                            sortable            : true
-                        },
-                        columns: [
-                            {
-                                text        : 'NOTA',
-                                dataIndex   : ele.col_name,
-                                renderer: function (val) {
-                                    return '<span style="color:Darkviolet;"> <b>' + val + '</b></span>'
-                                }
-                            }
-                        ]
-                    };
-                    columns.push(data);
-                    // let 
-                    //     xsocket     = Global.getSocket();
-                    // xsocket.emit('querySelect',{
-                    //     dataName    : gb.getDbName(),
-                    //     fields      : "CONCAT('n',a.numero_column) col_name",
-                    //     table       : 'columnas_notas_competencias a',
-                    //     where       : 'a.id_competencia = ? AND a.tipo = ? ',
-                    //     values      : [ele.id_pk, 'PROM']
-                    // },(err, res)=>{
-                    //     console.log(res);
-                    //     if(res){
-                    //         if(res.length > 0){
-                    //             data.columns.push({
-                    //                 text        : '%',
-                    //                 dataIndex   : res[0].col_name,
-                    //                 renderer: function (val) {
-                    //                     return '<span style="color:red;"> <b>' + val + '</b></span>'
-                    //                 }
-                    //             });
-                    //             columns.push(data);
-                    //         }
-                    //     }
-                    // });
-                });
-
-                columns.push(
-                    {
-                        text        : 'FINAL',
-                        dataIndex   : 'final',
-                        menuDisabled: true,
-                        align       : 'right',
-                        summaryType : 'average',
-                        summaryRenderer: function (value) {
-                            return 'PROM: ' + value.toFixed(2).toString();
-                        },
-                        renderer: function (val) {
-                            return '<span style="color:red;"> <b>' + val + '</b></span>'
-                        }
-                    },
-                    {
-                        text        : 'Desempeño',
-                        width       : 100,
-                        menuDisabled: true,
-                        dataIndex   : 'nombre_escala',
-                        tooltip     : 'Escala de desempeño',
-                        renderer: function (val) {
-                            switch (val.trim()) {
-                                case 'BAJO':
-                                    return '<span style="color:red;"> <b>' + val.trim() + '</b></span>';
-                                    break;
-                                case 'BÁSICO':
-                                    return '<span style="color:green;"> <b>' + val.trim() + '</b></span>';
-                                    break;
-                                case 'ALTO':
-                                    return '<span style="color:Darkviolet;"> <b>' + val.trim() + '</b></span>';
-                                    break;
-                                case 'SUPERIOR':
-                                    return '<span style="color:Steelblue;"> <b>' + val.trim() + '</b></span>';
-                                    break;
-                            }
-
-                            return val;
-                        }
-                    },
-                    {
-                        text: 'FALTAS',
-                        menuDisabled: true,
-                        defaults: {
-                            width: 77,
-                            align: 'right',
-                            menuDisabled: true,
-                            cellWrap: true,
-                            headerWrap: true,
-                            variableRowHeight: true,
-                            sortable: true
-                        },
-                        columns: [
-                            {
-                                text        : 'J',
-                                dataIndex   : 'faltas',
-                                tooltip     : 'Faltas Justifcadas',
-                                summaryType : 'sum',
-                                summaryRenderer: function (value) {
-                                    return 'T: ' + value.toString();
-                                }
-                            },
-                            {
-                                text        : 'I',
-                                dataIndex   : 'injustificadas',
-                                tooltip     : 'Faltas Injustifcadas',
-                                summaryType : 'sum',
-                                summaryRenderer: function (value) {
-                                    return 'T: ' + value.toString();
-                                }
-                            },
-                            {
-                                text        : 'R',
-                                dataIndex   : 'retraso',
-                                tooltip     : 'Faltas por llegada tarde a clase',
-                                summaryType : 'sum',
-                                summaryRenderer: function (value) {
-                                    return 'T: ' + value.toString();
-                                }
-                            }
-                        ]
-                    }
-                );
-                /**/
-                grid = new Ext.create('Admin.grid.CustomGrid', {
-                    itemId      : 'grid1',
-                    store       : 'NotasEstudiantesStore',
-                    plugins: [
-                        {
-
-                            ptype: 'gridSearch',
-                            readonlyIndexes: ['note'],
-                            disableIndexes: ['pctChange'],
-                            minChars: 1,
-                            mode: 'local',
-                            flex: 1,
-                            autoFocus: true,
-                            independent: true
-                        }
-                    ],
-                    multiColumnSort: false,
-                    features: [{
-                        ftype: 'groupingsummary',
-                        startCollapsed: true,
-                        groupHeaderTpl: 'Periodo: {name} ({rows.length} Asignatura{[values.rows.length > 1 ? "s" : ""]})'
-                    }],
-                    columns: columns
-                });
-                form.remove('grid1', true);
-                form.add(grid);
-                socket.close();
-            }
-        });
+			columns = [];
+		let enroll	= Global.getData().enrollment;
+		let socket	= Global.getSocket();
+		socket.emit('querySelect',{
+			dataName    : Global.getDbName(),
+			fields      : "*",
+			table       : 'student_access',
+			where       : 'enrollment_id = ? AND notes = ? ',
+			values      : [enroll[0].id,1]
+		},(err, res)=>{
+			if(err){
+				Admin.getApplication().showResult('No tiene acceso','error');
+				socket.close();
+				return false;
+			}
+			if (res.length > 0){
+				let socketB	= Global.getSocket();
+				socketB.emit('querySelect',{
+					dataName    : gb.getDbName(),
+					fields      : "a.*, CONCAT('n',b.numero_column) col_name, b.tipo",
+					table       : 'competencias a LEFT JOIN columnas_notas_competencias AS b ON b.id_competencia = a.id_pk',
+					where       : 'a.year = ? AND a.calificable = ?  AND b.tipo = ? ',
+					values      : [gb.getYear(),1, 'PORC']
+				},(err, res)=>{
+					if(err){
+						app.showResult('Error en el servidor','error');
+					}else{
+						columns = [
+							{
+								xtype       : 'customrownumberer'
+							},
+							{
+								text        : 'Asignaturas',
+								dataIndex   : 'asignatura',
+								width       : 300,
+								menuDisabled: true,
+								sortable    : true
+							},
+							{
+								text        : 'Prom',
+								dataIndex   : 'prom',
+								menuDisabled: true,
+								width       : 60
+							},
+							{
+								text        : 'P',
+								dataIndex   : 'periodo',
+								tooltip     : 'periodo',
+								menuDisabled: true,
+								width       : 40
+							}
+						];
+						res.forEach(ele => {
+							let data    = {
+								text        : ele.competencia + ' ' + ele.porcentaje + ' %',
+								tooltip     : ele.competencia + ' ' + ele.porcentaje + ' %',
+								menuDisabled: true,
+								defaults    : {
+									width               : 77,
+									align               : 'right',
+									menuDisabled        : true,
+									cellWrap            : true,
+									headerWrap          : true,
+									variableRowHeight   : true,
+									sortable            : true
+								},
+								columns: [
+									{
+										text        : 'NOTA',
+										dataIndex   : ele.col_name,
+										renderer: function (val) {
+											return '<span style="color:Darkviolet;"> <b>' + val + '</b></span>'
+										}
+									}
+								]
+							};
+							columns.push(data);
+							// let 
+							//     xsocket     = Global.getSocket();
+							// xsocket.emit('querySelect',{
+							//     dataName    : gb.getDbName(),
+							//     fields      : "CONCAT('n',a.numero_column) col_name",
+							//     table       : 'columnas_notas_competencias a',
+							//     where       : 'a.id_competencia = ? AND a.tipo = ? ',
+							//     values      : [ele.id_pk, 'PROM']
+							// },(err, res)=>{
+							//     console.log(res);
+							//     if(res){
+							//         if(res.length > 0){
+							//             data.columns.push({
+							//                 text        : '%',
+							//                 dataIndex   : res[0].col_name,
+							//                 renderer: function (val) {
+							//                     return '<span style="color:red;"> <b>' + val + '</b></span>'
+							//                 }
+							//             });
+							//             columns.push(data);
+							//         }
+							//     }
+							// });
+						});
+		
+						columns.push(
+							{
+								text        : 'FINAL',
+								dataIndex   : 'final',
+								menuDisabled: true,
+								align       : 'right',
+								summaryType : 'average',
+								summaryRenderer: function (value) {
+									return 'PROM: ' + value.toFixed(2).toString();
+								},
+								renderer: function (val) {
+									return '<span style="color:red;"> <b>' + val + '</b></span>'
+								}
+							},
+							{
+								text        : 'Desempeño',
+								width       : 100,
+								menuDisabled: true,
+								dataIndex   : 'nombre_escala',
+								tooltip     : 'Escala de desempeño',
+								renderer: function (val) {
+									switch (val.trim()) {
+										case 'BAJO':
+											return '<span style="color:red;"> <b>' + val.trim() + '</b></span>';
+											break;
+										case 'BÁSICO':
+											return '<span style="color:green;"> <b>' + val.trim() + '</b></span>';
+											break;
+										case 'ALTO':
+											return '<span style="color:Darkviolet;"> <b>' + val.trim() + '</b></span>';
+											break;
+										case 'SUPERIOR':
+											return '<span style="color:Steelblue;"> <b>' + val.trim() + '</b></span>';
+											break;
+									}
+		
+									return val;
+								}
+							},
+							{
+								text: 'FALTAS',
+								menuDisabled: true,
+								defaults: {
+									width: 77,
+									align: 'right',
+									menuDisabled: true,
+									cellWrap: true,
+									headerWrap: true,
+									variableRowHeight: true,
+									sortable: true
+								},
+								columns: [
+									{
+										text        : 'J',
+										dataIndex   : 'faltas',
+										tooltip     : 'Faltas Justifcadas',
+										summaryType : 'sum',
+										summaryRenderer: function (value) {
+											return 'T: ' + value.toString();
+										}
+									},
+									{
+										text        : 'I',
+										dataIndex   : 'injustificadas',
+										tooltip     : 'Faltas Injustifcadas',
+										summaryType : 'sum',
+										summaryRenderer: function (value) {
+											return 'T: ' + value.toString();
+										}
+									},
+									{
+										text        : 'R',
+										dataIndex   : 'retraso',
+										tooltip     : 'Faltas por llegada tarde a clase',
+										summaryType : 'sum',
+										summaryRenderer: function (value) {
+											return 'T: ' + value.toString();
+										}
+									}
+								]
+							}
+						);
+						/**/
+						grid = new Ext.create('Admin.grid.CustomGrid', {
+							itemId      : 'grid1',
+							store       : 'NotasEstudiantesStore',
+							plugins: [
+								{
+		
+									ptype: 'gridSearch',
+									readonlyIndexes: ['note'],
+									disableIndexes: ['pctChange'],
+									minChars: 1,
+									mode: 'local',
+									flex: 1,
+									autoFocus: true,
+									independent: true
+								}
+							],
+							multiColumnSort: false,
+							features: [{
+								ftype: 'groupingsummary',
+								startCollapsed: true,
+								groupHeaderTpl: 'Periodo: {name} ({rows.length} Asignatura{[values.rows.length > 1 ? "s" : ""]})'
+							}],
+							columns: columns
+						});
+						form.remove('grid1', true);
+						form.add(grid);
+						socketB.close();
+					}
+				});
+				
+			}else{
+				Admin.getApplication().showResult('No tiene acceso','error');
+			}
+			socket.close();
+		});
     },
     onDocument : function (grid, rowIndex) {
         let
@@ -835,8 +934,6 @@ Ext.define('Admin.view.estudiantes.controller.EstudiantesController',{
      * @param btn
      */
     onSetReport: function(btn){
-        Admin.getApplication().showResult('No tiene acceso','error');
-        return false;
         var
             win     = btn.up('window'),
             enroll  = Global.getData().enrollment[0],

@@ -42,7 +42,20 @@ Ext.define('Admin.view.academico.FichaSeguimiento',{
                 columns : [
                     {
                         xtype       : 'customrownumberer'
-                    },
+					},
+					{
+						dataIndex   : 'foto',
+						text        : 'Imagen',
+						width       : 80,
+						renderer    : function (val) {
+							if(Ext.isEmpty(val)){
+								aVal    = Global.getAvatarUnknoun();
+							}else {
+								aVal    = val
+							}
+							return '<img alt="{foto}" height="48" width="48" src="'+aVal+'"/>';
+						}
+					},
                     {
                         text        : 'Apellidos y Nombres',
                         dataIndex   : 'nombres',
@@ -104,6 +117,5 @@ Ext.define('Admin.view.academico.FichaSeguimiento',{
         me.setTitle('Ficha de seguimiento'+' - '+ Global.getYear());
     },
     itemId          : 'fichaseguimiento',
-    showSaveButton  : false,
-   
+    showSaveButton  : false
 });

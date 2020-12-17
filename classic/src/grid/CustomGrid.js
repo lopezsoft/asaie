@@ -42,8 +42,9 @@ Ext.define('Admin.grid.CustomGrid' ,{
 	],
 	initComponent: function(){
 		let	me	= this,
-			form= me.up('form');
-		if(form && me.getSyncHeight()){
+			form= me.up('form'),
+			win = me.up('window');
+		if(form && me.getSyncHeight() && !win){
 			form.setLayout('fit');
 		}
 		me.callParent(arguments);

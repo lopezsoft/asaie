@@ -234,6 +234,8 @@ class SME_Model extends CI_Model {
 			mkdir($dir_p.PATH_DELIM.DIGITAL_DOCUMENTS_DIR_NAME, 0777, true);
 		}		
 		
+		$this->adminImagesDirectoryPath		= $dir_p.PATH_DELIM.PROFILE_DIR_NAME;
+		$this->adminDigitalDirectoryPath	= $dir_p.PATH_DELIM.DIGITAL_DOCUMENTS_DIR_NAME;
 	}
 	
 	public function get_get_docente_curso($gdo,$gpo,$sede,$jorn,$a,$curso){

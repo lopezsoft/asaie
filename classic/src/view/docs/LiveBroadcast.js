@@ -14,8 +14,8 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
     maximizable     : false,
 	header          : false,
 	maximized		: true,
-    task            : true,
     config          : {
+		task            : undefined,
 		email			: 'soporte@asaie.co',
 		displayName 	: 'ASIAE EXODO',
 		subject			: 'Sala de pruebas.',
@@ -25,7 +25,11 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
 		seconds			: 0,
 		record          : null,
 		test			: true,
-		api				: null
+		api				: null,
+		store			: undefined,
+		isHost			: true,
+		isStudent		: false,
+		roomName		: 'meet.asie.co.example'
     },
     defaultListenerScope : true,
     initComponent   : function(){
@@ -35,6 +39,7 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
 				xtype       : 'form',
 				ui			: 'panel-white',
 				layout 		: 'anchor',
+				scrollable	: true,
 				items 		: [
 					{
 						xtype 	: 'container',
@@ -62,6 +67,7 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
 							iconCls     : 'fas fa-play-circle',
 							text        : 'Iniciar',
 							ui			: 'header-green',
+							disabled	: !(me.getIsHost()),
 							handler		: function (){
 								this.up('window').startTransmission();
 							}
@@ -69,6 +75,7 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
 						{
 							iconCls     : 'far fa-stop-circle',
 							text		: 'Parar',
+							disabled	: !(me.getIsHost()),
 							ui			: 'header-red',
 							handler		: function (){
 								this.up('window').stopTransmission();
@@ -81,7 +88,7 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
 							}
 						}
 					]
-				}],
+				}]
 			}
 		]
         me.callParent();
@@ -96,15 +103,18 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
 		me.stopClock();
 		if (me.getTest()){
 			me.stopTransmission();
+			me.clearClock();
 			me.close();
 		}else{
 			Ext.Msg.show({
 				title	: 'Cerrar sala virtual',
-				message	: 'Desea cerrar  la sesión de la sala virtual?',
+				message	: (me.getIsHost()) ? 'Desea cerrar  la sesión de la sala virtual?' : 'Desea salir de la sala virtual?',
 				buttons	: Ext.Msg.YESNO,
 				icon	: Ext.Msg.QUESTION,
 				fn: function(btn) {
-					me.savechanges();
+					if (btn === 'yes') {
+						me.savechanges();
+					}
 				}
 			});
 		}
@@ -118,16 +128,16 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
             text    = 60,
             fin     = false,
 			min     = parseInt(me.getWeather() - 1);
-			if(parseInt(me.getWeather()) == 0){
+			if(!me.getIsHost()){
 				me.task	= Ext.TaskManager.start({
 					run	: function () {
 						next	++;
-						clock.setHtml(("0" + me.minutes.toString()).slice (-2) + ':' + ("0" + next.toString()).slice (-2));
+						clock.setHtml('Tiempo: ' + ("0" + me.minutes.toString()).slice (-2) + ':' + ("0" + next.toString()).slice (-2));
 						me.seconds ++;
 						if(next == 60) {
 							next	= 0;
 							me.minutes  ++;
-							clock.setHtml(("0" + me.minutes.toString()).slice (-2) + ':' + ("0" + next.toString()).slice (-2));
+							clock.setHtml('Tiempo: ' + ("0" + me.minutes.toString()).slice (-2) + ':' + ("0" + next.toString()).slice (-2));
 							me.seconds = 0;
 						}
 
@@ -166,27 +176,43 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
 				});
 			}
 
-    },
+	},
+	clearClock: function (){
+		let me          = this;
+		me.stopClock();
+		me.task	= undefined;
+	},
     stopClock   : function () {
         var
-            me  = this;
-        Ext.TaskManager.stop(me.task);
+			me  = this;
+		if(me.getIsHost()){
+			Ext.TaskManager.stop(me.task);
+		}
 	},
 	startTransmission : function(){
-		let	me	= this,
-			api	= me.getApi();
+		let	me		= this,
+			api		= me.getApi(),
+			record	= me.getRecord(),
+			app		= Admin.getApplication();
 		const domain = 'meet.asaie.co';
 		const options = {
-			roomName    : 'meet.asie.co.example',
+				roomName    : me.getRoomName(),
 			width       : '100%',
-			height      : 700,
+			height      : me.height - 10,
 			parentNode  : document.querySelector('#meet'),
 			devices: {
 				audioInput  : '<deviceLabel>',
 				audioOutput :'<deviceLabel>',
 				videoInput  : '<deviceLabel>'
 			},
-			configOverwrite: { startWithAudioMuted: true },
+			configOverwrite: { 
+				startWithAudioMuted: true,
+				localRecording: {
+					enabled: true,
+					// The recording format, can be one of 'ogg', 'flac' or 'wav'.
+					format: 'wav'
+				}
+			},
 			userInfo: {
 				email       : me.getEmail(),
 				displayName : me.getDisplayName()
@@ -200,41 +226,144 @@ Ext.define('Admin.view.docs.LiveBroadcast',{
 					'livestreaming', 'etherpad', 'sharedvideo', 'settings', 'raisehand',
 					'videoquality', 'filmstrip', 'invite', 'feedback', 'stats', 'shortcuts',
 					'tileview', 'videobackgroundblur', 'download', 'help', 'mute-everyone',
-					'e2ee', 'security'
+					'e2ee', 'security','localrecording'
 				]
 			},
 		};
 		if(!api){
 			me.setApi(new JitsiMeetExternalAPI(domain, options));
 			api = me.getApi();
-			api.on('participantJoined', (data) => {
-				console.log(data);
-			});
-			api.on('participantLeft ', (data) => {
-				console.log(data);
-			});
-			api.on('readyToClose', (data) => {
-				console.log(data);
-			});
+			api.executeCommand('subject', me.getSubject());
+			if(me.getIsHost()){
+				
+				api.on('participantJoined', (data) => {
+					console.log('participantJoined');
+					console.log(data);
+				});
+				api.on('participantLeft ', (data) => {
+					console.log('participantLeft');
+					console.log(data);
+				});
+				api.on('readyToClose', (data) => {
+					console.log('readyToClose');
+					console.log(data);
+				});
+
+			}
+			if(!me.getTest()){
+				let socket = Global.getSocket();
+				if(me.getIsHost()){
+					socket.emit('updateData',{
+						dataName	: Global.getDbName(),
+						table       : 'tl_live_classes',
+						values		: [
+							{ transmitting : 1 },
+							{id : record.get('id')}
+						]
+					},(err, resp) =>{
+						if(err){
+							app.showResult('Error al iniciar la transmisión de la clase.','error');
+							me.stopTransmission();
+							socket.close();
+							me.close();
+							return false;
+						}
+						socket.close();
+					});
+				}else{
+					socket.emit('updateData',{
+						dataName	: Global.getDbName(),
+						table       : 'tl_students_live_classes',
+						values		: [
+							{ transmitting : 1, isit_read : 1 },
+							{id : record.get('id')}
+						]
+					},(err, resp) =>{
+						if(err){
+							app.showResult('Error al iniciar la transmisión de la clase.','error');
+							me.stopTransmission();
+							socket.close();
+							me.close();
+							return false;
+						}
+						socket.close();
+					});
+				}
+			}
+			if(!me.task){
+				me.runClock();
+			}
 		}
-		api.executeCommand('subject', me.getSubject());
-		me.runClock();
+		
 	},
 	stopTransmission: function(){
 		let	me	= this,
 			api	= me.getApi();
 		if(api){
 			api.executeCommand('hangup');
-			api.dispose();
+			if(me.getIsHost()){
+				api.dispose();
+			}
 			me.setApi(null);
 		}
 	},
 	savechanges : function () {
-		let me = this;
-		if(me.getTest()){
-			me.close();
+		let me 		= this,
+			record	= me.getRecord(),
+			app		= Admin.getApplication(),
+			store	= me.getStore();
+		if(me.getTest() || !me.getIsHost()){
+			if(me.getIsStudent()){
+				let socket = Global.getSocket();
+				socket.emit('updateData',{
+					dataName	: Global.getDbName(),
+					table       : 'tl_students_live_classes',
+					values		: [
+						{ transmitting : 0 },
+						{id : record.get('id')}
+					]
+				},(err, resp) =>{
+					if(err){
+						app.showResult('Error al guardar la transmisión.','error');
+						socket.close();
+						return false;
+					}
+					socket.close();
+					me.stopTransmission();
+					me.clearClock();
+					if(store){
+						store	= Ext.getStore(store);
+						store.reload();
+					}
+					me.close();
+				});
+			}else{
+				me.close();
+			}
 		}else{
-
+			let socket = Global.getSocket();
+			socket.emit('updateData',{
+				dataName	: Global.getDbName(),
+				table       : 'tl_live_classes',
+				values		: [
+					{ transmitting : 0, active : 0 },
+					{id : record.get('id')}
+				]
+			},(err, resp) =>{
+				if(err){
+					app.showResult('Error al guardar la transmisión.','error');
+					socket.close();
+					return false;
+				}
+				socket.close();
+				me.stopTransmission();
+				me.clearClock();
+				if(store){
+					store	= Ext.getStore(store);
+					store.reload();
+				}
+				me.close();
+			});
 		}
 	}
 });

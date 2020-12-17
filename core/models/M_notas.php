@@ -18,17 +18,18 @@ class M_notas extends SME_Model {
 	
 	public function get_logros_estandares_verify($periodo,$grado,$asig) {
 		$db     = $this->get_db_name();
+		$year	= $this->get_year();
 		$query	= "SELECT tl.id_docente, tl.id_asig, tl.tipo 
 						FROM ".$db.".logros_estandares tl 
 						WHERE periodo=".$periodo." AND id_grado='".$grado.
 						"' AND id_asig=".$asig." AND id_docente=".$this->get_parent().
-						" AND tipo=2 GROUP BY id_docente,id_asig,periodo,tipo";
+						" AND tipo=2 AND tl.year = ".$year." GROUP BY id_docente,id_asig,periodo,tipo";
 						
 		$query2	= "SELECT tl.id_docente, tl.id_asig, tl.tipo 
 						FROM ".$db.".logros_estandares tl 
 						WHERE periodo=".$periodo." AND id_grado='".$grado.
 						"' AND id_asig=".$asig." AND id_docente=".$this->get_parent().
-						" AND tipo > 2 GROUP BY id_docente,id_asig,periodo,tipo";
+						" AND tipo > 2 AND tl.year = ".$year." GROUP BY id_docente,id_asig,periodo,tipo";
 	  
 	  $logros		= $this->db->query($query);
 	  $indicadores	= $this->db->query($query2);

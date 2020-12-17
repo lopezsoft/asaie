@@ -4027,6 +4027,11 @@ COLLATE='utf8_general_ci'
 ENGINE=InnoDB;
 
 
+/********************************* 10 agosto 2020 ******************************/
+
+ALTER TABLE `configboletin`
+	ADD COLUMN `bol_desem` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activeindica`;
+
 /*********************************** AJUSTES **********************************/
 
 INSERT INTO users (user_id, user_type, username, password, active)
@@ -4106,7 +4111,7 @@ SELECT a.id, d.id_matric, d.id_sede, d.id_jorn, d.id_grado, d.grupo, d.`año`, d
 FROM inscripciones a
 LEFT JOIN matriculas AS d ON d.cod_est = a.id
 WHERE d.cod_est = a.id AND NOT EXISTS(
-	SELECT * FROM student_enrollment b WHERE b.id_student = d.id_matric
+	SELECT * FROM student_enrollment b WHERE b.id = d.id_matric
 ) ORDER BY a.id, d.`año`;
 
 
@@ -4117,3 +4122,44 @@ DELETE FROM inscripciones WHERE id = 221;
 DELETE FROM student_enrollment WHERE id_student = 221 ;
 	
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=1;	
+
+/*Quitar etiquetas html de un campo*/
+UPDATE obs_anotaciones_mod_3 a SET 
+a.anotacion = (SELECT strip_tags(a.anotacion));
+UPDATE obs_anotaciones_mod_3 a SET 
+a.compromiso_est = (SELECT strip_tags(a.compromiso_est));
+UPDATE obs_anotaciones_mod_3 a SET 
+a.compromiso_acu = (SELECT strip_tags(a.compromiso_acu))
+UPDATE obs_anotaciones_mod_3 a SET 
+a.compromiso_inst = (SELECT strip_tags(a.compromiso_inst));
+
+
+	
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;	
+
+INSERT INTO nscp00 SELECT tn.* FROM nscp00_copy AS tn
+LEFT JOIN cursos AS tc ON (tn.id_curso = tc.id AND tn.year = tc.year)
+LEFT JOIN student_enrollment AS tm ON (tn.id_matric = tm.id AND tn.year = tm.year)
+WHERE tn.id_curso = tc.id AND tn.id_matric = tm.id AND NOT EXISTS (
+	SELECT * FROM nscp00 AS tr WHERE tr.id_curso = tn.id_curso AND tr.id_matric = tn.id_matric
+	AND tr.year = tn.year AND tr.periodo = tn.periodo
+);
+
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=1;	
+
+
+UPDATE inscripciones b SET b.nro_doc_id = RAND() 
+WHERE EXISTS(
+	SELECT COUNT(a.nro_doc_id) AS total, a.nro_doc_id FROM inscripciones a 
+	WHERE a.nro_doc_id = b.nro_doc_id 
+	GROUP BY a.nro_doc_id 
+	HAVING total > 1);
+
+
+
+UPDATE obs_anotaciones_mod_3 a 
+SET a.anotacion = (SELECT strip_tags(a.anotacion)),
+a.compromiso_est = (SELECT strip_tags(a.compromiso_est)),
+a.compromiso_acu = (SELECT strip_tags(a.compromiso_acu)),
+a.compromiso_inst = (SELECT strip_tags(a.compromiso_inst))
+;

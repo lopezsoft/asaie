@@ -7,7 +7,12 @@ Ext.define('Admin.view.docentes.controller.TeacherLiveClasseController',{
 	
 	onClassTransmitting : function (grid, rowIndex) {
 		let
-            record  = grid.getStore().getAt(rowIndex);
+			record  = grid.getStore().getAt(rowIndex),
+			app		= Admin.getApplication();
+		if((record.get('active') == 0)){
+			app.showResult('La clase no se encuentra activa.','error');
+			return false;
+		}
 		Ext.create('Admin.view.docs.LiveBroadcast',{
 			subject			: record.get('class_description'),
 			weather			: record.get('class_time'),
@@ -15,6 +20,8 @@ Ext.define('Admin.view.docentes.controller.TeacherLiveClasseController',{
 			displayName		: Global.getUserData().names + ' ' + Global.getUserData().last_name,
 			attached		: record.get('url_file'),
 			test			: false,
+			store			: 'LiveClassesStore',
+			roomName		: record.get('class_name'),
 			record			: record
 		}).show();
 	},
@@ -29,6 +36,7 @@ Ext.define('Admin.view.docentes.controller.TeacherLiveClasseController',{
 			displayName		: Global.getUserData().names + ' ' + Global.getUserData().last_name,
 			attached		: record.get('url_file'),
 			test			: true,
+			roomName		: record.get('class_name'),
 			record			: record
 		}).show();
 	},

@@ -31,7 +31,10 @@ Ext.define('Admin.view.academico.CuadroHonorView',{
                 },
                 items   : [
                     {
-                        xtype   : 'CbPeriodos'
+						xtype   : 'CbPeriodos',
+						bind: {
+							visible: 'true'
+						}
                     },
 					{
 						xtype	: 'customcheckboxfield',
@@ -86,7 +89,10 @@ Ext.define('Admin.view.academico.CuadroHonorView',{
                         fieldLabel  : 'Mostrar los primeros'
                     },
                     {
-                        xtype       : 'CbPeriodos',
+						xtype       : 'CbPeriodos',
+						bind: {
+							visible: 'true'
+						},
                         width		: '100%',
                         reference   : 'per',
                         itemId      : 'per'

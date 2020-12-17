@@ -17,14 +17,14 @@ class Academic_m extends SME_Model {
 		
 		$queryCount			= "SELECT COUNT(a.id) total
 			FROM ".$db.".student_access AS a
-			LEFT JOIN ".$db.".student_enrollment AS b ON a.id = b.id
+			LEFT JOIN ".$db.".student_enrollment AS b ON a.enrollment_id = b.id
 			LEFT JOIN ".$db.".inscripciones AS c ON b.id_student = c.id 
 			WHERE b.year = ? ";
 		$queryStatemente	= "SELECT a.*, 
 			CONCAT(TRIM(c.apellido1),' ',TRIM(c.apellido2),' ',TRIM(c.nombre1),' ',TRIM(c.nombre2)) AS nombres,
 			c.nro_documento
 			FROM ".$db.".student_access AS a
-			LEFT JOIN ".$db.".student_enrollment AS b ON a.id = b.id
+			LEFT JOIN ".$db.".student_enrollment AS b ON a.enrollment_id = b.id
 			LEFT JOIN ".$db.".inscripciones AS c ON b.id_student = c.id
 			WHERE b.year = ? ";
 		$fieldsSearch		= [
@@ -124,48 +124,48 @@ class Academic_m extends SME_Model {
 	  		$db_field = '';			
 			$primary_key_name = 'id'; // Nombre del campo primario de la tabla				
 			$table	= "";
-			$db	= $this->get_db_name();
+			$db	= $this->get_db_name().".";
 			if ($count > 1) {	
 				for($i = 0; $i < $count; $i++){
 					$fields_value = $fields[$i]->id;	
 					if($f > 0){
 						$table	= $this->tabla_notas(4);
 						$this->db->where('id_matric', $fields_value);				
-						$this->db->delete($table);
+						$this->db->delete($db.$table);
 						$table	= $this->tabla_notas(5);
 						$this->db->where('id_matric', $fields_value);				
-						$this->db->delete($table);
+						$this->db->delete($db.$table);
 						$table	= $this->tabla_notas(10);
 						$this->db->where('id_matric', $fields_value);				
-						$this->db->delete($table);
+						$this->db->delete($db.$table);
 						$table	= $this->tabla_notas(14);
 						$this->db->where('id_matric', $fields_value);				
-						$this->db->delete($table);		
+						$this->db->delete($db.$table);		
 					}					
 					$this->db->where('id', $fields_value);				
 					$this->db->limit(1);
-					$this->db->delete($db.'.student_enrollment');							
+					$this->db->delete($db.'student_enrollment');							
 				}			
 			}else{
 				$fields_value = $fields->id;		
 				if($f > 0){
 					$table	= $this->tabla_notas(4);
 					$this->db->where('id_matric', $fields_value);				
-					$this->db->delete($table);
+					$this->db->delete($db.$table);
 					$table	= $this->tabla_notas(5);
 					$this->db->where('id_matric', $fields_value);				
-					$this->db->delete($table);
+					$this->db->delete($db.$table);
 					$table	= $this->tabla_notas(10);
 					$this->db->where('id_matric', $fields_value);				
-					$this->db->delete($table);
+					$this->db->delete($db.$table);
 					$table	= $this->tabla_notas(14);
 					$this->db->where('id_matric', $fields_value);				
-					$this->db->delete($table);		
+					$this->db->delete($db.$table);		
 				}
 				
 				$this->db->where('id', $fields_value);				
 				$this->db->limit(1);
-				$this->db->delete($db.'.student_enrollment');
+				$this->db->delete($db.'student_enrollment');
 			}			
 			$this->trans_complete();		
 			if ($this->trans_status()) {

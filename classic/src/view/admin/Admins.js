@@ -81,7 +81,61 @@ Ext.define('Admin.view.admin.Admins',{
                 xtype   : 'toolbarCrud',
                 items   : [
                     '->',
-                    {
+					{
+						xtype       : 'customButton',
+						tooltip     : AppLang.getSToolTipDigitalDocuments(),
+						itemId      : 'btnDocDig',
+						disabled  	: true,
+						iconCls     : 'x-fa fa-book',
+						handler     : function (btn) {
+							var me  = Admin.getApplication(),
+								rec = btn.up('form').down('grid').getSelection()[0];
+								me.onStore('docs.ImageBrowserStore');
+							Ext.create({
+								xtype       	: 'FilesView',
+								pathReadFile    : 'c_admin/read_files_dig',
+								pathUploadFile  : 'c_admin/upload_files_dig',
+								textButtonApply : AppLang.getSButtonAcept(),
+								extraParams     : {
+									pdbDocumento: rec.get('numero_documento')
+								}
+							}).show();
+						}
+					},'-',
+					{
+						xtype       : 'customButton',
+						tooltip     : 'Imagenes',
+						itemId      : 'btnWebcam',
+						disabled  	: true,
+						iconCls     : 'x-fa fa-picture-o',
+						handler     : function (btn) {
+							var me  = Admin.getApplication(),
+								view= btn.up('window') || btn.up('form'),
+								rec = btn.up('form').down('grid').getSelection()[0];
+								me.onStore('docs.ImageBrowserStore');
+								store   = view.down('grid').getStore();
+							Ext.create({
+								xtype           : 'FilesView',
+								title           : 'Imagenes',
+								pathReadFile    : 'c_admin/read_images',
+								pathUploadFile  : 'c_admin/upload_images',
+								titlePanelLoad  : 'Capturar',
+								titlePanelView  : 'Mis imágenes',
+								textButtonApply : 'Aceptar',
+								extraParams     : {
+									pdbDocumento: rec.get('numero_documento')
+								}
+							}).show().on('afterselect',function (me, select) {
+								rec.set('foto',select.data.path_set);
+							}).on('apply',function (me) {
+								store.sync();
+								this.close();
+							}).on('cancel',function (me) {
+								store.rejectChanges();
+							});
+						}
+					},'-',
+					{
                         xtype   : 'addButton'
                     },'-',
                     {
@@ -93,64 +147,6 @@ Ext.define('Admin.view.admin.Admins',{
                     {
                         xtype   : 'closebutton'
                     }
-					// {
-					// 	xtype       : 'customButton',
-					// 	tooltip     : AppLang.getSToolTipDigitalDocuments(),
-					// 	itemId      : 'btnDocDig',
-					// 	disabled  	: true,
-					// 	iconCls     : 'x-fa fa-book',
-					// 	handler     : function (btn) {
-					// 		var me  = Admin.getApplication(),
-					// 			rec = btn.up('form').down('grid').getSelection()[0];
-					// 		me.onMsgWait();
-					// 		Ext.require([
-					// 			'Admin.view.docs.FilesView'
-					// 		]);
-					// 		Ext.onReady(function () {
-					// 			me.onStore('docs.ImageBrowserStore');
-					// 			var win = Ext.create({
-					// 				xtype       : 'FilesView',
-					// 				pathReadFile    : 'c_admin/read_files_dig',
-					// 				pathUploadFile  : 'c_admin/upload_files_dig',
-					// 				textButtonApply : AppLang.getSButtonAcept(),
-					// 				extraParams     : {
-					// 					pdbDocumento: rec.get('documento')
-					// 				}
-					// 			});
-					// 			win.show();
-					// 			me.onMsgClose();
-					// 		});
-					// 	}
-					// },'-',
-					// {
-					// 	xtype       : 'customButton',
-					// 	tooltip     : 'Imagenes',
-					// 	itemId      : 'btnImages',
-					// 	disabled  	: true,
-					// 	iconCls     : 'x-fa fa-picture-o',
-					// 	handler     : function (btn) {
-					// 		var me  = Admin.getApplication(),
-					// 			rec = btn.up('form').down('grid').getSelection()[0];
-					// 		me.onMsgWait();
-					// 		Ext.require([
-					// 			'Admin.view.docs.FilesView'
-					// 		]);
-					// 		Ext.onReady(function () {
-					// 			me.onStore('docs.ImageBrowserStore');
-					// 			var win = Ext.create({
-					// 				xtype       : 'FilesView',
-					// 				pathReadFile    : 'c_admin/read_images',
-					// 				pathUploadFile  : 'c_admin/upload_images',
-                    //                 textButtonApply : AppLang.getSButtonAcept(),
-					// 				extraParams     : {
-					// 					pdbDocumento: rec.get('documento')
-					// 				}
-					// 			});
-					// 			win.show();
-					// 			me.onMsgClose();
-					// 		});
-					// 	}
-					// }
                 ]
             },
             {

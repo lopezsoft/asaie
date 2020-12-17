@@ -6,6 +6,13 @@ class Students_m extends SME_Model {
 		$this->student_folders($this->get_student_id());
 	}	
 
+	public function getStudentsLiveClasses() {		
+		$param	= array(
+				$this->get_get_idmatric()
+		);
+		return $this->getExecute('sp_students_live_classes(?)',$param);
+	}
+
 	function getCommentsActivities($id, $course_id, $enrollment){
 		$param	= array(
 			$id,

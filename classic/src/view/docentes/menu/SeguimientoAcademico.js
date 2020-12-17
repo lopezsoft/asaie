@@ -23,6 +23,36 @@ Ext.define('Admin.view.docentes.menu.SeguimientoAcademico',{
             items   : [
                 {
                     xtype   : 'buttonPanel',
+                    text    : 'Esquema de plan de unidad',
+                    handler : 'onViewFormato02',
+                    iconCls : 'x-fa fa-eye'
+                }
+            ]
+        },
+        {
+            items   : [
+                {
+                    xtype   : 'buttonPanel',
+                    text    : 'Planilla de registro de evaluación',
+                    handler : 'onViewFormato03',
+                    iconCls : 'x-fa fa-eye'
+                }
+            ]
+        },
+        {
+            items   : [
+                {
+                    xtype   : 'buttonPanel',
+                    text    : 'Formato de seguimiento',
+                    handler : 'onViewFormato01',
+                    iconCls : 'x-fa fa-eye'
+                }
+            ]
+        },
+        {
+            items   : [
+                {
+                    xtype   : 'buttonPanel',
                     text    : 'Acciones de seguimiento',
                     disabled: true,
                     iconCls : 'x-fa fa-eye'

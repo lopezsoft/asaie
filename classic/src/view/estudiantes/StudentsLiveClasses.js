@@ -1,23 +1,23 @@
-Ext.define('Admin.view.estudiantes.StudentsEvaluations',{
+Ext.define('Admin.view.estudiantes.StudentsLiveClasses',{
     extend	: 'Admin.forms.CustomForm',
     requires: [
         'Admin.view.docs.VideoView',
-        'Admin.store.estudiantes.StudentsEvaluationsStore'
+        'Admin.store.estudiantes.StudentsLiveClassesStore'
     ],
-    alias 	    : 'widget.studentsevaluations',
+    alias 	    : 'widget.studentsliveclasses',
     controller  : 'estudiantes',
     initComponent : function(){
         let me  = this,
             app = Admin.getApplication();
-        app.onStore('estudiantes.StudentsEvaluationsStore');
+        app.onStore('estudiantes.StudentsLiveClassesStore');
         me.callParent(arguments);
-        me.setTitle('Evaluaciones en línea');
+        me.setTitle('Clases en vivo - ' + Global.getYear());
 	},
 	showSaveButton      : false,
     items   : [
         {
             xtype       : 'customgrid',
-            store		: 'StudentsEvaluationsStore',
+            store		: 'StudentsLiveClassesStore',
             selModel	: 'rowmodel',
             plugins		: [
                 {
@@ -33,15 +33,15 @@ Ext.define('Admin.view.estudiantes.StudentsEvaluations',{
             ],
             // Reusable actions
             actions: {
-                leer: {
-                    iconCls: 'x-fa fa-eye',
-                    tooltip: 'Responder evaluación',
-                    handler: 'replyEvaluation'
+                connect: {
+                    iconCls: 'fas fa-play',
+                    tooltip: 'Conectarse a la clase',
+                    handler: 'onConnectToLiveClass'
                 }
             },
             viewConfig: {
                 getRowClass: function(record) {
-                    return record.get('eread') == 1 ? 'letter-row' : 'no-letter-row';
+                    return record.get('isit_read') == 1 ? 'letter-row' : 'no-letter-row';
                 }
             },
             columns	: [
@@ -53,45 +53,76 @@ Ext.define('Admin.view.estudiantes.StudentsEvaluations',{
                     sortable        : false,
                     xtype       : 'actioncolumn',
                     width       : 30,
-                    items       : ['@leer']
-                },
-                {
-                    text        : 'Nombre',
-                    width       : 300,
-                    dataIndex   : 'nombre'
-                },
-                {
-                    text        : 'Per',
-                    width       : 45,
-                    dataIndex   : 'periodo'
-                },
+                    items       : ['@connect']
+				},
+				{
+                    text 		: 'Estado',
+                    width 		: 130,
+                    dataIndex	: 'active_class',
+                    filter		: 'list',
+                    renderer :  function(val) {
+                        switch(val){
+                            case '1':
+                                return '<span style="color:green;"> <b> Disponible </b></span>';
+                                break;
+                            default :
+                                return '<span style="color:red;"> <b> No Disponible </b></span>';
+                                break;
+                        }
+                    }
+				},
                 {   
                     text    : 'Disponible desde',
                     columns : [
                         {
                             text 		: 'Fecha',
                             width 		: 100,
-                            dataIndex	: 'fecha'
+                            dataIndex	: 'closing_date'
                         },
                         {
                             text 		: 'Hora',
-                            width 		: 85,
-                            dataIndex	: 'hora_apertura'
+                            width 		: 100,
+                            dataIndex	: 'closing_time'
                         }
                     ]
-                },
-                {
-                    text    : 'Disponible hasta',
+				},
+				{
+                    text 		: 'Tiempo',
+                    width 		: 100,
+                    dataIndex	: 'class_time',
+                    filter		: 'list',
+                    menuDisabled: true,
+                    renderer :  function(val) {
+                        return '<span style="color:#000;"> <b> '+val.toString()+' min</b></span>';
+                    }
+				},
+				{
+                    text    : 'Transmisión',
                     columns : [
                         {
-                            text 		: 'Fecha',
-                            width 		: 100,
-                            dataIndex	: 'fecha_cierre'
+                            text 		    : 'Iniciada?',
+                            width 		    : 90,
+							dataIndex	    : 'transmiting_class',
+							renderer :  function(val) {
+								switch(val){
+									case '1':
+										return '<span style="color:green;"> <b> SI </b></span>';
+										break;
+									default :
+										return '<span style="color:red;"> <b> NO </b></span>';
+										break;
+								}
+							}
                         },
                         {
-                            text 		: 'Hora',
-                            width 		: 85,
-                            dataIndex	: 'hora_cierre'
+                            text 		    : 'Inició',
+                            width 		    : 155,
+                            dataIndex	    : 'transmission_start_time_class'
+                        },
+                        {
+                            text 		    : 'Finalizó',
+                            width 		    : 155,
+                            dataIndex	    : 'transmission_closing_time_class'
                         }
                     ]
                 },

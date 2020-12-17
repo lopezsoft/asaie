@@ -30,20 +30,20 @@ Ext.define('Admin.view.academico.inscripciones.NoveltyView',{
         if (!ts.getWinObject()) {
             ts.buildWindow();
         }
-        if (ts.getRecord().get('promoted') && btn.itemId == 'addButton') {
-            me.showResult(AppLang.getSMgsDoNotEditEnrollment());
-        }else{
-            form = ts.winObject.down('form');
-            if (btn.itemId == 'editButton') {
-                form.loadRecord(data);
-                form.down('#CbEstado').setDisabled(true);
-            } else {
-                form.reset(true);
-                form.down('#CbEstado').setDisabled(false);
-            };
-            ts.winObject.setRecord(ts.getRecord());
-            ts.winObject.setAlwaysOnTop(true).show();
-        }
+        // if (ts.getRecord().get('promoted') && btn.itemId == 'addButton') {
+        //     me.showResult(AppLang.getSMgsDoNotEditEnrollment());
+        // }else{
+		form = ts.winObject.down('form');
+		if (btn.itemId == 'editButton') {
+			form.loadRecord(data);
+			form.down('#CbEstado').setDisabled(true);
+		} else {
+			form.reset(true);
+			form.down('#CbEstado').setDisabled(false);
+		};
+		ts.winObject.setRecord(ts.getRecord());
+		ts.winObject.setAlwaysOnTop(true).show();
+        // }
     },
     showSaveButton  : false,
     items: [

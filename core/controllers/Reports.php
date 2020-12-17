@@ -52,8 +52,9 @@ class Reports extends SME_Controller {
 		$Matric	= $this->input->post('pdbMatric');		
 		$Sede	= $this->input->post('pdbSede');
 		$Estudian= $this->input->post('pdbEstudian');
+		$pdbImage= $this->input->post('pdbImage');
 		echo $this->
-		M_report_general->ficha_observador($format,$Grado,$Grupo,$Jorn,$Matric,$Sede,$Estudian);
+		M_report_general->ficha_observador($format,$Grado,$Grupo,$Jorn,$Matric,$Sede,$Estudian,$pdbImage);
 	}
 	
 	public function report_sabanas_finales(){

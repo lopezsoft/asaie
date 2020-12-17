@@ -9,20 +9,20 @@ Ext.define('Admin.view.config.Configs',{
 		nomUser	  : '',
 		indicatorsRecord : [], // Registro indicadores de desempeños
 		recordAchievements : [], // Registro logros academicos
-		dirGroup	: false, // Si el estado es TRUE es director de grupo
-		dataDirGroup: [], // Data del director de grupo
-		dataTeacher	: [], // Datos del docente
-		obsType		: 0, // Tipo de observador
-		language	: 'Es', // Idioma del sistema
-		avatarMan	: "/assets/img/avatars/man.png",
-		avatarWomen	: "/assets/img/avatars/woman.png",
-		avatarUnknoun: "/assets/img/avatars/unknown.png",
-		configReport: [],
-		userData	: [],
-		socket		: null,
-		hostSocket	: 'https://ns3138775.ip-51-77-67.eu:3002',
-		urlBase 	: "https://schools.asaie.co/",
-		urlLocation : "https://schools.asaie.co/",
+		dirGroup		: false, // Si el estado es TRUE es director de grupo
+		dataDirGroup	: [], // Data del director de grupo
+		dataTeacher		: [], // Datos del docente
+		obsType			: 0, // Tipo de observador
+		language		: 'Es', // Idioma del sistema
+		avatarMan		: "/assets/img/avatars/man.png",
+		avatarWomen		: "/assets/img/avatars/woman.png",
+		avatarUnknoun	: "/assets/img/avatars/unknown.png",
+		configReport	: [],
+		userData		: [],
+		socket			: null,
+		hostSocket		: 'https://ns547829.ip-66-70-178.net:3001',
+		urlBase 		: "https://schools.asaie.co/",
+		urlLocation 	: "https://schools.asaie.co/",
 		// hostSocket	: 'http://localhost:3001',
 		// urlBase 	: "http://asaie/",
 		// urlLocation : "http://asaie/",
@@ -75,6 +75,7 @@ Ext.define('Admin.view.config.Configs',{
 			me	= this;
 		me.socket = io.connect(me.getHostSocket(),{ 'forceNew': true });
 		me.socket.on('connect_error', (error) => {
+			console.log(error);
 			Admin.getApplication().showResult('No hay conexión con el servidor de sockets, contante al administrador del sistema.', 'error');
 		});
 		return me.socket;

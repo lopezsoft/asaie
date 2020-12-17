@@ -16,7 +16,7 @@ Ext.define('Admin.view.docentes.TecherLiveClasses',{
     items   : [
         {
             cls         : 'allRecordsCls',
-            hideHeaders : true,
+            hideHeaders : false,
             border      : false,
             selModel    : 'rowmodel',
             xtype       : 'customgrid',
@@ -111,16 +111,15 @@ Ext.define('Admin.view.docentes.TecherLiveClasses',{
                     width           : 30,
                     items           : ['@transEval']
                 },
-                {
-                    text        : 'Nombre de la sala',
-                    flex        : 1,
-                    dataIndex   : 'class_name'
-                },
+                // {
+                //     text        : 'Nombre de la sala',
+                //     width       : 180,
+                //     dataIndex   : 'class_name'
+                // },
                 {
                     text    : 'Disponible desde',
                     columns : [
                         {
-                            // xtype           : 'datecolumn',
                             text 		    : 'Fecha',
                             width 		    : 95,
                             dataIndex	    : 'closing_date'
@@ -134,7 +133,7 @@ Ext.define('Admin.view.docentes.TecherLiveClasses',{
                 },
                 {
                     text 		: 'Tiempo',
-                    width 		: 120,
+                    width 		: 100,
                     dataIndex	: 'class_time',
                     filter		: 'list',
                     menuDisabled: true,
@@ -157,6 +156,21 @@ Ext.define('Admin.view.docentes.TecherLiveClasses',{
                                 break;
                         }
                     }
+				},
+				{
+                    text    : 'Transmisión',
+                    columns : [
+                        {
+                            text 		    : 'Inició',
+                            width 		    : 155,
+                            dataIndex	    : 'transmission_start_time'
+                        },
+                        {
+                            text 		    : 'Finalizó',
+                            width 		    : 155,
+                            dataIndex	    : 'transmission_closing_time'
+                        }
+                    ]
                 }
             ],
             dockedItems : [
@@ -198,5 +212,14 @@ Ext.define('Admin.view.docentes.TecherLiveClasses',{
                 }
             ]
         }
-    ]
+	],
+	beforeEdit : function (){
+		let me      = this,
+			record 	= me.down('grid').getSelection()[0],
+			app		= Admin.getApplication();
+		if(!(record.get('transmitting') == 0)){
+			app.showResult('No se puede editar una clase trasmitida.');
+		}
+		return (record.get('transmitting') == 0) ? true : false;
+	}
 });

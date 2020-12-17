@@ -13,7 +13,8 @@ var store   = Ext.create('Ext.data.Store', {
        // {id: '7',    nombre: 'BOLETIN POR ÁREAS CON ESTADÍISTICAS'},
        // {id: '8',    nombre: 'BOLETIN POR ASIGNATURAS CON ESTADÍISTICAS'}
        // {id: '9',    nombre: 'BOLETIN POR ÁREAS (SAMAC)'},
-        {id: '10',    nombre: 'PRE-INFORME'}
+        {id: '10',    nombre: 'PRE-INFORME'},
+        {id: '11',    nombre: 'NFORME POR DESEMPEÑOS'}
     ]
 });
 
@@ -109,7 +110,8 @@ Ext.define('Admin.view.docentes.BoletinesReportView',{
                     margin  : '0 1 0 0',
                     flex    : 4,
                     title   : 'CONSULTA',
-                    autoLoad    : false,
+					autoLoad    : false,
+					syncHeight	: false,
                     plugins: [
                         {
                             ptype: 'rowexpander',
