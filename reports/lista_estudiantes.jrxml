@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Created with Jaspersoft Studio version 6.5.1.final using JasperReports Library version 6.5.1  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_electoral" language="groovy" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="43" bottomMargin="20" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
+<!-- Created with Jaspersoft Studio version 6.8.0.final using JasperReports Library version 6.8.0-2ed8dfabb690ff337a5797129f2cd92902b0c87b  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="certificado_electoral" pageWidth="595" pageHeight="842" columnWidth="539" leftMargin="28" rightMargin="28" topMargin="43" bottomMargin="20" uuid="33974257-97b3-4498-8fe2-7887b59433ce">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
 	<property name="ireport.y" value="0"/>
@@ -109,37 +109,16 @@
 			<textField pattern="h.mm.ss a">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="58" width="390" height="10" isRemoveLineWhenBlank="true" uuid="57d9a020-193c-4e8c-a975-752856e79cf6"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
-			<textField>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="28" width="390" height="10" isRemoveLineWhenBlank="true" uuid="10cedbbb-3e2e-4339-88a6-d3b7eccb654b"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="SansSerif" size="7" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_NIT}.trim()]]></textFieldExpression>
-			</textField>
 			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
-				<reportElement isPrintRepeatedValues="false" x="74" y="2" width="390" height="16" uuid="1453bfa9-78af-4c63-87bc-13590be4ee93"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="SansSerif" size="12" isBold="true"/>
+				<reportElement isPrintRepeatedValues="false" x="74" y="2" width="390" height="46" uuid="1453bfa9-78af-4c63-87bc-13590be4ee93"/>
+				<textElement textAlignment="Center" verticalAlignment="Top" markup="html">
+					<font fontName="Arial" size="12" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_TITLE}.trim()]]></textFieldExpression>
-			</textField>
-			<textField isStretchWithOverflow="true" pattern="">
-				<reportElement positionType="Float" isPrintRepeatedValues="false" mode="Transparent" x="74" y="38" width="390" height="10" isRemoveLineWhenBlank="true" uuid="a5f7d312-1b87-4650-9f7f-492a65cc5526"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="6" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_RESOL}.trim()]]></textFieldExpression>
-			</textField>
-			<textField>
-				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="18" width="390" height="10" isRemoveLineWhenBlank="true" uuid="31f8c3f1-7759-4246-bdad-8920d39efffb"/>
-				<textElement textAlignment="Center" verticalAlignment="Top">
-					<font fontName="SansSerif" size="7" isBold="true"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_DANE}.trim()]]></textFieldExpression>
 			</textField>
 			<image>
 				<reportElement x="0" y="1" width="72" height="72" uuid="8b654b7e-8517-430d-892b-a4b6f5a4a1f4"/>
@@ -148,7 +127,7 @@
 			<textField pattern="EEEEE dd MMMMM yyyy">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="74" y="48" width="390" height="10" isRemoveLineWhenBlank="true" uuid="dcaf8245-71f2-45a2-a365-f50dee0b24ca"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="SansSerif" size="7"/>
+					<font fontName="Arial" size="7"/>
 				</textElement>
 				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
 			</textField>
@@ -300,7 +279,7 @@
 			<textField isStretchWithOverflow="true">
 				<reportElement stretchType="RelativeToBandHeight" x="19" y="22" width="507" height="8" uuid="974eb2e7-978f-4ee6-bf38-9371ddf072e7"/>
 				<textElement textAlignment="Center">
-					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
+					<font fontName="Arial" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_MARKETING}]]></textFieldExpression>
 			</textField>

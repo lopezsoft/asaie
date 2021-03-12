@@ -113,6 +113,26 @@ Ext.define('Admin.grid.CustomGrid' ,{
 		'selectionchange': function(grid, selected, eOpts) {
 			var me	= this;
 
+			if (me.down('#btnCloseVoting')){
+				me.down('#btnCloseVoting').setDisabled(!selected.length);
+			}
+
+			if (me.down('#btnOpenVoting')){
+				me.down('#btnOpenVoting').setDisabled(!selected.length);
+			}
+			
+			if (me.down('#btnGrades')){
+				me.down('#btnGrades').setDisabled(!selected.length);
+			}
+
+			if (me.down('#dtnHeadquarter')){
+				me.down('#dtnHeadquarter').setDisabled(!selected.length);
+			}
+
+			if (me.down('#btnJury')){
+				me.down('#btnJury').setDisabled(!selected.length);
+			}
+			
 			if (me.down('#printbutton2')){
 				me.down('#printbutton2').setDisabled(!selected.length);
 			}

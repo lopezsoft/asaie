@@ -108,9 +108,7 @@ class M_actividades_apoyo_finales extends SME_Model {
 			foreach($sql->result_array() as $row){
 				$this->get_desempeños_rango($row['id_grado']);
 				$this->last_periodo($row['id_grado']);
-				$this->
-				get_nota($row['id_sede'],$row['id_grado'],$row['grupo'],$row['id_asig'],$row['id_jorn'],$doc,
-				$nro_acta,$row['id']);
+				$this->get_nota($row['id_sede'],$row['id_grado'],$row['grupo'],$row['id_asig'],$row['id_jorn'],$doc,$nro_acta,$row['id']);
 			}
 			
 		}

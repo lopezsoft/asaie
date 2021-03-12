@@ -12,6 +12,7 @@ class M_cierre extends SME_Model {
 		  'competencias,'.
 		  'config001,'.
 		  'matcurso,'.
+		  'aux_asignaturas,'.
 		  'aux_docentes,';
 		//   'configdiplomas,'.
 		//   'config_acta_grado,';	

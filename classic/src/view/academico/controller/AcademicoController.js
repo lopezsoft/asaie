@@ -686,7 +686,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
             pdbType     : type
         };
 
-        me.setParamStore('CandidatosSearchStore',extra,true);
+        me.setParamStore('CandidatesSearchStore',extra,true);
     },
 
     onNotasAcademicas : function (btn) {

@@ -8,6 +8,15 @@ Ext.define('Admin.toolbar.ToolbarCrud',{
     ],
 	xtype	: 'toolbarCrud',
 	items 	: [
+		{
+			xtype	: 'facebookButton'
+		},
+		{
+			xtype	: 'youtubeButton'
+		},'-',
+		{
+			xtype	: 'printButton'
+		},
 		'->',
         {
         	xtype	: 'addButton'
@@ -20,15 +29,6 @@ Ext.define('Admin.toolbar.ToolbarCrud',{
 		},'-',
         {
 			xtype 	: 'closebutton'
-		},'-',
-		{
-			xtype	: 'printButton'
-		},
-		{
-			xtype	: 'facebookButton'
-		},
-		{
-			xtype	: 'youtubeButton'
 		}
 	]
 });

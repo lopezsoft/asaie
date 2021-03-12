@@ -61,7 +61,7 @@ Ext.define('Admin.view.widgets.WidgetA', {
                     {
                         xtype   : 'label',
                         cls     : 'widget-name-text',
-                        html    : (enroll) ? enroll.estudiante : ''
+                        html    : (enroll) ? enroll.estudiante + " (" + enroll.id + ")" : ''
                     },
                     {
                         xtype   : 'label',

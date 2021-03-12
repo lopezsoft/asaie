@@ -135,7 +135,7 @@ Ext.define('Admin.Application', {
         me.onStore('promocion.PromotedObservationStore');
         me.onStore('general.ConstanciasStore');
         me.onStore('general.CertificatesHeader');
-        me.onStore('personero.CandidatosSearchStore');
+        me.onStore('representative.CandidatesSearchStore');
         me.onStore('docentes.RecuperacionesPeriodicasStore');
         me.onStore('general.NivelesAcademicosStore');
         me.onStore('docentes.CargaStore');
@@ -159,7 +159,9 @@ Ext.define('Admin.Application', {
         me.onStore('docentes.ImportarDescriptoresStore');
         me.onStore('docentes.LogrosEstandarStore');
         me.onStore('docentes.SugerenciasInsertStore');
-        
+		me.onStore('representative.ControlPanelStore');
+		store   = Ext.getStore('ControlPanelStore');
+        store.reload();        
     },
 
     onAppUpdate: function() {

@@ -329,6 +329,11 @@ class SME_Model extends CI_Model {
 			);
 			$request = json_encode($request);
 		}else{
+
+			if(!is_dir($this->directory_path.$path)) {
+				mkdir($this->directory_path.$path, 0777, true);
+			}
+
 	        if (is_dir($this->directory_path.$path)){
 		        $foto	= $this->directory_path.$path.PATH_DELIM.basename($fileName);	
 				if (is_uploaded_file($fileTmp)){

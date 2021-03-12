@@ -53,12 +53,20 @@ Ext.define('Admin.store.NavigationTreeMain', {
                 //     leaf    : true,
                 //     routeId : 'biblioteca'
                 // },
-                // {
-                //     text    : 'Personero',
-                //     iconCls : 'x-fa fa-group',
-                //     leaf    : true,
-                //     routeId : 'personero'
-                // },
+                {
+                    text    : 'Personero OLD',
+                    iconCls : 'x-fa fa-group',
+                    leaf    : true,
+					viewType: "personeroContainerView",
+                    routeId : 'personero'
+                },
+                {
+                    text    : 'Personero NEW',
+                    iconCls : 'x-fa fa-group',
+                    leaf    : true,
+					viewType: "representativeContainerView",
+                    routeId : 'representative'
+                },
                 // {
                 //     text    : 'Financiero',
                 //     iconCls : 'x-fa fa-money',

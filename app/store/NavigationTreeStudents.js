@@ -42,7 +42,14 @@ Ext.define('Admin.store.NavigationTreeStudents', {
                     routeId     : 'academicactivities',
                     viewType    : 'academicactivitiesstudents',
                     leaf        : true
-                }
+                },
+				{
+                    text    : 'Personero NEW',
+                    iconCls : 'x-fa fa-group',
+                    leaf    : true,
+					viewType: "representativestudentscontainerview",
+                    routeId : 'representative'
+                },
             ]
     }
 });
