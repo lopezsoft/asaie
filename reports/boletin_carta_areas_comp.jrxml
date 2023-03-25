@@ -1367,7 +1367,7 @@
 		<band height="33" splitType="Stretch">
 			<textField isStretchWithOverflow="true">
 				<reportElement x="26" y="7" width="507" height="18" isRemoveLineWhenBlank="true" uuid="60f4683a-0284-4fea-9cb7-bb6a102fcce2"/>
-				<textElement textAlignment="Center">
+				<textElement textAlignment="Center" markup="html">
 					<font fontName="Arial" size="8" isItalic="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{R_FOOTER}]]></textFieldExpression>

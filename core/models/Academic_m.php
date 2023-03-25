@@ -363,7 +363,7 @@ class Academic_m extends SME_Model {
 	
 	function get_generate_cuadro_honor($per,$ck){
 		$db	= $this->get_db_name();
-		return $this->get_call_execute($db.".sp_gen_c_honor",$this->get_year().",".$per.",".$ck);
+		return $this->get_call_execute("sp_gen_c_honor",$this->get_year().",".$per.",".$ck);
 	}
 	function upload_files_dig_est ($file,$cod_est) {
 		$this->student_folders($cod_est);

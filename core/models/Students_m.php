@@ -118,6 +118,7 @@ class Students_m extends SME_Model {
 		$db	= $this->get_db_name();
 		$this->db->where('id_student', $this->get_student_id());
 		$this->db->where('year', $this->get_year());
+		$this->db->where('id_state', 2);
 		$qm		= $this->db->get($db.'.student_enrollment');
 		$row	= $qm->row();
 		if($row){

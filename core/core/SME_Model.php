@@ -262,6 +262,7 @@ class SME_Model extends CI_Model {
 		$this->db->select('id');
 		$this->db->where('id_student', $this->get_student_id());
 		$this->db->where('year', $this->get_year());
+		$this->db->where('id_state', 2);
 		$this->db->limit(1);
 		$query 	= $this->db->get($db.".student_enrollment");
 		$row	= $query->row();

@@ -6,5 +6,5 @@
  define('USER_PASSWORD','');
  define('PORT','3307');
  define('DATABASE_DRIVE','MariaDB'); // MariaDB, MySQL
- define('BASE_URL_INDEX','http://asaie/');
+ define('BASE_URL_INDEX','http://asaie.test/');
  

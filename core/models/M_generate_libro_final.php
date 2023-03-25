@@ -305,7 +305,7 @@ class M_generate_libro_final extends SME_Model {
 						$_p1 = 0; $_p2 = 0; $_p3 = 0; $_p4 = 0; $_count = 0;
 						$q	= "SELECT IF(nota_habilitacion > 0, nota_habilitacion, final) nt, periodo FROM ".$table." 
 							AS tn LEFT JOIN ".$db.".cursos AS tc ON (tn.id_curso=tc.id AND tn.year=tc.year)
-							WHERE tc.id_asig=".$row['id_asig']." AND id_matric =".$_id_matric.
+							WHERE tc.id=".$row['id_curso']." AND id_matric =".$_id_matric.
 							" AND periodo BETWEEN 1 AND ".$this->_n_per_div;
 						$q	= $this->db->query($q);						
 						if($q->num_rows() > 0){

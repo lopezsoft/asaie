@@ -512,13 +512,6 @@
 				</textElement>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
 			</textField>
-			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="RelativeToBandHeight" x="26" y="20" width="507" height="8" uuid="7829f300-5387-4522-b2ae-d6bf773009d8"/>
-				<textElement textAlignment="Center">
-					<font fontName="SansSerif" size="6" isBold="true" isItalic="false" isUnderline="false" isStrikeThrough="false"/>
-				</textElement>
-				<textFieldExpression><![CDATA[$P{R_MARKETING}]]></textFieldExpression>
-			</textField>
 			<textField pattern="h:mm a">
 				<reportElement positionType="Float" isPrintRepeatedValues="false" x="540" y="17" width="32" height="10" isRemoveLineWhenBlank="true" uuid="57d23671-45dc-4406-b2cc-71d2a720121e"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">

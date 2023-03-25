@@ -37,8 +37,8 @@ Ext.define('Admin.view.promocion.PromAnticipada',{
                         labelWidth	: 60
                     },
                     width   : 450,
-					height  : 255,
-					margin  : 4,
+					          height  : 255,
+					          margin  : 4,
                     items   : [
                         {
                             xtype   : 'sedesJorn',
@@ -79,8 +79,8 @@ Ext.define('Admin.view.promocion.PromAnticipada',{
                     xtype   : 'fieldset',
                     itemId  : 'Mat',
                     title   : 'Promover estudiantes a:',
-					hidden  : true,
-					margin  : 4,
+					          hidden  : true,
+					          margin  : 4,
                     defaults : {
                         labelWidth	: 60
                     },
@@ -135,8 +135,8 @@ Ext.define('Admin.view.promocion.PromAnticipada',{
             margin  : '0 1 0 0',
             flex    : 4,
             title   : 'CONSULTA',
-			autoLoad    : false,
-			syncHeight  : false,
+			      autoLoad    : false,
+			      syncHeight  : false,
             plugins: [
                 {
                     ptype: 'rowexpander',
@@ -179,7 +179,7 @@ Ext.define('Admin.view.promocion.PromAnticipada',{
                 },
                 {
                     text: 'Grupo',
-                    dataIndex: 'grupo',
+                    dataIndex: 'id_group',
                     width: 60
                 },
                 {

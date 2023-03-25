@@ -856,7 +856,7 @@
 			</line>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="212" width="26" height="12" uuid="12822b83-de16-474e-bf65-d4988f22e5d3">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 6)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 10)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -865,7 +865,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="225" width="26" height="12" uuid="7b527d78-1d69-43b2-a7b9-0bed00244bbc">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 6)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 10)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -874,7 +874,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="238" width="26" height="12" uuid="fb906257-bc89-4079-a345-45981b3f557f">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 6)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 10)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -883,7 +883,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="251" width="26" height="12" uuid="33e823a1-4768-4879-abfa-934298250d7b">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 6)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 10)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -892,7 +892,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="264" width="26" height="12" uuid="ef0a6712-f430-495a-9da9-d61510b106c6">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 6)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 10)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -901,7 +901,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="277" width="26" height="12" uuid="7ff5dbfb-51f1-4f99-8a00-c5e4e4294c22">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 6)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() < 10)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -910,7 +910,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="212" width="26" height="12" printWhenGroupChanges="codigo estudiante" uuid="83d78505-602e-44de-9c5c-4d7603ed6e4b">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 5)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 9)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -919,7 +919,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="225" width="26" height="12" uuid="d61ccd26-6d85-4f3b-87ac-d15c80addade">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 5)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 9)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -928,7 +928,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="238" width="26" height="12" uuid="2739b76b-3cf7-46e6-b62f-f97693ee5b01">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 5)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 9)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -937,7 +937,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="251" width="26" height="12" uuid="ab3d731c-c4ed-4e68-a05a-a20214f25711">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 5)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 9)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -946,7 +946,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="264" width="26" height="12" uuid="73a7c4b5-4d35-43cb-a2e1-416dedb095c9">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 5)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 9)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>
@@ -955,7 +955,7 @@
 			</staticText>
 			<staticText>
 				<reportElement positionType="Float" x="48" y="277" width="26" height="12" uuid="b7503e76-f6d1-4891-8f98-0b24f4e28c0d">
-					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 5)]]></printWhenExpression>
+					<printWhenExpression><![CDATA[new Boolean($F{id_grade}.floatValue() > 9)]]></printWhenExpression>
 				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font size="9" isBold="true"/>

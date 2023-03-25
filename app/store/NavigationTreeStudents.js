@@ -44,7 +44,7 @@ Ext.define('Admin.store.NavigationTreeStudents', {
                     leaf        : true
                 },
 				{
-                    text    : 'Personero NEW',
+                    text    : 'Elecciones escolares',
                     iconCls : 'x-fa fa-group',
                     leaf    : true,
 					viewType: "representativestudentscontainerview",

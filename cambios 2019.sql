@@ -4032,7 +4032,27 @@ ENGINE=InnoDB;
 ALTER TABLE `configboletin`
 	ADD COLUMN `bol_desem` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activeindica`;
 
+
+/*************************** 07-05-2021 *****************************/
+
+	ALTER TABLE `config_columns_theacher`
+		DROP FOREIGN KEY `FK_config_columns_theacher_cursos`;
+
+		ALTER TABLE `config_columns_theacher`
+		ADD CONSTRAINT `FK_config_columns_theacher_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
 /*********************************** AJUSTES **********************************/
+
+INSERT INTO obs_items_modelos (id_modelo, descripcion, year, estado, convivencia)
+SELECT id_modelo, descripcion, YEAR + 1, estado, convivencia 
+FROM obs_items_modelos a WHERE a.year = 2020;
+
+INSERT INTO obs_criterios (id_inst, id_item_modelo, descripcion, estado)
+SELECT a.id_inst, a.id_item_modelo, a.descripcion, a.estado
+FROM obs_criterios AS a
+LEFT JOIN obs_items_modelos AS b ON a.id_item_modelo = b.id
+WHERE b.year = 2020 ORDER BY a.id_item_modelo;
 
 INSERT INTO users (user_id, user_type, username, password, active)
 	SELECT id_docente, 4, documento, SHA1(documento),1 FROM docentes a

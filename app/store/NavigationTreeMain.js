@@ -61,7 +61,7 @@ Ext.define('Admin.store.NavigationTreeMain', {
                     routeId : 'personero'
                 },
                 {
-                    text    : 'Personero NEW',
+                    text    : 'Elecciones escolares',
                     iconCls : 'x-fa fa-group',
                     leaf    : true,
 					viewType: "representativeContainerView",

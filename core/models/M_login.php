@@ -246,6 +246,7 @@ class M_login extends SME_Model {
 					$this->db->join($db.'.inscripciones AS g', 'a.id_student = g.id', 'left');
 					$this->db->where('a.id_student', $this->get_student_id());
 					$this->db->where('a.year', $this->get_year());
+					$this->db->where('a.id_state', 2);
 					$this->db->limit(1);
 					$enrollement	= $this->db->get();
 					

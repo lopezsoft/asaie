@@ -467,7 +467,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 			$this->db->where('tn.year', $year);
 			$this->db->where('tn.periodo', $per);
 			$this->db->where('tn.id_matric', $idMatric);
-			$this->db->where('tn.final > 0');
+			$this->db->where('tn.final >= 0');
 			$this->db->where('tc.year', $year);
 			$this->db->where('tc.id_grado', $grado);
 			$this->db->where('tc.estado', 1);
@@ -519,7 +519,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 					}/*END*/
 					$_suma			= $_suma + $final;
 					$idAsig			= $row->id_asig;
-					if($final > 0 AND $final <= $this->hasta){
+					if($final >= 0 AND $final <= $this->hasta){
 						++$x_cant_asig_perdidas;
 					}
 					$x_count2	= 0;					

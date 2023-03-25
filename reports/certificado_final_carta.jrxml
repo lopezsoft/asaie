@@ -543,7 +543,9 @@
 					<textFieldExpression><![CDATA[$F{area}.trim()]]></textFieldExpression>
 				</textField>
 				<subreport>
-					<reportElement positionType="Float" x="499" y="1" width="59" height="12" uuid="4ddab6ff-60d1-4dfe-8634-cafaf7dc8325"/>
+					<reportElement positionType="Float" x="499" y="1" width="59" height="12" uuid="4ddab6ff-60d1-4dfe-8634-cafaf7dc8325">
+						<printWhenExpression><![CDATA[new Boolean($F{ih}.floatValue() >0 )]]></printWhenExpression>
+					</reportElement>
 					<subreportParameter name="PYear">
 						<subreportParameterExpression><![CDATA[$F{year}]]></subreportParameterExpression>
 					</subreportParameter>
@@ -593,7 +595,9 @@
 				<textFieldExpression><![CDATA[$F{asignatura}.trim()]]></textFieldExpression>
 			</textField>
 			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="ContainerHeight" x="444" y="0" width="54" height="10" printWhenGroupChanges="area" uuid="246c35bd-dcf6-416c-9fa2-b2b139925d61"/>
+				<reportElement stretchType="ContainerHeight" x="444" y="0" width="54" height="10" printWhenGroupChanges="area" uuid="246c35bd-dcf6-416c-9fa2-b2b139925d61">
+					<printWhenExpression><![CDATA[new Boolean($F{ih}.floatValue() >0 )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Right" verticalAlignment="Middle">
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
@@ -611,8 +615,10 @@
 					<pen lineWidth="0.75"/>
 				</graphicElement>
 			</line>
-			<textField isStretchWithOverflow="true">
-				<reportElement stretchType="ContainerHeight" x="350" y="0" width="90" height="10" printWhenGroupChanges="area" uuid="da60bb3c-3e3a-42f8-8fa0-cbc29e20e9ee"/>
+			<textField isStretchWithOverflow="true" pattern="#,###.###;(#,###.###-)">
+				<reportElement stretchType="ContainerHeight" x="350" y="0" width="90" height="10" printWhenGroupChanges="area" uuid="da60bb3c-3e3a-42f8-8fa0-cbc29e20e9ee">
+					<printWhenExpression><![CDATA[new Boolean($F{ih}.floatValue() >0 )]]></printWhenExpression>
+				</reportElement>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="7" isBold="false"/>
 				</textElement>
