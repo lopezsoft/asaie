@@ -21,7 +21,7 @@ Ext.define('Admin.view.promocion.PromotionContainer',{
             items   : [
                 {
                     xtype   : 'buttonPanel',
-                    text    : 'Informe final de evaluación',
+                    text    : 'Informe final de promoción',
                     iconCls : 'x-fa fa-book',
                     handler : 'onLibroFinal'
                 }
@@ -87,13 +87,12 @@ Ext.define('Admin.view.promocion.PromotionContainer',{
             items   : [
                 {
                     xtype   : 'buttonPanel',
-                    disabled: true,
                     text    : 'Cerrar año lectivo',
                     handler : function (btn) {
                         var
                             me  = Admin.getApplication(),
-                            gb  = globales,
-                            cUrl= gb.SetUrls.UrlBase+'c_cierre/get_close';
+                            gb  = Global,
+                            cUrl= gb.getUrlBase() + 'c_cierre/get_close';
                         me.onMsgWait();
                         Ext.Ajax.request({
                             url     : cUrl ,

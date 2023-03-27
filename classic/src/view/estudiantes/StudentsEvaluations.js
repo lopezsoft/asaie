@@ -12,7 +12,8 @@ Ext.define('Admin.view.estudiantes.StudentsEvaluations',{
         app.onStore('estudiantes.StudentsEvaluationsStore');
         me.callParent(arguments);
         me.setTitle('Evaluaciones en línea');
-    },
+	},
+	showSaveButton      : false,
     items   : [
         {
             xtype       : 'customgrid',
@@ -68,7 +69,6 @@ Ext.define('Admin.view.estudiantes.StudentsEvaluations',{
                     text    : 'Disponible desde',
                     columns : [
                         {
-                            xtype       : 'datecolumn',
                             text 		: 'Fecha',
                             width 		: 100,
                             dataIndex	: 'fecha'
@@ -84,7 +84,6 @@ Ext.define('Admin.view.estudiantes.StudentsEvaluations',{
                     text    : 'Disponible hasta',
                     columns : [
                         {
-                            xtype       : 'datecolumn',
                             text 		: 'Fecha',
                             width 		: 100,
                             dataIndex	: 'fecha_cierre'

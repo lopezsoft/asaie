@@ -15,10 +15,10 @@ Ext.define('Admin.store.general.MatCursoStore', {
             pdbGrado    : 0
         },
         api: {
-            create  : 'General/insert_data',
+            create  : 'master/insertData',
             read    : 'academic/get_select_matcurso',
-            update  : 'General/update_data',
-            destroy : 'General/delete_data'
+            update  : 'master/updateData',
+            destroy : 'master/deleteData'
         }
     }
 });

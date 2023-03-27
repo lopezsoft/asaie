@@ -686,7 +686,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
             pdbType     : type
         };
 
-        me.setParamStore('CandidatosSearchStore',extra,true);
+        me.setParamStore('CandidatesSearchStore',extra,true);
     },
 
     onNotasAcademicas : function (btn) {
@@ -913,6 +913,7 @@ Ext.define('Admin.view.academico.controller.AcademicoController',{
                         pdbJorn     : values.get('id_study_day'),
                         pdbMatric   : values.get('id'),
                         pdbSede     : values.get('id_headquarters'),
+                        pdbImage    : values.get('foto'),
                         pdbEstudian : values.get('nombres')
                     };
                 break;

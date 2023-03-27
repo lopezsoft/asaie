@@ -79,7 +79,7 @@ class M_report_general extends SME_Model {
 		return $request;
 	}
 		
-	function ficha_observador($format,$Grado,$Grupo,$Jorn,$Matric,$Sede,$est){
+	function ficha_observador($format,$Grado,$Grupo,$Jorn,$Matric,$Sede,$est,$pdbImage){
 		//Reporte a Procesar : Este nombre es del reporte creado en JasReport
 		$report			=	'ficha_observador_mod3';
 		$date			= date('Y-m-d h-m-s');
@@ -99,7 +99,14 @@ class M_report_general extends SME_Model {
 			$c_cuerpo	= $sql->row('cuerpo');
 			$c_cuerpo	= str_replace("{P_NAME_STUDENT}",$est,$c_cuerpo);
 		}
-				
+		
+		$image	= 'assets/img/avatars/unknown_carnets.png';
+		if(strlen($pdbImage)){
+			$imgright	= $this->directory_path.PATH_DELIM.$pdbImage;
+			if(file_exists($imgright)){
+				$image	= $pdbImage;
+			}
+		}
 		$parm	= array(
 			'SQL_PARAM' 	=> $query,
 			'P_ID_MATRIC'	=> intval($Matric),
@@ -108,11 +115,10 @@ class M_report_general extends SME_Model {
 			'P_GRADO'		=> ($Grado),
 			'P_GRUPO'		=> ($Grupo),
 			'P_ID_JORN'		=> intval($Jorn),
+			'P_IMAGE_PROF'	=> $image,
 			'R_CUERPO'		=> $c_cuerpo
 		);
-		
-		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);
-				
+		$request	= $this->M_jreport->get_report_export($report,$report_export,$format,$query,$parm);	
 		return $request;
 	}
 	

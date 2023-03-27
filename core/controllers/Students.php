@@ -5,6 +5,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  		parent::__construct();
  		$this->load->model('Students_m');
 	} 	
+	public function getStudentsLiveClasses(){
+	   echo $this->Students_m->getStudentsLiveClasses();
+   	} 	
 
 	public function getCommentsActivities()
 	{

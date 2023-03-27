@@ -254,8 +254,8 @@ class M_generate_libro_final extends SME_Model {
 						$final	= 	$row['final'];
 						if($this->_n_red > 0 AND $this->_n_aplica > 0){
 							$selec	= "SELECT t.hasta FROM ".$db.".desempeños t 
-									LEFT ".$db.".JOIN grados_agrupados AS t1 ON t.id_grado_agrupado = t1.id
-									LEFT ".$db.".JOIN aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
+									LEFT JOIN {$db}.grados_agrupados AS t1 ON t.id_grado_agrupado = t1.id
+									LEFT JOIN {$db}.aux_grados_agrupados AS t2 ON t2.id_grado_agrupado = t1.id
 									WHERE t.year = ".$_year." AND t.reprueba = 1 
 									AND t2.id_grado = ".$_grado." LIMIT 1";
 							$selec	= $this->db->query($selec);
@@ -305,7 +305,7 @@ class M_generate_libro_final extends SME_Model {
 						$_p1 = 0; $_p2 = 0; $_p3 = 0; $_p4 = 0; $_count = 0;
 						$q	= "SELECT IF(nota_habilitacion > 0, nota_habilitacion, final) nt, periodo FROM ".$table." 
 							AS tn LEFT JOIN ".$db.".cursos AS tc ON (tn.id_curso=tc.id AND tn.year=tc.year)
-							WHERE tc.id_asig=".$row['id_asig']." AND id_matric =".$_id_matric.
+							WHERE tc.id=".$row['id_curso']." AND id_matric =".$_id_matric.
 							" AND periodo BETWEEN 1 AND ".$this->_n_per_div;
 						$q	= $this->db->query($q);						
 						if($q->num_rows() > 0){
@@ -363,9 +363,9 @@ class M_generate_libro_final extends SME_Model {
 		$result	= $curso;
 		if($sql->num_rows()>0){
 			if ($sql->row('estado') == 0){
-				$qry	= "SELECT id FROM cursos WHERE id_sede=".$sql->row('id_sede')." AND id_grado=".
+				$qry	= "SELECT id FROM {$db}.cursos WHERE id_sede=".$sql->row('id_sede')." AND id_grado=".
 						  $sql->row('id_grado')." AND id_asig=".$sql->row('id_asig').
-						  " AND cod_jorn=".$sql->row('cod_jorn')." AND grupo='".$sql->row('grupo').
+						  " AND id_jorn=".$sql->row('id_jorn')." AND grupo='".$sql->row('grupo').
 						  "' AND year=".$sql->row('year')." AND estado = 1 LIMIT 1";
 				$qry	= $this->db->query($qry);
 				if ($qry->num_rows() > 0){

@@ -135,7 +135,10 @@ Ext.define('Admin.forms.CustomForm',{
 		if(me.getModalView()){
 			me.setWinObject(Ext.create(me.getModalView()));
 		}
-    },
+	},
+	beforeEdit : function (){
+		return true;
+	},
     /**Mostrador de ventanas*/
     showWindow: function (btn) {
         var me	= this;
@@ -149,6 +152,9 @@ Ext.define('Admin.forms.CustomForm',{
 			form 	= me.getWinObject().down('form'),
 			form.reset(true);
 			if(btn.itemId == 'editButton'){
+				if(!me.beforeEdit()){
+					return false;
+				}
 				form.loadRecord(data);
 			}
 			if(me.getRecord()){

@@ -30,7 +30,7 @@ Ext.define('Admin.view.estudiantes.menu.StudentReportsContainer',{
                     iconCls : 'x-fa fa-print'
                 }
             ]
-        },
+		},
         {
             xtype   : 'containerButton',
             items   : [
@@ -51,8 +51,7 @@ Ext.define('Admin.view.estudiantes.menu.StudentReportsContainer',{
                     xtype   : 'buttonPanel',
                     text    : 'Informe final de promoción',
                     itemId  : 'btnLibroFinal',
-                    disabled: true,
-                    handler : '',
+                    handler : 'onLibroFinal',
                     iconCls : 'x-fa fa-graduation-cap"'
                 }
             ]

@@ -118,6 +118,7 @@ define('HTML_REPORT_DIRECTORY','html');
 define('RTF_REPORT_DIRECTORY','rtf');
 define('EXPORT_FOLDER','filesexport');
 define('STUDENT_FOLDERS','estudiantes');
+define('REPRESENTATIVE_FOLDERS','representative');
 
 define('URL_JAVA_BRIDGE',"http://localhost:8080/JavaBridge/java/Java.inc");
 

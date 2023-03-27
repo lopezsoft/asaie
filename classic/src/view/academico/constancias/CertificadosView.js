@@ -4,7 +4,7 @@ Ext.define('Admin.view.academico.CertificadosView',{
     itemId      : 'CertificadosView',
     initComponent: function () {
         var me  = Admin.getApplication();
-        me.onStore('personero.CandidatosSearchStore');
+        me.onStore('representative.CandidatesSearchStore');
         me.onStore('general.PeriodosStore');
         this.callParent(arguments);
         this.setTitle(AppLang.getSTitleViewStudyCertificates() + ' - ' + Global.getYear());

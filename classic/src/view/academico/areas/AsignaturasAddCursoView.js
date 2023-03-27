@@ -1,7 +1,7 @@
 Ext.define('Admin.view.academico.AsignaturasAddCursoView' ,{
-    extend	: 'Admin.base.WindowCrud',
-    alias 	: 'widget.AsignaturasAddCursoView',
-    width	: 750,
+    extend		: 'Admin.base.WindowCrud',
+    alias 		: 'widget.AsignaturasAddCursoView',
+    width		: 750,
 	maximized	: false,
 	controller	: 'academico',
     modal       : false,
@@ -65,10 +65,11 @@ Ext.define('Admin.view.academico.AsignaturasAddCursoView' ,{
                         tooltip	: 'Haga Click para agregar las asignaturas seleccionadas',
                         iconAlign	: 'left',
                         handler : function (btn) {
-                            var win 	    = btn.up('grid'),
-                                selectAsig   = win.getSelection(),
-                                winGrado     = Ext.ComponentQuery.query('CargaView')[0],
-                                selectGrado  = winGrado.down('#gridGrados').getSelection(),
+							var 
+								ts			= btn.up('window'),
+								win 		= btn.up('grid'),
+                                selectAsig  = win.getSelection(),
+                                selectGrado = ts.getRecord(),
                                 me		    = Admin.getApplication(),
                                 cCount	    = 0,
                                 store       = Ext.getStore('MatCursoStore');

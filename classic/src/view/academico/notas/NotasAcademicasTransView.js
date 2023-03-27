@@ -11,7 +11,7 @@ Ext.define('Admin.view.academico.NotasAcademicasTransView',{
         me.onStore('general.PeriodosStore');
         me.onStore('general.AsignaturaStore');
         me.onStore('general.CargaNotasStore');
-        me.onStore('personero.CandidatosSearchStore');
+        me.onStore('representative.CandidatesSearchStore');
         me.onStore('general.NotasAcademicasStore');
         this.callParent(arguments);
         this.setTitle(AppLang.getSTitleViewAcademicNotes() + ' - ' + Global.getYear());
@@ -28,7 +28,7 @@ Ext.define('Admin.view.academico.NotasAcademicasTransView',{
             items : [
                 {
                     xtype   : 'customgrid',
-                    store   : 'CandidatosSearchStore',
+                    store   : 'CandidatesSearchStore',
                     flex    : 4,
                     margin  : '0 1 0 0',
                     iconCls : '',

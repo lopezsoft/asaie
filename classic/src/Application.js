@@ -30,7 +30,7 @@ Ext.define('Admin.Application', {
     ],
 
 
-    defaultToken : 'dashboard',
+    defaultToken: 'dashboard',
 
     // The name of the initial view to create. This class will gain a "viewport" plugin
     // if it does not extend Ext.Viewport.
@@ -52,17 +52,17 @@ Ext.define('Admin.Application', {
     },
     launch: function() {
         Ext.Date.patterns = {
-            ISO8601Long     :"d-m-Y H:i:s",
-            ISO8601Short    :"d-m-Y",
-            ShortDate       : "J/n/Y",
-            LongDate        : "l, d F, Y",
-            FullDateTime    : "l, d F, Y g:i:s A",
-            MonthDay        : "d F",
-            ShortTime       : "g:i A",
-            LongTime        : "g:i:s A",
+            ISO8601Long: "d-m-Y H:i:s",
+            ISO8601Short: "d-m-Y",
+            ShortDate: "J/n/Y",
+            LongDate: "l, d F, Y",
+            FullDateTime: "l, d F, Y g:i:s A",
+            MonthDay: "d F",
+            ShortTime: "g:i A",
+            LongTime: "g:i:s A",
             SortableDateTime: "d-m-Y\\TH:i:s",
             UniversalSortableDateTime: "d-m-Y H:i:s",
-            YearMonth       : "F, Y"
+            YearMonth: "F, Y"
         };
         // TODO - Launch the application
         var me = this;
@@ -85,10 +85,10 @@ Ext.define('Admin.Application', {
                     Global.setData(result.data);
                     Global.setYear(result.data.year);
                     Global.setDbName(result.data.db_name);
-					Global.setDbConfig(result.data.config);
-					Global.setUserData(result.data.user_data[0]);
+                    Global.setDbConfig(result.data.config);
+                    Global.setUserData(result.data.user_data[0]);
                     me.setMainView('Admin.view.main.Main');
-					mainView = me.getMainView();
+                    mainView = me.getMainView();
                     mainView.getController().redirectTo('dashboard', true);
                     toastr.options = {
                         "closeButton": false,
@@ -135,7 +135,7 @@ Ext.define('Admin.Application', {
         me.onStore('promocion.PromotedObservationStore');
         me.onStore('general.ConstanciasStore');
         me.onStore('general.CertificatesHeader');
-        me.onStore('personero.CandidatosSearchStore');
+        me.onStore('representative.CandidatesSearchStore');
         me.onStore('docentes.RecuperacionesPeriodicasStore');
         me.onStore('general.NivelesAcademicosStore');
         me.onStore('docentes.CargaStore');
@@ -159,7 +159,9 @@ Ext.define('Admin.Application', {
         me.onStore('docentes.ImportarDescriptoresStore');
         me.onStore('docentes.LogrosEstandarStore');
         me.onStore('docentes.SugerenciasInsertStore');
-        
+        me.onStore('representative.ControlPanelStore');
+        store = Ext.getStore('ControlPanelStore');
+        store.reload();
     },
 
     onAppUpdate: function() {
@@ -273,7 +275,7 @@ Ext.define('Admin.Application', {
      @extParam : array
      @reload : Bolean, indica si se recarga el Store después de setearlo (Opcional),
      */
-    setParamStore: (cStore, extParam, reload) => {
+    setParamStore: function(cStore, extParam, reload) {
         var datos = Ext.getStore(cStore);
         if (datos) {
             proxy = datos.getProxy();
@@ -309,38 +311,38 @@ Ext.define('Admin.Application', {
 
     showResult: function(text, type) {
         toastr.options = {
-            "closeButton"   : true,
-            "debug"         : false,
-            "newestOnTop"   : false,
-            "progressBar"   : false,
-            "positionClass" : "toast-top-right",
-            "preventDuplicates" : true,
-            "onclick"       : null,
-            "showDuration"  : "300",
-            "hideDuration"  : "1000",
-            "timeOut"       : "5000",
-            "extendedTimeOut"   : "1000",
-            "showEasing"    : "swing",
-            "hideEasing"    : "linear",
-            "showMethod"    : "fadeIn",
-            "hideMethod"    : "fadeOut"
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": false,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": true,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
         };
-        if(type){
+        if (type) {
             switch (type) {
                 case 'success':
                     toastr.success(text);
                     break;
                 case 'warning':
-                        toastr.warning(text);
-                        break;
+                    toastr.warning(text);
+                    break;
                 case 'error':
-                            toastr.error(text);
-                            break;
+                    toastr.error(text);
+                    break;
                 default:
                     toastr.info(text);
                     break;
             }
-        }else{
+        } else {
             toastr.info(text);
         }
     },

@@ -13,6 +13,7 @@ Ext.define('Admin.model.general.ConfiguracionBoletinModel',{
         { name: 'firmadirgrupo',type : 'int'},
         { name: 'activamsg',type : 'int'},
         { name: 'activeindica',type : 'int'},
+        { name: 'bol_desem',type : 'int'},
         { name: 'permi_ind',type : 'int'}
     ]
 });

@@ -85,8 +85,9 @@ Ext.define('Admin.view.academico.Carga',{
                                             tooltip	: 'Haga Click para agregar lasignaturas al grado seleccionado',
                                             iconAlign	: 'left',
                                             handler     : function (btn) {
-                                                win = Ext.create('Admin.view.academico.AsignaturasAddCursoView');
-                                                win.show();
+                                               Ext.create('Admin.view.academico.AsignaturasAddCursoView',{
+												   record	: btn.up('window').down('#gridGrados').getSelection()
+											   }).show();
                                             }
                                         }
                                     ]

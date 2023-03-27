@@ -15,7 +15,7 @@ Ext.define('Admin.combo.CustomComboBox',{
     queryDelay	: '10',
     labelWidth	: 180,
     autoLoadOnValue : true,
-    minChars    : 2,
+    minChars    : 3,
     anyMatch    : true,
     modal       : true,
     frame       : true,

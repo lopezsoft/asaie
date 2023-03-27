@@ -4027,7 +4027,32 @@ COLLATE='utf8_general_ci'
 ENGINE=InnoDB;
 
 
+/********************************* 10 agosto 2020 ******************************/
+
+ALTER TABLE `configboletin`
+	ADD COLUMN `bol_desem` TINYINT(1) NOT NULL DEFAULT 0 AFTER `activeindica`;
+
+
+/*************************** 07-05-2021 *****************************/
+
+	ALTER TABLE `config_columns_theacher`
+		DROP FOREIGN KEY `FK_config_columns_theacher_cursos`;
+
+		ALTER TABLE `config_columns_theacher`
+		ADD CONSTRAINT `FK_config_columns_theacher_cursos` FOREIGN KEY (`id_curso`) REFERENCES `cursos` (`id`) ON UPDATE CASCADE ON DELETE CASCADE;
+
+
 /*********************************** AJUSTES **********************************/
+
+INSERT INTO obs_items_modelos (id_modelo, descripcion, year, estado, convivencia)
+SELECT id_modelo, descripcion, YEAR + 1, estado, convivencia 
+FROM obs_items_modelos a WHERE a.year = 2020;
+
+INSERT INTO obs_criterios (id_inst, id_item_modelo, descripcion, estado)
+SELECT a.id_inst, a.id_item_modelo, a.descripcion, a.estado
+FROM obs_criterios AS a
+LEFT JOIN obs_items_modelos AS b ON a.id_item_modelo = b.id
+WHERE b.year = 2020 ORDER BY a.id_item_modelo;
 
 INSERT INTO users (user_id, user_type, username, password, active)
 	SELECT id_docente, 4, documento, SHA1(documento),1 FROM docentes a
@@ -4106,7 +4131,7 @@ SELECT a.id, d.id_matric, d.id_sede, d.id_jorn, d.id_grado, d.grupo, d.`año`, d
 FROM inscripciones a
 LEFT JOIN matriculas AS d ON d.cod_est = a.id
 WHERE d.cod_est = a.id AND NOT EXISTS(
-	SELECT * FROM student_enrollment b WHERE b.id_student = d.id_matric
+	SELECT * FROM student_enrollment b WHERE b.id = d.id_matric
 ) ORDER BY a.id, d.`año`;
 
 
@@ -4117,3 +4142,155 @@ DELETE FROM inscripciones WHERE id = 221;
 DELETE FROM student_enrollment WHERE id_student = 221 ;
 	
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=1;	
+
+/*Quitar etiquetas html de un campo*/
+UPDATE obs_anotaciones_mod_3 a SET 
+a.anotacion = (SELECT strip_tags(a.anotacion));
+UPDATE obs_anotaciones_mod_3 a SET 
+a.compromiso_est = (SELECT strip_tags(a.compromiso_est));
+UPDATE obs_anotaciones_mod_3 a SET 
+a.compromiso_acu = (SELECT strip_tags(a.compromiso_acu))
+UPDATE obs_anotaciones_mod_3 a SET 
+a.compromiso_inst = (SELECT strip_tags(a.compromiso_inst));
+
+
+	
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;	
+
+INSERT INTO nscp00 SELECT tn.* FROM nscp00_copy AS tn
+LEFT JOIN cursos AS tc ON (tn.id_curso = tc.id AND tn.year = tc.year)
+LEFT JOIN student_enrollment AS tm ON (tn.id_matric = tm.id AND tn.year = tm.year)
+WHERE tn.id_curso = tc.id AND tn.id_matric = tm.id AND NOT EXISTS (
+	SELECT * FROM nscp00 AS tr WHERE tr.id_curso = tn.id_curso AND tr.id_matric = tn.id_matric
+	AND tr.year = tn.year AND tr.periodo = tn.periodo
+);
+
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=1;	
+
+
+UPDATE inscripciones b SET b.nro_doc_id = RAND() 
+WHERE EXISTS(
+	SELECT COUNT(a.nro_doc_id) AS total, a.nro_doc_id FROM inscripciones a 
+	WHERE a.nro_doc_id = b.nro_doc_id 
+	GROUP BY a.nro_doc_id 
+	HAVING total > 1);
+
+
+
+UPDATE obs_anotaciones_mod_3 a 
+SET a.anotacion = (SELECT strip_tags(a.anotacion)),
+a.compromiso_est = (SELECT strip_tags(a.compromiso_est)),
+a.compromiso_acu = (SELECT strip_tags(a.compromiso_acu)),
+a.compromiso_inst = (SELECT strip_tags(a.compromiso_inst))
+;
+
+
+-- Select para obtener el listado de los estudiantes con notas
+
+(SELECT tn.periodo,tn.year,tn.final, tc.grupo, tg.cod_grado, tg.grado, 
+		RTRIM(tas.asignatura) asignatura,tas.abrev AS abrev_asig,
+		RTRIM(tar.area) area, tar.abrev AS abre_area, 
+		CONCAT(RTRIM(td.apellido1),' ',RTRIM(td.apellido2),' ',
+		RTRIM(td.nombre1),' ',RTRIM(td.nombre2)) as docente,
+		ts.NOMBRE_SEDE AS sede, tj.jornada
+		,CONCAT(RTRIM(te.apellido1),' ',RTRIM(te.apellido2),' ',
+		RTRIM(te.nombre1),' ',RTRIM(te.nombre2)) as estudiante, 
+		tme.name_state, es.nombre_escala	FROM nscp00 AS tn 
+		LEFT JOIN cursos AS tc ON (tn.id_curso = tc.id AND tn.year = tc.year)
+		LEFT JOIN asignaturas AS tas ON tc.id_asig=tas.id_pk
+		LEFT JOIN aux_asignaturas AS au ON (au.id_asign = tas.id_pk AND au.year = 2020)
+	   LEFT JOIN areas AS tar ON au.id_area = tar.id 
+		LEFT JOIN docentes AS td ON tc.id_docente=td.id_docente 
+		LEFT JOIN sedes AS ts ON tc.id_sede=ts.id 
+	   LEFT JOIN jornadas AS tj ON tc.id_jorn=tj.cod_jorn
+	   LEFT JOIN grados As tg ON tc.id_grado=tg.id
+	   LEFT JOIN student_enrollment AS tm ON tn.id_matric=tm.id
+		LEFT JOIN inscripciones AS te ON tm.id_student = te.id
+		LEFT JOIN registration_status AS tme ON tm.id_state = tme.id
+		LEFT JOIN `desempeños` AS t1 ON (tn.final BETWEEN t1.desde AND t1.hasta AND t1.year = tn.year)
+		LEFT JOIN grados_agrupados AS t2 ON t1.id_grado_agrupado = t2.id 
+		LEFT JOIN aux_grados_agrupados AS t3 ON t3.id_grado_agrupado = t2.id
+		LEFT JOIN escala_nacional AS es ON t1.id_escala = es.id
+		WHERE tn.year =  2020 AND tc.year =  2020 AND tm.year =  2020  AND t3.id_grado = tc.id_grado)
+	UNION
+	(SELECT tn.periodo,tn.year,tn.final, tc.grupo, tg.cod_grado, tg.grado, 
+		RTRIM(tas.asignatura) asignatura,tas.abrev AS abrev_asig,
+		RTRIM(tar.area) area, tar.abrev AS abre_area, 
+		CONCAT(RTRIM(td.apellido1),' ',RTRIM(td.apellido2),' ',
+		RTRIM(td.nombre1),' ',RTRIM(td.nombre2)) as docente,
+		ts.NOMBRE_SEDE AS sede, tj.jornada
+		,CONCAT(RTRIM(te.apellido1),' ',RTRIM(te.apellido2),' ',
+		RTRIM(te.nombre1),' ',RTRIM(te.nombre2)) as estudiante, 
+		tme.name_state, es.nombre_escala	FROM nscp001 AS tn 
+		LEFT JOIN cursos AS tc ON (tn.id_curso = tc.id AND tn.year = tc.year)
+		LEFT JOIN asignaturas AS tas ON tc.id_asig=tas.id_pk
+		LEFT JOIN aux_asignaturas AS au ON (au.id_asign = tas.id_pk AND au.year = 2020)
+	   LEFT JOIN areas AS tar ON au.id_area = tar.id 
+		LEFT JOIN docentes AS td ON tc.id_docente=td.id_docente 
+		LEFT JOIN sedes AS ts ON tc.id_sede=ts.id 
+	   LEFT JOIN jornadas AS tj ON tc.id_jorn=tj.cod_jorn
+	   LEFT JOIN grados As tg ON tc.id_grado=tg.id
+	   LEFT JOIN student_enrollment AS tm ON tn.id_matric=tm.id
+		LEFT JOIN inscripciones AS te ON tm.id_student = te.id
+		LEFT JOIN registration_status AS tme ON tm.id_state = tme.id
+		LEFT JOIN `desempeños` AS t1 ON (tn.final BETWEEN t1.desde AND t1.hasta AND t1.year = tn.year)
+		LEFT JOIN grados_agrupados AS t2 ON t1.id_grado_agrupado = t2.id 
+		LEFT JOIN aux_grados_agrupados AS t3 ON t3.id_grado_agrupado = t2.id
+		LEFT JOIN escala_nacional AS es ON t1.id_escala = es.id
+		WHERE tn.year =  2020 AND 
+		tc.year =  2020 AND tm.year =  2020  AND t3.id_grado = tc.id_grado)
+	UNION 
+	(SELECT tn.periodo,tn.year,tn.final, tc.grupo, tg.cod_grado, tg.grado, 
+		RTRIM(tas.asignatura) asignatura,tas.abrev AS abrev_asig,
+		RTRIM(tar.area) area, tar.abrev AS abre_area, 
+		CONCAT(RTRIM(td.apellido1),' ',RTRIM(td.apellido2),' ',
+		RTRIM(td.nombre1),' ',RTRIM(td.nombre2)) as docente,
+		ts.NOMBRE_SEDE AS sede, tj.jornada
+		,CONCAT(RTRIM(te.apellido1),' ',RTRIM(te.apellido2),' ',
+		RTRIM(te.nombre1),' ',RTRIM(te.nombre2)) as estudiante, 
+		tme.name_state, es.nombre_escala	FROM nscp002 AS tn 
+		LEFT JOIN cursos AS tc ON (tn.id_curso = tc.id AND tn.year = tc.year)
+		LEFT JOIN asignaturas AS tas ON tc.id_asig=tas.id_pk
+		LEFT JOIN aux_asignaturas AS au ON (au.id_asign = tas.id_pk AND au.year = 2020)
+	   LEFT JOIN areas AS tar ON au.id_area = tar.id 
+		LEFT JOIN docentes AS td ON tc.id_docente=td.id_docente 
+		LEFT JOIN sedes AS ts ON tc.id_sede=ts.id 
+	   LEFT JOIN jornadas AS tj ON tc.id_jorn=tj.cod_jorn
+	   LEFT JOIN grados As tg ON tc.id_grado=tg.id
+	   LEFT JOIN student_enrollment AS tm ON tn.id_matric=tm.id
+		LEFT JOIN inscripciones AS te ON tm.id_student = te.id
+		LEFT JOIN registration_status AS tme ON tm.id_state = tme.id
+		LEFT JOIN `desempeños` AS t1 ON (tn.final BETWEEN t1.desde AND t1.hasta AND t1.year = tn.year)
+		LEFT JOIN grados_agrupados AS t2 ON t1.id_grado_agrupado = t2.id 
+		LEFT JOIN aux_grados_agrupados AS t3 ON t3.id_grado_agrupado = t2.id
+		LEFT JOIN escala_nacional AS es ON t1.id_escala = es.id
+		WHERE tn.year =  2020 AND 
+		tc.year =  2020 AND tm.year =  2020 AND t3.id_grado = tc.id_grado)
+	UNION 
+	(SELECT tn.periodo,tn.year,tn.final, tc.grupo, tg.cod_grado, tg.grado, 
+		RTRIM(tas.asignatura) asignatura,tas.abrev AS abrev_asig,
+		RTRIM(tar.area) area, tar.abrev AS abre_area, 
+		CONCAT(RTRIM(td.apellido1),' ',RTRIM(td.apellido2),' ',
+		RTRIM(td.nombre1),' ',RTRIM(td.nombre2)) as docente,
+		ts.NOMBRE_SEDE AS sede, tj.jornada
+		,CONCAT(RTRIM(te.apellido1),' ',RTRIM(te.apellido2),' ',
+		RTRIM(te.nombre1),' ',RTRIM(te.nombre2)) as estudiante, 
+		tme.name_state, es.nombre_escala	FROM nscp003 AS tn 
+		LEFT JOIN cursos AS tc ON (tn.id_curso = tc.id AND tn.year = tc.year)
+		LEFT JOIN asignaturas AS tas ON tc.id_asig=tas.id_pk
+		LEFT JOIN aux_asignaturas AS au ON (au.id_asign = tas.id_pk AND au.year = 2020)
+	   LEFT JOIN areas AS tar ON au.id_area = tar.id 
+		LEFT JOIN docentes AS td ON tc.id_docente=td.id_docente 
+		LEFT JOIN sedes AS ts ON tc.id_sede=ts.id 
+	   LEFT JOIN jornadas AS tj ON tc.id_jorn=tj.cod_jorn
+	   LEFT JOIN grados As tg ON tc.id_grado=tg.id
+	   LEFT JOIN student_enrollment AS tm ON tn.id_matric=tm.id
+		LEFT JOIN inscripciones AS te ON tm.id_student = te.id
+		LEFT JOIN registration_status AS tme ON tm.id_state = tme.id
+		LEFT JOIN `desempeños` AS t1 ON (tn.final BETWEEN t1.desde AND t1.hasta AND t1.year = tn.year)
+		LEFT JOIN grados_agrupados AS t2 ON t1.id_grado_agrupado = t2.id 
+		LEFT JOIN aux_grados_agrupados AS t3 ON t3.id_grado_agrupado = t2.id
+		LEFT JOIN escala_nacional AS es ON t1.id_escala = es.id
+		WHERE tn.year =  2020 AND 
+		tc.year =  2020 AND tm.year =  2020  AND t3.id_grado = tc.id_grado)
+		ORDER BY sede,cod_grado,grupo,jornada,estudiante,periodo,area,asignatura; 

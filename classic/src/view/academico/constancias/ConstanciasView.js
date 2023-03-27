@@ -3,7 +3,7 @@ Ext.define('Admin.view.academico.ConstanciasView',{
     controller  : 'academico',
     initComponent: function () {
         var me  = Admin.getApplication();
-        me.onStore('personero.CandidatosSearchStore');
+        me.onStore('representative.CandidatesSearchStore');
         me.onStore('general.PeriodosStore');
         me.onStore('general.ConstanciasStore');
         this.callParent(arguments);
@@ -16,7 +16,7 @@ Ext.define('Admin.view.academico.ConstanciasView',{
     items : [
         {
             xtype   : 'customgrid',
-            store   : 'CandidatosSearchStore',
+            store   : 'CandidatesSearchStore',
             plugins		: [
                 {
                     ptype: 'rowexpander',

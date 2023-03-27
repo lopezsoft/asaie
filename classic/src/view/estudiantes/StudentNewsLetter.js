@@ -4,16 +4,17 @@ var store   = Ext.create('Ext.data.Store', {
         { name : 'nombre'}
     ],
     data : [
-        {id: '1',    nombre: 'BOLETIN POR ÁREAS'},
-        {id: '2',    nombre: 'BOLETIN POR ASIGNATURAS'},
-        {id: '3',    nombre: 'BOLETIN POR COMPETENCIAS'},
+        // {id: '1',    nombre: 'BOLETIN POR ÁREAS'},Habilitar
+        // {id: '2',    nombre: 'BOLETIN POR ASIGNATURAS'},Habilitar
+        // {id: '3',    nombre: 'BOLETIN POR COMPETENCIAS'},Habilitar
         // {id: '4',    nombre: 'MOD - PROY TRANSVERSALES'},
-        {id: '5',    nombre: 'BOLETIN POR ÁREAS MODELO Nº 2'},
+        // {id: '5',    nombre: 'BOLETIN POR ÁREAS MODELO Nº 2'}, Habilitar
         // {id: '6',    nombre: 'BOLETIN POR ASIGNATURAS  MODELO Nº 2'},
        // {id: '7',    nombre: 'BOLETIN POR ÁREAS CON ESTADÍISTICAS'},
        // {id: '8',    nombre: 'BOLETIN POR ASIGNATURAS CON ESTADÍISTICAS'}
        // {id: '9',    nombre: 'BOLETIN POR ÁREAS (SAMAC)'},
-        {id: '10',    nombre: 'PRE-INFORME'}
+		{id: '10',    nombre: 'PRE-INFORME'},
+		{id: '11',    nombre: 'NFORME POR DESEMPEÑOS'}
     ]
 });
 

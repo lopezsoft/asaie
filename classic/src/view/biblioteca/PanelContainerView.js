@@ -9,7 +9,7 @@ Ext.define('Admin.view.biblioteca.PanelContainerView',{
     requires    : [
         'Ext.ux.layout.ResponsiveColumn'
     ],
-   // controller  : 'personero',
+   // controller  : 'representative',
 
     alias   : 'widget.PanelContainerBibliotecaView',
 

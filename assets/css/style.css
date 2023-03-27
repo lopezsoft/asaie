@@ -5,6 +5,12 @@ body {
   background-size: cover;
 }
 
+.asterisk {
+  color        : red;
+  font-weight  : bold;
+  padding-right: 5px;
+}
+
 @keyframes spinner {
   0% {
     transform: rotateZ(0deg);

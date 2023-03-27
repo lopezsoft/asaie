@@ -11,7 +11,7 @@ Ext.define('Admin.field.TimeField',{
     labelStyle	: 'font-weight:bold',
     width 		: '100%',
     allowBlank 	: false,
-    alias       : 'widget.timeField',
+    alias       : 'widget.customtimefield',
     xtype       : 'customtime',
     emptyText 	: 'Campo obligatorio',
     tooltip 	: '',

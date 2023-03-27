@@ -6,7 +6,12 @@ Ext.define('Admin.view.docentes.controller.ReportesBoletinController',{
         me.setConfigVar();
         me.control({
         });
-    },
+	},
+
+	onLibroFinal : function (btn) {
+        this.redirectTo('informefinal', true);
+	},
+	
     onReportView : function (bnt) {
         Ext.create('Admin.view.docentes.BoletinesReportView',{
             title   : 'Boletines - '+Global.getYear()

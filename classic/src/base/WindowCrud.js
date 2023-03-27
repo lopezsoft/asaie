@@ -109,6 +109,7 @@ Ext.define('Admin.base.WindowCrud' ,{
 	saveData	: function(storeName,reload){
 		var me 		= this.getApp(),
 			win		= this,
+			ts		= this,
 			form    = win.down('form'),
 			record  = form.getRecord(),
 			values  = form.getValues(),
@@ -125,6 +126,7 @@ Ext.define('Admin.base.WindowCrud' ,{
 					if (reload == true){
 						store.reload();
 					}
+					ts.afterSave();
 					win.close();
 				},
 				failure	: function (re) {
@@ -139,6 +141,7 @@ Ext.define('Admin.base.WindowCrud' ,{
 				success : function(batch, o){
 					me.showResult('Se han guardado los datos');
 					win.unmask();
+					ts.afterSave();
 					win.close();
 					if (reload == true){
 						store.reload();
@@ -150,6 +153,13 @@ Ext.define('Admin.base.WindowCrud' ,{
 				}
 			});
 		};
+	},
+
+	/**
+	 * Se ejecuta luego de guardar los cambios
+	 */
+	afterSave	: function() {
+		// console.log('afterSave');
 	},
 
 	/**

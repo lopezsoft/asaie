@@ -10,7 +10,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 	<meta name="generator" content="ASAIE ESCOLAR 1.0, asiae.co">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="keywords" content="ASIAE,Software escolar,Software academico,decreto 1290,
-	elecion de personero,modulo de convivencia,Software de notas,Boletines escolares,programa de notas,plataforma web online,
+	elecion de representative,modulo de convivencia,Software de notas,Boletines escolares,programa de notas,plataforma web online,
 	paltaforma escolar,notas academicas,logros, indicadores, estandares de competencia, indicadores de desempeño,evaluaciones,
 	gestion esoclar, gestion administrativa">
 	<meta name='author' content='Lewis Oswaldo Lopez Gomez.'>

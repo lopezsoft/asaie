@@ -99,6 +99,15 @@ class M_docentes_report extends SME_Model {
 						$report_export	= ' preinforme '.$periodo." ".$date;
 					}
 					break;
+				case 11	: // Modelo areas samac
+					if($hojaReport == 1){
+						$report			= 'boletin_oficio_sin_notas';
+						$report_export	= 'Boletin sin notas '.$periodo." ".$date;
+					}else{
+						$report			= 'boletin_oficio_sin_notas_carta';
+						$report_export	= ' Boletin sin notas '.$periodo." ".$date;
+					}
+					break;
 				default: 		// Modelo 1
 					if($hojaReport == 1){
 						$report			= 'boletin_oficio_areas';

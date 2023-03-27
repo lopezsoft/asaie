@@ -234,6 +234,8 @@ class SME_Model extends CI_Model {
 			mkdir($dir_p.PATH_DELIM.DIGITAL_DOCUMENTS_DIR_NAME, 0777, true);
 		}		
 		
+		$this->adminImagesDirectoryPath		= $dir_p.PATH_DELIM.PROFILE_DIR_NAME;
+		$this->adminDigitalDirectoryPath	= $dir_p.PATH_DELIM.DIGITAL_DOCUMENTS_DIR_NAME;
 	}
 	
 	public function get_get_docente_curso($gdo,$gpo,$sede,$jorn,$a,$curso){
@@ -260,6 +262,7 @@ class SME_Model extends CI_Model {
 		$this->db->select('id');
 		$this->db->where('id_student', $this->get_student_id());
 		$this->db->where('year', $this->get_year());
+		$this->db->where('id_state', 2);
 		$this->db->limit(1);
 		$query 	= $this->db->get($db.".student_enrollment");
 		$row	= $query->row();
@@ -327,6 +330,11 @@ class SME_Model extends CI_Model {
 			);
 			$request = json_encode($request);
 		}else{
+
+			if(!is_dir($this->directory_path.$path)) {
+				mkdir($this->directory_path.$path, 0777, true);
+			}
+
 	        if (is_dir($this->directory_path.$path)){
 		        $foto	= $this->directory_path.$path.PATH_DELIM.basename($fileName);	
 				if (is_uploaded_file($fileTmp)){

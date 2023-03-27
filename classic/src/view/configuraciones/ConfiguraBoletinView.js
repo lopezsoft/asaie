@@ -93,6 +93,11 @@ Ext.define('Admin.view.configuraciones.ConfiguraBoletinView',{
                                 },
                                 {
                                     xtype       : 'customcheckboxfield',
+                                    name        : 'bol_desem',
+                                    boxLabel    : 'Mostrar boletin por desempeños.'
+                                },
+                                {
+                                    xtype       : 'customcheckboxfield',
                                     name        : 'promedio',
                                     boxLabel    : 'Mostrar promedio.'
                                 },

@@ -1,13 +1,10 @@
-/**
- * Created by LOPEZSOFT on 5/12/2015.
- */
 Ext.define('Admin.model.general.MatCursoModel',{
     extend  : 'Admin.model.base.BaseModel',
     fields: [
-        { name: 'id_gradi',	type : 'int'},
+        { name: 'id_grado',	type : 'int'},
         { name: 'id_asig',	type : 'int'},
         { name: 'ih'},
-        { name: 'año'},
+        { name: 'year'},
         { name: 'porciento'},
         { name: 'proc1'},
         { name: 'proc2'},

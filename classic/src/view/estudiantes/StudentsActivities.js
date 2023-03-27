@@ -214,7 +214,6 @@ Ext.define('Admin.view.estudiantes.StudentsActivities',{
                     text    : 'Disponible desde',
                     columns : [
                         {
-                            xtype           : 'datecolumn',
                             text 		    : 'Fecha',
                             width 		    : 95,
                             dataIndex	    : 'fecha'
@@ -230,7 +229,6 @@ Ext.define('Admin.view.estudiantes.StudentsActivities',{
                     text    : 'Disponible hasta',
                     columns : [
                         {
-                            xtype           : 'datecolumn',
                             text 		    : 'Fecha',
                             width 		    : 95,
                             dataIndex	    : 'fecha_cierre'

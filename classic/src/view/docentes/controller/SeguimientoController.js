@@ -8,6 +8,16 @@ Ext.define('Admin.view.docentes.controller.SeguimientoController',{
         this.setConfigVar();
     },
 
+    onViewFormato01 : function (btn) {
+        this.redirectTo('formatoseguimientodocente', true);
+	},
+    onViewFormato02 : function (btn) {
+        this.redirectTo('formatoseguimientodocente', true);
+	},
+    onViewFormato03 : function (btn) {
+        this.redirectTo('formatoseguimientodocente', true);
+	},
+	
     onViewObservador : function (btn) {
         this.redirectTo('fichaseguimientodocente', true);
     }

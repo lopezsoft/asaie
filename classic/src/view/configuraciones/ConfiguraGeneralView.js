@@ -143,7 +143,17 @@ Ext.define('Admin.view.configuraciones.ConfiguraGeneralView',{
 									boxLabel    : '3 o más',
 									name        : 'areas_pierde',
 									inputValue  : 3
-								}
+								},
+								{
+									boxLabel    : '4 o más',
+									name        : 'areas_pierde',
+									inputValue  : 4
+								},
+								{
+									boxLabel    : '5 o más',
+									name        : 'areas_pierde',
+									inputValue  : 5
+								},
 							]
 						}
 					]

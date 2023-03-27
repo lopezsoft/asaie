@@ -6,7 +6,6 @@ Ext.define('Admin.field.NumberField',{
 	decimalSeparator:'.',
 	hideTrigger		: true,
     keyNavEnabled	: false,
-    mouseWheelEnabled	: false,
     labelAlign	: 'top',
     labelStyle	: 'font-weight:bold',
     width 		: '100%',

@@ -1013,7 +1013,7 @@ class Excel_manager_m extends SME_Model {
 						 		$this->objXls->getActiveSheet()->setCellValue($beforeCol.'3','%');
 						 		$val	= $query_cur->row('proc'.$field['id']) > 0 ? $query_cur->row('proc'.$field['id']) 
 						 		: $field['porcentaje'];
-						 		$val	= number_format($val,2,',', '.');
+						 		$val	= number_format($val,0,',', '.');
 						 		$this->objXls->getActiveSheet()->setCellValue($beforeCol.'2',$val.'%');
 						 		$this->cellColor($beforeCol.'2','F7BE81');
 						 		$this->cellColor($beforeCol.'3','F7BE81');

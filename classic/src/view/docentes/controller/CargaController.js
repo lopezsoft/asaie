@@ -599,7 +599,7 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
             btn2	        = win.down('#btnUndo'),
             me		        = this,
             glo             = Global,
-            addLind         = glo.getConfigReport()[0].permi_ind,
+            addLind         = parseInt(glo.getConfigReport()[0].permi_ind),
             rerult          = false,
 			dbConfig        = Global.getDbConfig(),
 			hasta	        = 0,
@@ -607,25 +607,26 @@ Ext.define('Admin.view.docentes.controller.CargaController',{
 			_n_final_red	= 0,
 			_n_aplica		= 0,
             msg     = '';
-        me.onStopTimer(btn);
-        if(addLind == '5'){
+		me.onStopTimer(btn);
+		console.log(addLind);
+        if(addLind === 5){
             rerult = true;
         }else{
             if (glo.getIndicatorsRecord().length > 0 && glo.getRecordAchievements().length > 0) {
                 rerult = true;
             }else if(glo.getIndicatorsRecord().length > 0 && !glo.getRecordAchievements().length > 0){
                 switch (addLind) {
-                    case   '1' :
+                    case   1 :
                         rerult  = true;
                         break;
-                    case   '2' :
+                    case   2 :
                         rerult  = false;
                         msg     = 'Debe digitar primero los INDICADORES - DESEMPEÑOS - LOGROS para poder generar los desempeños.';
                         break;
-                    case   '3' :
+                    case   3 :
                         rerult  = true;
                         break;
-                    case   '4' :
+                    case   4 :
                         rerult  = false;
                         msg     = 'Le falta digitar los DESEMPEÑOS - LOGROS para poder generar los desempeños.';
                         break;

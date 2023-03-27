@@ -11,18 +11,15 @@ class M_cierre extends SME_Model {
 		  'desempeños,'.
 		  'competencias,'.
 		  'config001,'.
-		  'configcerfinal,'.
-		  'configconstancias,'.
 		  'matcurso,'.
-		  'docentes,'.
-		  'configcerfinalciclos,'.
-		  'configconstanciasciclos,'.
-		  'encabezado_reportes,'.
-		  'configdiplomas,'.
-		  'config_acta_grado,';	
+		  'aux_asignaturas,'.
+		  'aux_docentes,';
+		//   'configdiplomas,'.
+		//   'config_acta_grado,';	
 		$result	= "";
+		$db		= $this->get_db_name();
 		$aNext	= strval($this->get_year())+1;
-		$get_a	= 'SELECT * FROM cierre WHERE año='.$this->get_year().' AND id_inst='.$this->get_id_school();
+		$get_a	= "SELECT * FROM {$db}.cierre WHERE año=".$this->get_year();
 		$get_a 	= $this->db->query($get_a);
 		$x		= 0;
 		if ($get_a ->num_rows() > 0){
@@ -34,7 +31,7 @@ class M_cierre extends SME_Model {
 				$SQLInsert 	= '';
 		    	$SQLValues	= '';
 		    	$nOccur 	= strpos($cListTables,',');
-		    	$cTableName = substr($cListTables,0,$nOccur);
+		    	$cTableName = $db.".".substr($cListTables,0,$nOccur);
 			 	$cListTables= substr($cListTables,$nOccur+1);
 				$fiels_table = $this->db->field_data($cTableName);
 				foreach($fiels_table as $field_compare){
@@ -44,7 +41,7 @@ class M_cierre extends SME_Model {
 					*/
 					$name = trim($field_compare->name);
 					$name_C = $this->normaliza(strtolower($name));
-					$nor	= $this->normaliza('año');
+					$nor	= $this->normaliza('year');
 					
 					/**
 					* 
@@ -69,13 +66,13 @@ class M_cierre extends SME_Model {
 				$SQLValues = substr($SQLValues,0,strlen($SQLValues)-1);				
 				$SQL = 'INSERT INTO '.$cTableName.' ('.$SQLInsert.') '.
 						'SELECT '.$SQLValues.' FROM '.$cTableName.
-						' WHERE año='.$this->get_year()." AND id_inst=".$this->get_id_school();
-				$DEL = 'DELETE FROM '.$cTableName.' WHERE año='.$aNext.' AND id_inst='.$this->get_id_school();
+						' WHERE year='.$this->get_year();
+				$DEL = 'DELETE FROM '.$cTableName.' WHERE year='.$aNext;
 				
 				$this->db->query($DEL);
 				$this->db->query($SQL);
 			}
-			$get_a	= 'INSERT INTO cierre (año,id_inst) VALUES ('.$this->get_year().','.$this->get_id_school().')';
+			$get_a	= "INSERT INTO {$db}.cierre (año) VALUES (".$this->get_year().")";
 			$this->db->query($get_a);
 			$this->trans_complete();
 			if ($this->trans_status()){
